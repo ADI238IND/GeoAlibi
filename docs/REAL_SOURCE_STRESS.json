@@ -1,0 +1,708 @@
+{
+  "purpose": "Known-no-change transformed-image stress diagnostic. Transformations are not independent acquisitions. Detector receives the registered after image.",
+  "configuration": {
+    "threshold": 0.12,
+    "min_area": 70,
+    "model": "pinned LEVIR-CD U-Net"
+  },
+  "results": [
+    {
+      "source": "test_102_0512_0000.png",
+      "transform": "identical",
+      "hash": "57a60fdbbc91a1f0e6609ca875c6650480a294e171a0fd768a04c7aadcec6680",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1099,
+        "inliers": 1099,
+        "phase_response": 1.0,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 486.85
+      }
+    },
+    {
+      "source": "test_102_0512_0000.png",
+      "transform": "global_illumination",
+      "hash": "4a315efb1167fbb9024751e57c796025d26cd7d4296326135d8ec2264c0b7320",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "ORB + RANSAC",
+        "matrix": [
+          [
+            0.9999908804893494,
+            6.731443863827735e-05,
+            -0.01572328247129917
+          ],
+          [
+            -6.731443863827735e-05,
+            0.9999908804893494,
+            0.006386908236891031
+          ]
+        ],
+        "matches": 497,
+        "inliers": 494,
+        "phase_response": 0.9977,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 486.85
+      }
+    },
+    {
+      "source": "test_102_0512_0000.png",
+      "transform": "translation_4px_-3px",
+      "hash": "e5c3e2636fd2bcd0648433d52cb9ffb6e585a2ecdd235a13e7117fbc6da195c4",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "phase correlation",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            -3.9377214908599854
+          ],
+          [
+            0.0,
+            1.0,
+            2.951716661453247
+          ]
+        ],
+        "matches": 857,
+        "inliers": 850,
+        "phase_response": 0.6605,
+        "reliable": true,
+        "overlap": 0.9575,
+        "texture_variance": 486.85
+      }
+    },
+    {
+      "source": "test_121_0768_0256.png",
+      "transform": "identical",
+      "hash": "1b347bf51173ab8476bc3fd4e491abebe231ba793d9b62584c5bf328f95bfbb9",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1623,
+        "inliers": 1623,
+        "phase_response": 1.0,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 682.89
+      }
+    },
+    {
+      "source": "test_121_0768_0256.png",
+      "transform": "global_illumination",
+      "hash": "2d7dd964a0367230276ea6d001aa49879e5b369cdf83e1ce580c9e11acdde7a8",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1171,
+        "inliers": 1168,
+        "phase_response": 0.9989,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 682.89
+      }
+    },
+    {
+      "source": "test_121_0768_0256.png",
+      "transform": "translation_4px_-3px",
+      "hash": "e03f17255121b90b0ad3cd1339415f8e3c805942735edb45e61b4e1ba59035e4",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "ORB + RANSAC",
+        "matrix": [
+          [
+            0.9998186826705933,
+            8.198139403248206e-05,
+            -3.9658846855163574
+          ],
+          [
+            -8.198139403248206e-05,
+            0.9998186826705933,
+            3.039710521697998
+          ]
+        ],
+        "matches": 1167,
+        "inliers": 1156,
+        "phase_response": 0.8234,
+        "reliable": true,
+        "overlap": 0.9575,
+        "texture_variance": 682.89
+      }
+    },
+    {
+      "source": "test_2_0000_0000.png",
+      "transform": "identical",
+      "hash": "09ee6a0672ecf4829a3f38e379d60e8c1d7dcbd0683d757ef73e5a4f17eb60b2",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1793,
+        "inliers": 1793,
+        "phase_response": 1.0,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 973.62
+      }
+    },
+    {
+      "source": "test_2_0000_0000.png",
+      "transform": "global_illumination",
+      "hash": "ff705d6c38ae33668fae442bfd8d8a72c0cfc39fc206a6ea52779099e4950faa",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1505,
+        "inliers": 1503,
+        "phase_response": 0.9974,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 973.62
+      }
+    },
+    {
+      "source": "test_2_0000_0000.png",
+      "transform": "translation_4px_-3px",
+      "hash": "8d648b836efb7f750746c430def76b72b565e6873f8e93839cf6185e5ff15fe4",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "phase correlation",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            -3.9741463661193848
+          ],
+          [
+            0.0,
+            1.0,
+            3.0304927825927734
+          ]
+        ],
+        "matches": 1317,
+        "inliers": 1303,
+        "phase_response": 0.8632,
+        "reliable": true,
+        "overlap": 0.9575,
+        "texture_variance": 973.62
+      }
+    },
+    {
+      "source": "test_2_0000_0512.png",
+      "transform": "identical",
+      "hash": "eb4f19c714dc5cb3de73f770d798081f791eb0bf81ad3c06585a92908c8a0cfd",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1938,
+        "inliers": 1938,
+        "phase_response": 1.0,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 1506.8
+      }
+    },
+    {
+      "source": "test_2_0000_0512.png",
+      "transform": "global_illumination",
+      "hash": "adf1c583f80281c0c5ac47c8d8dd5a89ac0fbe589645310fcb6e9bc38fbf2eea",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1776,
+        "inliers": 1769,
+        "phase_response": 0.9992,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 1506.8
+      }
+    },
+    {
+      "source": "test_2_0000_0512.png",
+      "transform": "translation_4px_-3px",
+      "hash": "21363d1c2d33b36b2adc67b69535f3a71e2fef5365dd87973779c00a52c17822",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "phase correlation",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            -3.9696335792541504
+          ],
+          [
+            0.0,
+            1.0,
+            3.0303640365600586
+          ]
+        ],
+        "matches": 1484,
+        "inliers": 1448,
+        "phase_response": 0.818,
+        "reliable": true,
+        "overlap": 0.9575,
+        "texture_variance": 1506.8
+      }
+    },
+    {
+      "source": "test_55_0256_0000.png",
+      "transform": "identical",
+      "hash": "c7d94e1572e814d967cdb79b67765cee7091ab9b49dcf746fb3a53525f70f781",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1666,
+        "inliers": 1666,
+        "phase_response": 1.0,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 1204.5
+      }
+    },
+    {
+      "source": "test_55_0256_0000.png",
+      "transform": "global_illumination",
+      "hash": "e54eeed8a2e56bb81cce78592a387e1031ec7b8496a853b40ee18418ffb6e00d",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1129,
+        "inliers": 1123,
+        "phase_response": 0.9987,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 1204.5
+      }
+    },
+    {
+      "source": "test_55_0256_0000.png",
+      "transform": "translation_4px_-3px",
+      "hash": "0b8c5c961d30f02cae985a2c0e49b856e8d2905b956ba0ab81001cb18901a9b4",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "ORB + RANSAC",
+        "matrix": [
+          [
+            1.0003364086151123,
+            2.2305146558210254e-05,
+            -4.026472568511963
+          ],
+          [
+            -2.2305146558210254e-05,
+            1.0003364086151123,
+            2.9751341342926025
+          ]
+        ],
+        "matches": 1217,
+        "inliers": 1190,
+        "phase_response": 0.8615,
+        "reliable": true,
+        "overlap": 0.9575,
+        "texture_variance": 1204.5
+      }
+    },
+    {
+      "source": "test_77_0512_0256.png",
+      "transform": "identical",
+      "hash": "0ea3f1a4e2688260d7229a8110d344168e2da0e396b733719faab930f1895be3",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1866,
+        "inliers": 1866,
+        "phase_response": 1.0,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 11928.61
+      }
+    },
+    {
+      "source": "test_77_0512_0256.png",
+      "transform": "global_illumination",
+      "hash": "a166fa23360cdca41402951d8b3fd575e0336362034a5888aa77aa7a92323f15",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1509,
+        "inliers": 1502,
+        "phase_response": 0.9997,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 11928.61
+      }
+    },
+    {
+      "source": "test_77_0512_0256.png",
+      "transform": "translation_4px_-3px",
+      "hash": "d704eaef3d57724f99ea99a1aace7a1f64131e74070b4413bae1c3cb30628e21",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "ORB + RANSAC",
+        "matrix": [
+          [
+            0.9997207522392273,
+            1.7012853277265094e-05,
+            -3.924809217453003
+          ],
+          [
+            -1.7012853277265094e-05,
+            0.9997207522392273,
+            3.0502734184265137
+          ]
+        ],
+        "matches": 1146,
+        "inliers": 1083,
+        "phase_response": 0.6662,
+        "reliable": true,
+        "overlap": 0.9575,
+        "texture_variance": 11928.61
+      }
+    },
+    {
+      "source": "test_7_0256_0512.png",
+      "transform": "identical",
+      "hash": "303858c4cdca7f7de6dde69866969535a0e08a00c0d8156c91ff3e3dbad8850f",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1933,
+        "inliers": 1933,
+        "phase_response": 1.0,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 3024.8
+      }
+    },
+    {
+      "source": "test_7_0256_0512.png",
+      "transform": "global_illumination",
+      "hash": "7c213f2281668a01f7b816fb7bd932a6c7b51656b5e23a2a2e7d0bee708d8fd5",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1727,
+        "inliers": 1720,
+        "phase_response": 0.9991,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 3024.8
+      }
+    },
+    {
+      "source": "test_7_0256_0512.png",
+      "transform": "translation_4px_-3px",
+      "hash": "e048a3a04447e55d32cd60bec69e61991d74b7c754aba9665d0e491b1dfa5894",
+      "proposal_false_pixels": 0,
+      "accepted_false_pixels": 0,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 0
+      },
+      "alignment": {
+        "method": "ORB + RANSAC",
+        "matrix": [
+          [
+            0.999805748462677,
+            0.0003852451918646693,
+            -3.9932186603546143
+          ],
+          [
+            -0.0003852451918646693,
+            0.999805748462677,
+            3.0974793434143066
+          ]
+        ],
+        "matches": 1369,
+        "inliers": 1331,
+        "phase_response": 0.8295,
+        "reliable": true,
+        "overlap": 0.9575,
+        "texture_variance": 3024.8
+      }
+    }
+  ],
+  "summary": {
+    "cases": 21,
+    "proposal_false_pixels": 0,
+    "accepted_false_pixels": 0
+  }
+}

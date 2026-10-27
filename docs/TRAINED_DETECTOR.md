@@ -60,3 +60,7 @@ python scripts/evaluate.py datasets/levir-author-demo --detector unet --output b
 3. Measure selective risk and review coverage jointly with recall. An all-review system cannot be advertised as automatically verified.
 4. Add trained-model nuisance stress tests, temporal-swap consistency, seam tests, and difficult-cloud/seasonal examples.
 5. Validate SAM building masks and Muse interpretations on appropriately licensed real imagery.
+
+## Known-no-change stress diagnostic
+
+All seven source A images were paired with identical copies, fixed brightness changes (0.75 × RGB + 12), and a 4px/−3px translation: 21 cases. The registered trained pipeline produced zero proposal and accepted false-positive pixels on those transformed pairs. These are not independent satellite acquisitions or an accuracy estimate. Results: REAL_SOURCE_STRESS.json. Reproduce with `python scripts/stress_detector.py datasets/levir-author-demo/A --output stress-results.json`. This passing nuisance check does not resolve the all-abstention result on genuinely changed image pairs.
