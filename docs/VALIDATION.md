@@ -56,3 +56,8 @@ A separate live SAM nonempty-output check on Meta's official duck photo returned
 ## v0.4 landmark-assisted registration
 
 38 tests cover prior functionality plus recovery of a known translation, explicit held-out disagreement rejection, insufficient/clustered/duplicate/out-of-bounds/nonfinite landmarks, and API upload/overlay behavior. Baseline desktop/mobile browser checks passed. The new manual coordinate entry is an advanced workflow; an interactive landmark picker remains future UX work. No additional paid API calls and no claim that automatic real-pair registration has been solved.
+
+
+## v0.5 visual landmark picker
+
+39 automated tests pass, including preview dimension parity, invalid preview input, no persisted preview investigation, and prior landmark tests. Browser flow exercises pointer matching, keyboard selection, undo, explicit opt-in, six-point upload with held-out checks, and stale reset on file change. Baseline report/export/history and mobile overflow checks remain covered. No paid model calls.

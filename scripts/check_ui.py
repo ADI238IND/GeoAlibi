@@ -83,10 +83,41 @@ def main():
                     page.locator("#toggle-upload").click()
                     page.locator("#before").set_input_files(before)
                     page.locator("#after").set_input_files(after)
+                    page.locator('#landmark-picker summary').click()
+                    page.wait_for_function("() => document.querySelector('#picker-state').textContent.includes('Add 6 more')")
+                    def pick(side, x, y):
+                        canvas=page.locator('#pick-'+side)
+                        # 640 square images are letterboxed inside a 512 × 384 canvas.
+                        canvas.click(position={'x':(64+x*.6)*canvas.bounding_box()['width']/512,
+                                               'y':y*.6*canvas.bounding_box()['height']/384})
+                    page.locator('#pick-before').focus()
+                    page.locator('#pick-before').press('ArrowRight')
+                    page.locator('#pick-before').press('Enter')
+                    page.locator('#pick-after').focus()
+                    page.locator('#pick-after').press('ArrowRight')
+                    page.locator('#pick-after').press('Enter')
+                    assert '1 complete pairs' in page.locator('#picker-state').inner_text()
+                    page.locator('#clear-landmarks').click()
+                    points=[(50,50),(580,50),(50,580),(580,580),(150,180),(480,440)]
+                    for x,y in points:
+                        pick('before',x,y)
+                        pick('after',x,y)
+                    assert page.locator('#use-picked-landmarks').is_enabled()
+                    page.locator('#undo-landmark').click()
+                    assert page.locator('#use-picked-landmarks').is_disabled()
+                    pick('before',480,440)
+                    pick('after',480,440)
+                    page.locator('#use-picked-landmarks').check()
+                    assert page.get_by_label('Matched image landmarks').is_disabled()
                     page.locator("#title").fill("Browser upload verification")
                     page.get_by_role("button", name="Investigate uploaded pair").click()
                     page.wait_for_function("() => document.querySelector('#run-title').textContent==='Browser upload verification'")
                     assert page.locator("#fixture-badge").is_hidden()
+                    assert 'supplied landmarks' in page.locator('#alignment-label').inner_text()
+                    page.locator('#before').set_input_files(before)
+                    assert not page.locator('#use-picked-landmarks').is_checked()
+                    assert page.locator('#use-picked-landmarks').is_disabled()
+                    assert page.get_by_label('Matched image landmarks').is_enabled()
                     page.reload()
                     page.locator("#history button").first.click()
                     page.locator("#results").wait_for(state="visible")
@@ -97,7 +128,7 @@ def main():
                     assert not errors, errors
                     browser.close()
                     (out / "ui-results.json").write_text(json.dumps({"status": "passed", "page_errors": errors,
-                        "checks": ["fixture investigation", "image assets", "review filtering", "saved reviewer decision", "image views", "swipe", "JSON download", "three nuisance scenarios", "file upload", "history reload", "390px mobile overflow"]}, indent=2))
+                        "checks": ["fixture investigation", "image assets", "review filtering", "saved reviewer decision", "image views", "swipe", "JSON download", "three nuisance scenarios", "file upload", "visual landmark matching/keyboard/undo/submit/stale reset", "history reload", "390px mobile overflow"]}, indent=2))
                     print("Browser checks passed: fixture, assets, filters, review, views, slider, download, nuisance scenarios, upload, history, mobile.")
             finally:
                 server.terminate()
