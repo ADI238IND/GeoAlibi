@@ -6,4 +6,7 @@ __pycache__/
 .geoalibi/
 dist/
 test-results/
+models/
+datasets/
+benchmark-results*.json
 

@@ -13,11 +13,12 @@ function showError(error) { $('error').textContent=error.message; $('error').hid
 function settings(){
   const threshold=Number($('threshold').value), min_area=Number($('min-area').value);
   if(!Number.isFinite(threshold)||threshold<.04||threshold>.4||!Number.isInteger(min_area)||min_area<16||min_area>10000)throw new Error('Threshold must be 0.04–0.40; minimum area must be 16–10000 pixels.');
-  return {threshold,min_area,use_meta:$('use-meta').checked,use_sam:$('use-sam').checked};
+  return {threshold,min_area,detector:$('detector').value,use_meta:$('use-meta').checked,use_sam:$('use-sam').checked};
 }
 async function status(){
   const s=await api('/api/status');
   $('use-meta').disabled=!s.meta_configured;
+  document.querySelector('#detector option[value=unet]').disabled=!s.detector_configured;
   $('meta-state').textContent=s.meta_configured?'Key configured · optional paid calls':'API key not configured · local checks available';
   $('use-sam').disabled=!s.sam_configured||!$('use-meta').checked;
   $('budget-text').textContent=`$${s.budget.reserved_usd.toFixed(2)} reserved against a $${s.budget.ceiling_usd.toFixed(2)} local ceiling. Each uncached interpretation reserves $0.50 conservatively, including failed calls. This is not measured spending; verify actual charges and remaining credits in Meta Billing.`;
@@ -41,7 +42,7 @@ function render(data){
   $('count-total').textContent=data.regions.length;$('count-supported').textContent=data.counts.supported;
   $('count-artifact').textContent=data.counts.artifact;$('count-review').textContent=data.counts.review;
   $('run-title').textContent=data.title;$('fixture-badge').hidden=!data.synthetic;
-  $('elapsed').textContent=`${(data.elapsed_ms/1000).toFixed(2)}s local analysis · ${data.engine}`;
+  $('elapsed').textContent=`${(data.elapsed_ms/1000).toFixed(2)}s · ${data.detector}`;
   $('dimensions').textContent=`${data.width} × ${data.height} px`;
   $('alignment-label').textContent=`${data.alignment.method} · ${(data.alignment.overlap*100).toFixed(1)}% overlap`;
   $('warnings').replaceChildren(...data.warnings.map(w=>element('p','',w)));

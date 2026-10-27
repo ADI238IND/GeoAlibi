@@ -12,7 +12,7 @@ import cv2
 import numpy as np
 from PIL import Image, ImageOps
 
-VERSION = "rgb-counterfactual-0.1.0"
+VERSION = "counterfactual-0.2.0"
 MAX_SIDE = 1024
 
 
@@ -131,12 +131,15 @@ class Analysis:
     images: dict[str, np.ndarray]
 
 
-def investigate(a, b, *, threshold=.12, min_area=70, proposal=None) -> Analysis:
+def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=None) -> Analysis:
     started = time.perf_counter()
     if a.shape != b.shape:
         raise ValueError("Use images of the same dimensions and footprint. Automatic stretching is disabled.")
     h, w = a.shape[:2]
     aligned, valid, alignment = align(a, b)
+    model_scores = None
+    if detector_fn is not None:
+        proposal, model_scores = detector_fn(a, aligned)
     normalized, fits = normalize(a, aligned, valid)
     raw_d = difference(a, b)
     align_d = difference(a, aligned)
@@ -148,7 +151,7 @@ def investigate(a, b, *, threshold=.12, min_area=70, proposal=None) -> Analysis:
     if proposal is not None:
         if proposal.shape != (h, w):
             raise ValueError("Proposal mask must match the processed image dimensions.")
-        candidates |= proposal.astype(bool) & valid
+        candidates = proposal.astype(bool) & valid
     # Filter noise but preserve separately inspectable local candidate regions.
     clean = cv2.morphologyEx(candidates.astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
     clean = cv2.morphologyEx(clean, cv2.MORPH_CLOSE, np.ones((5, 5), np.uint8))
@@ -248,5 +251,14 @@ def investigate(a, b, *, threshold=.12, min_area=70, proposal=None) -> Analysis:
                               "No causal disaster/damage conclusion can be drawn from these checks alone.", "Global normalization does not resolve local shadows, clouds, parallax, or seasonal changes reliably.",
                               "Two images alone cannot prove that a candidate is a real-world change."],
               "meta": {"status": "not_requested", "reason": "Local evidence only; no Meta API call was made."}, "sam": {"status": "not_requested"}}
-    return Analysis(report, {"before": a, "after": b, "aligned": aligned, "normalized": normalized, "overlay": overlay,
-                             "heatmap": heat, "raw_mask": raw_mask.astype(np.uint8) * 255, "supported_mask": accepted})
+    report['all_candidates_abstained'] = bool(regions) and counts['review'] == len(regions)
+    if report['all_candidates_abstained']:
+        report['warnings'].append('All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed.')
+    images = {"before": a, "after": b, "aligned": aligned, "normalized": normalized, "overlay": overlay,
+              "heatmap": heat, "raw_mask": raw_mask.astype(np.uint8) * 255, "proposal_mask": candidates.astype(np.uint8) * 255, "supported_mask": accepted}
+    if model_scores is not None:
+        from .pretrained import PROVENANCE, NAME
+        report["detector"] = NAME
+        report["model_provenance"] = PROVENANCE
+        images["model_scores"] = np.uint8(np.clip(model_scores * 255, 0, 255))
+    return Analysis(report, images)
