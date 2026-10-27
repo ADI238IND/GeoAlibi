@@ -21,7 +21,7 @@ load_dotenv()
 ROOT = Path(__file__).parent
 store = Store(Path(os.getenv("GEOALIBI_DATA_DIR", ".geoalibi")))
 BUDGET = float(os.getenv("GEOALIBI_API_BUDGET_USD", "10"))
-app = FastAPI(title="GeoAlibi", version="0.3.0")
+app = FastAPI(title="GeoAlibi", version="0.4.0")
 lock = asyncio.Semaphore(1)
 
 
@@ -109,12 +109,12 @@ def review(run_id: str, region_id: str, body: Review):
     return get_run(run_id)
 
 
-async def run(a, b, title, threshold, min_area, use_meta, use_sam, synthetic=False, detector="baseline"):
+async def run(a, b, title, threshold, min_area, use_meta, use_sam, synthetic=False, detector="baseline", landmarks=None):
     async with lock:
         try:
             if detector not in {"baseline", "unet"}:
                 raise ValueError("Unknown proposal detector.")
-            result = await asyncio.to_thread(investigate, a, b, threshold=threshold, min_area=min_area, detector_fn=pretrained.propose if detector == "unet" else None)
+            result = await asyncio.to_thread(investigate, a, b, threshold=threshold, min_area=min_area, detector_fn=pretrained.propose if detector == "unet" else None, landmarks=landmarks)
             if use_meta:
                 try:
                     await meta.enrich(result, store, BUDGET, with_sam=use_sam)
@@ -152,7 +152,7 @@ async def demo_run(body: DemoRequest):
 @app.post("/api/analyze")
 async def upload(before: UploadFile = File(...), after: UploadFile = File(...), title: str = Form("Untitled investigation"),
                  threshold: float = Form(.12, ge=.04, le=.4), min_area: int = Form(70, ge=16, le=10000),
-                 use_meta: bool = Form(False), use_sam: bool = Form(False), detector: str = Form("baseline")):
+                 use_meta: bool = Form(False), use_sam: bool = Form(False), detector: str = Form("baseline"), landmarks: str = Form("")):
     try:
         a = decode_image(await before.read(12 * 1024 * 1024 + 1))
         b = decode_image(await after.read(12 * 1024 * 1024 + 1))
@@ -161,7 +161,15 @@ async def upload(before: UploadFile = File(...), after: UploadFile = File(...), 
     finally:
         await before.close()
         await after.close()
-    return await run(a, b, title.strip()[:120] or "Untitled investigation", threshold, min_area, use_meta, use_sam, detector=detector)
+    points=None
+    if landmarks.strip():
+        try:
+            if len(landmarks)>5000:raise ValueError('Too many landmark characters.')
+            points=json.loads(landmarks)
+            if points is None:raise ValueError('Landmark JSON must be an array.')
+        except ValueError as exc:
+            raise HTTPException(422,'Landmarks must be a JSON array of numeric coordinate rows.') from exc
+    return await run(a, b, title.strip()[:120] or "Untitled investigation", threshold, min_area, use_meta, use_sam, detector=detector, landmarks=points)
 
 
 app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")

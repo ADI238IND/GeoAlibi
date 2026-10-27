@@ -73,3 +73,17 @@ def test_security_headers_and_no_secret_exposure(client):
     assert r.status_code == 200
     assert "frame-ancestors 'none'" in r.headers["content-security-policy"]
     assert "MODEL_API_KEY" not in client.get("/api/status").text
+
+
+def test_landmark_upload_requires_valid_evidence(client):
+    import json
+    a,_,_=pair()
+    points=[[50,50,50,50],[580,50,580,50],[50,580,50,580],[580,580,580,580],[150,180,150,180],[480,440,480,440]]
+    files={"before":("a.png",png(a),"image/png"),"after":("b.png",png(a),"image/png")}
+    good=client.post('/api/analyze',files=files,data={'landmarks':json.dumps(points)})
+    assert good.status_code==200
+    assert good.json()['alignment']['held_out_points']==2
+    assert client.get(good.json()['assets']['landmarks_before']).status_code==200
+    points[-1][2]+=20
+    assert client.post('/api/analyze',files=files,data={'landmarks':json.dumps(points)}).status_code==422
+    assert client.post('/api/analyze',files=files,data={'landmarks':'null'}).status_code==422

@@ -12,7 +12,7 @@ import cv2
 import numpy as np
 from PIL import Image, ImageOps
 
-VERSION = "counterfactual-0.3.0"
+VERSION = "counterfactual-0.4.0"
 MAX_SIDE = 1024
 
 
@@ -131,12 +131,16 @@ class Analysis:
     images: dict[str, np.ndarray]
 
 
-def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=None) -> Analysis:
+def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=None, landmarks=None) -> Analysis:
     started = time.perf_counter()
     if a.shape != b.shape:
         raise ValueError("Use images of the same dimensions and footprint. Automatic stretching is disabled.")
     h, w = a.shape[:2]
-    aligned, valid, alignment = align(a, b)
+    if landmarks is not None:
+        from .landmarks import register
+        aligned,valid,alignment=register(a,b,landmarks)
+    else:
+        aligned, valid, alignment = align(a, b)
     model_scores = None
     if detector_fn is not None:
         proposal, model_scores = detector_fn(a, aligned)
@@ -231,6 +235,8 @@ def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=
         regions[-1]['evidence_requests'] = evidence_requests(regions[-1]['checks'], alignment)
     counts = {k: sum(r["verdict"] == k for r in regions) for k in ["supported", "artifact", "review"]}
     flags = []
+    if landmarks is not None:
+        flags.append('Alignment uses user-supplied landmarks with a held-out geometric check. Correspondence truth and acquisition provenance were not independently verified.')
     if not alignment["reliable"]:
         flags.append("Low registration evidence: inspect alignment before interpreting change.")
     if len(selected) > 24:
@@ -267,4 +273,13 @@ def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=
         report["detector"] = NAME
         report["model_provenance"] = PROVENANCE
         images["model_scores"] = np.uint8(np.clip(model_scores * 255, 0, 255))
+    if landmarks is not None:
+        for name,image,columns in [('landmarks_before',a,(2,3)),('landmarks_after',b,(0,1))]:
+            overlay_points=image.copy()
+            for i,row in enumerate(alignment['landmarks']):
+                point=tuple(int(round(row[k])) for k in columns)
+                color=(255,193,92) if i>=len(landmarks)-2 else (67,225,168)
+                cv2.circle(overlay_points,point,5,color,2)
+                cv2.putText(overlay_points,str(i+1),point,cv2.FONT_HERSHEY_SIMPLEX,.5,color,1)
+            images[name]=overlay_points
     return Analysis(report, images)
