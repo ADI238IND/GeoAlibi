@@ -128,3 +128,10 @@ See [TRAINED_DETECTOR.md](docs/TRAINED_DETECTOR.md) (model setup, licenses, repr
 ## Challenge log and portable evidence (v0.3)
 
 Every new region records five alternative-explanation challenges, with explicit unresolved/untested outcomes and prioritized evidence requests. Supported findings must survive each of four registration perturbations, not just the average. The Evidence packet button downloads source/derived images, current report and review history, plus an unsigned SHA-256 manifest. Verify downloaded content with `python scripts/verify_packet.py evidence.zip`. Checksums detect changes relative to the manifest; they are not signatures, acquisition provenance, or proof of correctness. Packets contain imagery: share only where the imagery terms and your privacy requirements allow. The registration bottleneck on the seven real demo pairs remains unresolved.
+
+
+## Landmark-assisted registration (v0.4)
+
+Advanced uploads accept 6–20 matched landmarks as `[after_x, after_y, before_x, before_y]` rows in processed original-image pixel coordinates. Supply stationary, independently checked correspondences. The first N−2 rows fit a bounded similarity transform; the final two rows are held out and are never used to refit. Fit points must span 10% of scene area; held-out points must be separated. Fit RMS must be ≤1.5px, held-out RMS ≤2px, and each held-out error ≤3px. The transform is limited to small shifts, ≤5° rotation and scale 0.95–1.05. Invalid evidence fails explicitly.
+
+Reports include all supplied points, their hash, fit/held-out residuals and source disclosure. Evidence packets include numbered landmark overlays: green fitting points and amber held-out points. This checks geometric consistency of user-supplied correspondences, not their real-world truth, acquisition provenance or independent authenticity. Do not generate guessed identity correspondences to bypass an unresolved automatic registration gate. No real-demo landmark annotations have yet been collected; the earlier seven-pair automatic all-abstention result remains unresolved.

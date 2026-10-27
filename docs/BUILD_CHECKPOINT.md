@@ -49,3 +49,8 @@ The optional-detector branch also includes 21 known-no-change transformed real-s
 ## v0.3 continuation
 
 Added per-region challenge logs, per-perturbation measurements, prioritized evidence requests, and portable ZIP evidence packets with an offline checksum verifier. Acceptance now uses the worst of the four perturbation survivals, correcting an average-masking weakness. No relaxed registration gate and no new Meta calls. Registration remains the next scientific bottleneck; this update improves auditability and gives reviewers concrete missing-evidence requests. Packet manifests are unsigned integrity checks, never authenticity certification.
+
+
+## v0.4 continuation
+
+Added explicit landmark-assisted registration for expert-supplied stable correspondences. Fit first N−2 of 6–20 points, withhold final two; bound residuals, spatial coverage and transform size; fail invalid evidence with no automatic fallback. API and upload UI accept JSON in processed original-image coordinates. Reports disclose the user-provided basis and include residuals, full point rows and hash; packets include numbered landmark overlays. Cache identity now includes alignment evidence. Known-transform and invalid-evidence tests passed; no real satellite landmark annotations were fabricated. Automatic registration on the seven demos is still unresolved. Next: collect independently checked real-image control points or larger contextual imagery, then evaluate conditional verification and false-acceptance behavior separately from the automatic path.
