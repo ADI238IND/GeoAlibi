@@ -128,7 +128,7 @@ async def enrich(analysis, store, ceiling, *, with_sam=False):
     if not available():
         analysis.report["meta"] = {"status": "unavailable", "reason": "MODEL_API_KEY is not configured. No credit was consumed."}
         return
-    cache_key = analysis.report["input_hash"] + analysis.report["engine"] + str(analysis.report["threshold"]) + str(analysis.report["min_area"]) + str(with_sam)
+    cache_key = analysis.report["input_hash"] + analysis.report["engine"] + analysis.report['detector'] + analysis.report.get('model_provenance',{}).get('sha256','') + str(analysis.report["threshold"]) + str(analysis.report["min_area"]) + str(with_sam)
     cached = store.cached(cache_key)
     if cached:
         analysis.report["meta"] = {**cached["meta"], "cache_hit": True}

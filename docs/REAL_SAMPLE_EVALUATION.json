@@ -1,0 +1,301 @@
+{
+  "dataset": "datasets/levir-author-demo",
+  "pairs": 7,
+  "subset_limit": 0,
+  "threshold": 0.12,
+  "min_area": 70,
+  "detector": "unet",
+  "metrics": {
+    "raw_rgb": {
+      "tp": 54906,
+      "fp": 211413,
+      "fn": 29086,
+      "tn": 163347,
+      "precision": 0.20616628929967445,
+      "recall": 0.6537051147728355,
+      "f1": 0.3134700309153866,
+      "iou": 0.18586686075049508
+    },
+    "proposals": {
+      "tp": 76558,
+      "fp": 6894,
+      "fn": 7434,
+      "tn": 367866,
+      "precision": 0.9173896371566889,
+      "recall": 0.9114915706257739,
+      "f1": 0.9144310933804735,
+      "iou": 0.8423519573971788
+    },
+    "supported": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 83992,
+      "tn": 374760,
+      "precision": null,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    }
+  },
+  "pair_results": [
+    {
+      "file": "test_102_0512_0000.png",
+      "hash": "1888029dc32ea135f04519ed9776914a8b8cd20f2f1a7e4505a8dc66b2d0e887",
+      "elapsed_ms": 6861,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 1
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 2,
+        "inliers": 0,
+        "phase_response": 0.0706,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 486.85
+      },
+      "candidate_pixels": 13329,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    },
+    {
+      "file": "test_121_0768_0256.png",
+      "hash": "c4c896c6c5ba35679042424a24bb813bf30bc91a10751f5bc736ef0c257b2e69",
+      "elapsed_ms": 232,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 4
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 8,
+        "inliers": 3,
+        "phase_response": -0.01,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 682.89
+      },
+      "candidate_pixels": 11746,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    },
+    {
+      "file": "test_2_0000_0000.png",
+      "hash": "950e99e95d028810c1f99525e69e899c377c238ad012c18a735bcfd54b12ac02",
+      "elapsed_ms": 231,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 16
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 7,
+        "inliers": 0,
+        "phase_response": 0.0443,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 973.62
+      },
+      "candidate_pixels": 16815,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    },
+    {
+      "file": "test_2_0000_0512.png",
+      "hash": "869b038d46e68ff4ae9dd4d90a5007ee9436fb137196a11fd3a0c20aa3c8c542",
+      "elapsed_ms": 249,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 14
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 4,
+        "inliers": 0,
+        "phase_response": 0.047,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 1506.8
+      },
+      "candidate_pixels": 12155,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    },
+    {
+      "file": "test_55_0256_0000.png",
+      "hash": "ca8a20f7d259fb76a2161127d688f1252605957867dc432356541017add99582",
+      "elapsed_ms": 239,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 4
+      },
+      "alignment": {
+        "method": "phase correlation",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            3.273381233215332
+          ],
+          [
+            0.0,
+            1.0,
+            1.062203288078308
+          ]
+        ],
+        "matches": 6,
+        "inliers": 0,
+        "phase_response": 0.1404,
+        "reliable": true,
+        "overlap": 0.969,
+        "texture_variance": 1204.5
+      },
+      "candidate_pixels": 7794,
+      "accepted_pixels": 0,
+      "warnings": [
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    },
+    {
+      "file": "test_77_0512_0256.png",
+      "hash": "feb6608927f9b1da196f400abe8a273780a73979b8c7ef6bac616eff41510886",
+      "elapsed_ms": 232,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 1
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 6,
+        "inliers": 0,
+        "phase_response": 0.0002,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 11928.61
+      },
+      "candidate_pixels": 12048,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    },
+    {
+      "file": "test_7_0256_0512.png",
+      "hash": "39335a7701c724abe132a8c46b868123349299a4f076483a89f5ec88139f3fce",
+      "elapsed_ms": 231,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 11
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 6,
+        "inliers": 0,
+        "phase_response": 0.0972,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 3024.8
+      },
+      "candidate_pixels": 9565,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    }
+  ],
+  "note": "Pixel metrics in processed image coordinates, maximum side 1024. Rejected/abstained pixels count as negative. Precision/recall are null when their denominator is zero. No calibration or real-world deployment claim."
+}

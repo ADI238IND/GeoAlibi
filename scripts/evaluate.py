@@ -12,7 +12,7 @@ from geoalibi.vision import decode_image, investigate
 
 def metrics(counts):
     tp, fp, fn, tn = counts
-    return {"tp": tp, "fp": fp, "fn": fn, "tn": tn, "precision": tp / max(1, tp + fp), "recall": tp / max(1, tp + fn),
+    return {"tp": tp, "fp": fp, "fn": fn, "tn": tn, "precision": tp / (tp + fp) if tp + fp else None, "recall": tp / (tp + fn) if tp + fn else None,
             "f1": 2 * tp / max(1, 2 * tp + fp + fn), "iou": tp / max(1, tp + fp + fn)}
 
 
@@ -22,6 +22,7 @@ def main():
     parser.add_argument("--output", type=Path, default=Path("benchmark-results.json"))
     parser.add_argument("--threshold", type=float, default=.12)
     parser.add_argument("--min-area", type=int, default=70)
+    parser.add_argument("--detector", choices=["baseline", "unet"], default="baseline")
     parser.add_argument("--limit", type=int, default=0, help="0 = all pairs; positive = explicitly limited subset")
     args = parser.parse_args()
     paths = sorted(p for p in (args.dataset / "A").iterdir() if p.suffix.lower() in {".png", ".jpg", ".jpeg", ".webp"})
@@ -29,7 +30,7 @@ def main():
         paths = paths[:args.limit]
     if not paths:
         parser.error("No image pairs found.")
-    totals = {"raw": [0, 0, 0, 0], "supported": [0, 0, 0, 0]}
+    totals = {"raw_rgb": [0, 0, 0, 0], "proposals": [0, 0, 0, 0], "supported": [0, 0, 0, 0]}
     pairs = []
     for path in paths:
         a = decode_image(path.read_bytes())
@@ -40,16 +41,19 @@ def main():
             if len(np.unique(label)) > 2:
                 raise ValueError(f"{path.name}: label must be binary; remap multiclass labels explicitly.")
             label = cv2.resize(label, (a.shape[1], a.shape[0]), interpolation=cv2.INTER_NEAREST) > 0
-        result = investigate(a, b, threshold=args.threshold, min_area=args.min_area)
-        for name, key in [("raw", "raw_mask"), ("supported", "supported_mask")]:
+        from geoalibi.pretrained import propose
+        result = investigate(a, b, threshold=args.threshold, min_area=args.min_area, detector_fn=propose if args.detector=="unet" else None)
+        for name, key in [("raw_rgb", "raw_mask"), ("proposals", "proposal_mask"), ("supported", "supported_mask")]:
             mask = result.images[key] > 0
             counts = [int((mask & label).sum()), int((mask & ~label).sum()), int((~mask & label).sum()), int((~mask & ~label).sum())]
             totals[name] = [x + y for x, y in zip(totals[name], counts)]
-        pairs.append({"file": path.name, "hash": result.report["input_hash"], "elapsed_ms": result.report["elapsed_ms"], "counts": result.report["counts"]})
+        pairs.append({"file": path.name, "hash": result.report["input_hash"], "elapsed_ms": result.report["elapsed_ms"], "counts": result.report["counts"],
+                      "alignment": result.report["alignment"], "candidate_pixels": int((result.images['proposal_mask']>0).sum()),
+                      "accepted_pixels": int((result.images['supported_mask']>0).sum()), "warnings": result.report['warnings']})
         print(f"Evaluated {path.name}", flush=True)
-    output = {"dataset": str(args.dataset), "pairs": len(pairs), "subset_limit": args.limit, "threshold": args.threshold, "min_area": args.min_area,
+    output = {"dataset": str(args.dataset), "pairs": len(pairs), "subset_limit": args.limit, "threshold": args.threshold, "min_area": args.min_area, "detector": args.detector,
               "metrics": {k: metrics(v) for k, v in totals.items()}, "pair_results": pairs,
-              "note": "Pixel metrics in processed image coordinates, maximum side 1024. Rejected/abstained pixels count as negative. No calibration or real-world deployment claim."}
+              "note": "Pixel metrics in processed image coordinates, maximum side 1024. Rejected/abstained pixels count as negative. Precision/recall are null when their denominator is zero. No calibration or real-world deployment claim."}
     args.output.write_text(json.dumps(output, indent=2))
     print(json.dumps(output["metrics"], indent=2))
 

@@ -57,8 +57,8 @@ Uses standard model mode. It does not select contributor/training mode.
 
 ## What is not established
 
-- **The detector is an RGB difference baseline, not a trained deep change-detection model.** The engine accepts an optional proposal mask in Python, but the UI uses the baseline.
-- **No real satellite benchmark accuracy has been measured in this build.** The built-in scenes and stress fixtures are procedural illustrations, prominently labelled. Passing fixture tests is not evidence of real-world accuracy.
+- The default detector remains the RGB baseline. An optional author-released trained U-Net is now integrated; see [trained detector setup and evaluation](docs/TRAINED_DETECTOR.md). GeoAlibi did not train these weights.
+- Seven selected real author-demo pairs were evaluated with the trained detector. Proposal F1 was 91.44%, but the verifier abstained on every candidate. This is a development diagnostic, not a full benchmark or evidence of automatic-verification quality. The built-in scenes remain procedural illustrations.
 - **Live Muse Spark and SAM calls passed on an illustrative image pair on 27 October.** This validates the API integration, not accuracy on satellite imagery. Real-image SAM mask geometry and interpretation quality still need evaluation.
 - Verdicts and diagnostic scores are not calibrated probabilities, ground truth or emergency guidance. SAM does not automatically prove an object changed.
 - Input images must depict the same footprint and have the same processed dimensions. The app does not validate provenance or georeferencing. It handles rendered RGB imagery, not full multispectral GeoTIFF workflows.
@@ -112,9 +112,14 @@ SAM uses the `meta-sam-parser` package; the event-lane finalization pattern foll
 
 ## Next milestones
 
-1. Run actual Muse/SAM calls with the user's key; verify schema, segmentation coordinate placement, usage and cache behavior.
-2. Integrate and compare a licensed pretrained change detector against the existing RGB baseline. Keep verification independent of the proposal model.
+1. Extend the completed live Muse/SAM smoke validation to appropriately licensed satellite imagery.
+2. Resolve the real-sample registration/abstention failure using larger context and independent registration evidence. Keep verification independent of the proposal model.
 3. Evaluate a fixed held-out real satellite split plus preregistered nuisance stress transforms; report both false-positive reduction and missed-change cost.
 4. Audit registration on repeated structures and difficult geographic/sensor conditions; add explicit cloud masks and acquisition metadata.
 5. Test with independent reviewers, prepare the required demo and confirm the full participant rules before submission.
 
+
+
+## Trained detector milestone
+
+See [TRAINED_DETECTOR.md](docs/TRAINED_DETECTOR.md) (model setup, licenses, reproducibility and the all-abstention failure report). Optional weights and images are not bundled. The trained path was exercised through the real upload API; 27 automated tests and the desktop/mobile browser workflow pass.
