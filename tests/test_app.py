@@ -37,6 +37,11 @@ def test_full_investigation_review_export_and_persistence(client):
     assert "attachment" in exported.headers["content-disposition"]
     assert exported.json()["audit"][0]["note"] == "Need a third acquisition."
     assert client.get("/api/runs").json()[0]["id"] == r["id"]
+    from geoalibi.dossier import verify_packet
+    packet=client.get(f'/api/runs/{r["id"]}/packet')
+    assert packet.status_code==200
+    manifest=verify_packet(packet.content)
+    assert manifest['run_id']==r['id'] and 'report.json' in manifest['files']
 
 
 def test_missing_key_is_explicit_and_does_not_reserve_budget(client):

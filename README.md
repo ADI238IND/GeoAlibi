@@ -123,3 +123,8 @@ SAM uses the `meta-sam-parser` package; the event-lane finalization pattern foll
 ## Trained detector milestone
 
 See [TRAINED_DETECTOR.md](docs/TRAINED_DETECTOR.md) (model setup, licenses, reproducibility and the all-abstention failure report). Optional weights and images are not bundled. The trained path was exercised through the real upload API; 27 automated tests and the desktop/mobile browser workflow pass.
+
+
+## Challenge log and portable evidence (v0.3)
+
+Every new region records five alternative-explanation challenges, with explicit unresolved/untested outcomes and prioritized evidence requests. Supported findings must survive each of four registration perturbations, not just the average. The Evidence packet button downloads source/derived images, current report and review history, plus an unsigned SHA-256 manifest. Verify downloaded content with `python scripts/verify_packet.py evidence.zip`. Checksums detect changes relative to the manifest; they are not signatures, acquisition provenance, or proof of correctness. Packets contain imagery: share only where the imagery terms and your privacy requirements allow. The registration bottleneck on the seven real demo pairs remains unresolved.

@@ -9,7 +9,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
@@ -21,7 +21,7 @@ load_dotenv()
 ROOT = Path(__file__).parent
 store = Store(Path(os.getenv("GEOALIBI_DATA_DIR", ".geoalibi")))
 BUDGET = float(os.getenv("GEOALIBI_API_BUDGET_USD", "10"))
-app = FastAPI(title="GeoAlibi", version="0.2.0")
+app = FastAPI(title="GeoAlibi", version="0.3.0")
 lock = asyncio.Semaphore(1)
 
 
@@ -85,6 +85,14 @@ def asset(run_id: str, name: str):
     if name not in report["assets"]:
         raise HTTPException(404, "Asset not found")
     return FileResponse(store.root / run_id / (name + ".png"), media_type="image/png")
+
+
+@app.get('/api/runs/{run_id}/packet')
+def packet(run_id: str):
+    from .dossier import build_packet
+    report = get_run(run_id)
+    assets = {name:(store.root/run_id/(name+'.png')).read_bytes() for name in report['assets']}
+    return Response(build_packet(report,assets), media_type='application/zip', headers={'Content-Disposition':f'attachment; filename="geoalibi-{run_id[:8]}-evidence.zip"'})
 
 
 class Review(BaseModel):

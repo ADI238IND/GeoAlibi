@@ -29,7 +29,7 @@ async function history(){
   if(!runs.length)$('history').append(element('span','muted','No investigations yet.'));
   for(const run of runs){const b=element('button','',run.title);b.append(element('small','',new Date(run.created).toLocaleString()));b.onclick=async()=>{if(busy)return;try{render(await api('/api/runs/'+run.id));}catch(e){showError(e);}};$('history').append(b);}
 }
-function setBusy(value){busy=value;$('loading').hidden=!value;$('run').disabled=value;document.querySelector('#upload-form button').disabled=value;$('export').disabled=value||!report;}
+function setBusy(value){busy=value;$('loading').hidden=!value;$('run').disabled=value;document.querySelector('#upload-form button').disabled=value;$('export').disabled=value||!report;$('packet').disabled=value||!report;}
 async function investigate(path, options){
   if(busy)return;setBusy(true);$('error').hidden=true;$('empty').hidden=true;
   try{render(await api(path,options));await history();await status();}
@@ -47,7 +47,7 @@ function render(data){
   $('alignment-label').textContent=`${data.alignment.method} · ${(data.alignment.overlap*100).toFixed(1)}% overlap`;
   $('warnings').replaceChildren(...data.warnings.map(w=>element('p','',w)));
   $('compare-image').src=data.assets.aligned;
-  setView(view);renderRegions();renderDetail();renderModel();$('export').disabled=false;
+  setView(view);renderRegions();renderDetail();renderModel();$('export').disabled=false;$('packet').disabled=false;
   document.querySelectorAll('.filter').forEach(b=>b.classList.toggle('active',b.dataset.filter===filter));
 }
 function setView(name){
@@ -91,7 +91,12 @@ function renderDetail(){
   const save=element('button','primary','Save review');save.type='submit';form.append(select,note,save);
   const saved=element('p','review-note',`${report.audit?.length||0} review entries in this investigation · Automated verdicts are preserved.`);saved.setAttribute('role','status');
   form.onsubmit=async event=>{event.preventDefault();save.disabled=true;try{report=await api(`/api/runs/${report.id}/reviews/${r.id}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({decision:select.value,note:note.value})});renderRegions();renderDetail();}catch(e){showError(e);}finally{save.disabled=false;}};
-  $('detail-body').append(checks,cols,form,saved);
+  const dossier=element('div','dossier');dossier.append(element('h3','','Alternative explanations: challenge log'));
+  for(const item of r.challenge_log||[]){const row=element('article','challenge');const labels={persists:'DIFFERENCE REMAINS',explained:'DIFFERENCE REDUCED',plausible:'STILL PLAUSIBLE',unresolved:'NEEDS EVIDENCE',untested:'NOT TESTED',sensitive:'SHIFT SENSITIVE'};const titles={registration:'Alignment correction',illumination:'Global lighting correction',local_appearance:'Local appearance check',registration_stress:'One-pixel registration stress',season_cloud_sensor:'Other explanations'};row.append(element('span','model-status',labels[item.result]||item.result.toUpperCase()),element('strong','',titles[item.id]||'Alternative explanation'),element('p','','Alternative: '+item.hypothesis),element('p','',item.scope));
+    for(const experiment of item.experiments||[])row.append(element('span','model-status',`Shift (${experiment.dx}, ${experiment.dy}): ${Math.round(experiment.survival*100)}% retained`));dossier.append(row);}
+  dossier.append(element('h3','','What evidence would help next?'));
+  for(const request of r.evidence_requests||[])dossier.append(element('p','',`${request.priority}. ${request.request}`));
+  $('detail-body').append(checks,cols,dossier,form,saved);
 }
 function renderModel(){
   const out=$('model-output');out.replaceChildren();
@@ -122,3 +127,5 @@ $('nav-method').onclick=()=>{$('method').hidden=!$('method').hidden;if(!$('metho
 $('nav-work').onclick=()=>{window.scrollTo({top:0,behavior:'smooth'});};
 window.addEventListener('resize',drawRegion);
 Promise.all([status(),history()]).catch(showError);
+
+$('packet').onclick=()=>{if(report)window.location.href=`/api/runs/${report.id}/packet`;};

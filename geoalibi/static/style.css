@@ -3,3 +3,5 @@
 .tabs{flex-wrap:wrap}.checks{grid-template-columns:repeat(3,minmax(0,1fr))}@media(max-width:560px){.checks{grid-template-columns:1fr 1fr}.regions{grid-template-columns:1fr}.region h3{font-size:12px}.region p{font-size:11px}.region-bottom{font-size:10px}.verdict{font-size:8px}}
 
 .options select{max-width:185px;border:1px solid var(--line);border-radius:4px;background:white;color:#456c59;font-size:10px;padding:4px}
+
+.dossier{border-top:1px solid var(--line);padding:15px 0}.dossier h3{font-size:12px}.challenge{padding:10px 0;border-bottom:1px solid #edf1ef}.challenge strong{font-size:11px}.challenge p,.dossier>p{font-size:11px;color:#718277}.intro #packet{margin-left:auto;margin-right:8px}@media(max-width:560px){.intro{flex-wrap:wrap}.intro #packet{margin-left:0}.intro .outline{width:auto}}

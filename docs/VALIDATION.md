@@ -46,3 +46,8 @@ A separate live SAM nonempty-output check on Meta's official duck photo returned
 ## Trained proposal milestone
 
 27 tests pass, including tile boundary/channel normalization, malformed model output, checkpoint refusal, semantic proposal replacement and no silent fallback. CPU inference loaded the exact pinned author checkpoint and ran successfully. The upload API accepted a real pair in trained mode and exported its proposal mask. The browser workflow passed again at desktop and 390px mobile widths. See TRAINED_DETECTOR.md for real-sample diagnostic results, limitations and dataset terms. Local learned inference incurred no Meta API charges.
+
+
+## v0.3 evidence-packet milestone
+
+30 automated tests pass, including tamper detection, unresolved/untested challenge states, worst-perturbation acceptance, and the packet download API. The browser workflow now downloads and verifies the evidence packet as well as the JSON report; desktop/mobile checks pass. The integrity manifest is unsigned. The prior real-image diagnostic remains a historical v0.2 result and has not been presented as a v0.3 accuracy measurement. Registration remains unresolved. No paid API calls were used for this milestone.

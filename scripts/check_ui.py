@@ -64,6 +64,11 @@ def main():
                     download = info.value
                     download.save_as(out / "evidence-export.json")
                     assert json.loads((out / "evidence-export.json").read_text())["audit"][0]["decision"] == "needs_field_check"
+                    with page.expect_download() as packet_info:
+                        page.locator("#packet").click()
+                    packet_info.value.save_as(out / "evidence-packet.zip")
+                    from geoalibi.dossier import verify_packet
+                    assert verify_packet((out / "evidence-packet.zip").read_bytes())["files"]["report.json"]
                     page.screenshot(path=str(out / "desktop.png"), full_page=True)
                     for case in ["shift", "light", "unchanged"]:
                         page.locator(f'[data-case="{case}"]').click()
