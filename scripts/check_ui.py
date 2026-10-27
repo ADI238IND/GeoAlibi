@@ -114,7 +114,9 @@ def main():
                     page.wait_for_function("() => document.querySelector('#run-title').textContent==='Browser upload verification'")
                     assert page.locator("#fixture-badge").is_hidden()
                     assert 'supplied landmarks' in page.locator('#alignment-label').inner_text()
-                    page.locator('#before').set_input_files(before)
+                    changed_before=Path(tmp)/'different-before.png'
+                    changed_before.write_bytes(png(b))
+                    page.locator('#before').set_input_files(changed_before)
                     assert not page.locator('#use-picked-landmarks').is_checked()
                     assert page.locator('#use-picked-landmarks').is_disabled()
                     assert page.get_by_label('Matched image landmarks').is_enabled()

@@ -1,6 +1,6 @@
 {
   ".env.example": "0140bea5acd41f1c27fc8f1001925af238a8ec04800d5594968fe98ec18ef435",
-  ".github/workflows/tests.yml": "8337aef2d99acdf15f4ece789616a60dc3288f3bdb31b968c508ade0ac0a16c4",
+  ".github/workflows/tests.yml": "243a7c3430a06021ffcf52ba53ded46d35883656227f2500aa5c101440fe1922",
   ".gitignore": "bd7695d69ebeafd64248ffe2599cb8d611d59c23a2d883a910f9f9d6516ddaa1",
   "README.md": "d4349eabcff78b0b5683a82488901fa6a46d11cf4d085a55f5fa10109b5248b6",
   "docs/BUILD_CHECKPOINT.md": "8264f4df894a594c8bb10475d5970fe5a06e80322b5fc33b0125c15f9d8a2751",
@@ -27,7 +27,7 @@
   "geoalibi/store.py": "7d0131d452e1ed89bbef583e48be96a1083918ce0fa2f25616335d062f896d52",
   "geoalibi/vision.py": "a00c8eb880cbec6feccaab395e26a0d6a540386b23f1e25d4aef525230837f64",
   "pyproject.toml": "3a617d61485595eab5b1a4150031bcca8993c98e97eeccf3c5ea78684fa1cebd",
-  "scripts/check_ui.py": "12467d7d205dea59fb21700efe42cdd56298f5ee8d1303d4b8bb37d461dee4a3",
+  "scripts/check_ui.py": "33c517a9bc9e7b9c5cc5388879d122061c48348a71d2c11644578e7dbf1aa86b",
   "scripts/download_detector.py": "12f19b59bfe59307b45679edeaf06b456c6a89df6b1b18577b97c1df98066dfd",
   "scripts/evaluate.py": "d093a08dd4ca50ee5f16fb5ae34c0508887cdb295149e3136875afba8a957e94",
   "scripts/smoke_meta.py": "eed9215b8365baf324e60ae545c4857196b976e9083473c58d1caeba7302a99f",
