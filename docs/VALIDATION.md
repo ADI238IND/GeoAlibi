@@ -61,3 +61,7 @@ A separate live SAM nonempty-output check on Meta's official duck photo returned
 ## v0.5 visual landmark picker
 
 39 automated tests pass, including preview dimension parity, invalid preview input, no persisted preview investigation, and prior landmark tests. Browser flow exercises pointer matching, keyboard selection, undo, explicit opt-in, six-point upload with held-out checks, and stale reset on file change. Baseline report/export/history and mobile overflow checks remain covered. No paid model calls.
+
+## Reviewed evaluation runner
+
+The offline CLI now evaluates automatic and supplied-landmark arms separately with an exact filename-set manifest and original A/B/label SHA-256 binding. Tests exercise the complete CLI on a seeded known-no-change fixture, null positive precision, held-out diagnostics, independent-review identifier rejection and wrong-image failure before output. This verifies tooling, not real satellite accuracy. No real reviewed-landmark results are claimed. See ASSISTED_EVALUATION.md.
