@@ -2,7 +2,7 @@
 
 **A change needs an alibi.** An evidence-first workstation for investigating whether an apparent satellite-image change survives alternative explanations.
 
-Built for Aditya Singhal's Meta Global AI Developer Hackathon idea, Indie Dev Track. This is a working local research prototype, not a completed hackathon submission or a validated disaster-response system.
+Built for Aditya Singhal's Meta Global AI Developer Hackathon idea, Indie Dev Track. This is a working local research prototype. Live Muse Spark interpretation and SAM response decoding have been exercised; real satellite accuracy and deployment readiness remain to be established. It is not a completed hackathon submission.
 
 ## Start on Windows PowerShell
 
@@ -32,7 +32,7 @@ Edit `.env` locally and set `MODEL_API_KEY` to the key from your Meta Model API 
 
 The user's stated $150 credits have not been independently verified by this code. A credit balance is not an API credential. Check the active balance, expiry, payment requirements and account controls in Meta Billing before enabling calls.
 
-1. Optional low-token connectivity check: `python scripts/smoke_meta.py` (makes one paid request; outside the app's reservation ledger).
+1. Optional low-token connectivity check: `python scripts/smoke_meta.py` (makes one paid request and reserves $0.01 in the local ledger).
 2. Enable **Muse Spark interpretation** before running a scenario or uploading images.
 3. Optionally enable **SAM 3.1 building evidence**. This calls SAM once for each image using the official parser, then sends the measured evidence with the imagery to Muse Spark.
 4. Inspect interpretation separately from the deterministic verdict. Provider failures preserve the local results and visibly report their status.
@@ -59,7 +59,7 @@ Uses standard model mode. It does not select contributor/training mode.
 
 - **The detector is an RGB difference baseline, not a trained deep change-detection model.** The engine accepts an optional proposal mask in Python, but the UI uses the baseline.
 - **No real satellite benchmark accuracy has been measured in this build.** The built-in scenes and stress fixtures are procedural illustrations, prominently labelled. Passing fixture tests is not evidence of real-world accuracy.
-- **No live Meta response has been tested without a valid key.** Mocked protocol tests do not establish provider compatibility or performance. SAM's interface is implemented with the official parser but requires a real-call smoke test.
+- **Live Muse Spark and SAM calls passed on an illustrative image pair on 27 October.** This validates the API integration, not accuracy on satellite imagery. Real-image SAM mask geometry and interpretation quality still need evaluation.
 - Verdicts and diagnostic scores are not calibrated probabilities, ground truth or emergency guidance. SAM does not automatically prove an object changed.
 - Input images must depict the same footprint and have the same processed dimensions. The app does not validate provenance or georeferencing. It handles rendered RGB imagery, not full multispectral GeoTIFF workflows.
 - Global corrections do not reliably resolve cloud, seasonal vegetation, local shadows, parallax, sensor differences, or major perspective changes. Unknowns need more evidence.
@@ -117,5 +117,4 @@ SAM uses the `meta-sam-parser` package; the event-lane finalization pattern foll
 3. Evaluate a fixed held-out real satellite split plus preregistered nuisance stress transforms; report both false-positive reduction and missed-change cost.
 4. Audit registration on repeated structures and difficult geographic/sensor conditions; add explicit cloud masks and acquisition metadata.
 5. Test with independent reviewers, prepare the required demo and confirm the full participant rules before submission.
-
 

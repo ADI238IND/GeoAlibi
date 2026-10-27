@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-27",
+  "muse_status": "completed",
+  "sam_status": "completed",
+  "muse_usage": {
+    "completion_tokens": 1340,
+    "prompt_tokens": 2932,
+    "total_tokens": 4272,
+    "completion_tokens_details": {
+      "reasoning_tokens": 462
+    },
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  },
+  "sam_before_objects": 0,
+  "sam_after_objects": 0,
+  "fixture": "procedural illustration, not real satellite imagery",
+  "main_integration_estimated_usd": 0.01436,
+  "local_reserved_usd": 0.53,
+  "note": "Estimate uses published standard rates and excludes smoke usage. Not an account billing statement. Credential intentionally omitted."
+}

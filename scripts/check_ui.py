@@ -1,0 +1,103 @@
+"""Local browser smoke test; requires Playwright and an installed Chromium binary."""
+import json
+import os
+import subprocess
+import sys
+import tempfile
+import time
+from pathlib import Path
+
+import httpx
+from playwright.sync_api import sync_playwright
+
+from geoalibi.demo import pair
+from geoalibi.vision import png
+
+
+def main():
+    root = Path(__file__).resolve().parents[1]
+    out = Path(os.getenv("GEOALIBI_UI_OUTPUT", str(root / "test-results")))
+    out.mkdir(exist_ok=True, parents=True)
+    with tempfile.TemporaryDirectory(prefix="geoalibi-ui-") as tmp:
+        env = {**os.environ, "GEOALIBI_DATA_DIR": tmp, "MODEL_API_KEY": ""}
+        with (out / "server.log").open("w") as log:
+            server = subprocess.Popen([sys.executable, "-m", "uvicorn", "geoalibi.app:app", "--host", "127.0.0.1", "--port", "8089"], cwd=root, env=env, stdout=log, stderr=log)
+            try:
+                with httpx.Client(trust_env=False) as client:
+                    for attempt in range(100):
+                        try:
+                            if client.get("http://127.0.0.1:8089/api/status").is_success:
+                                break
+                        except httpx.ConnectError:
+                            time.sleep(.1)
+                    else:
+                        raise RuntimeError("Local test server did not start.")
+                with sync_playwright() as p:
+                    options = {"headless": True, "args": ["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"]}
+                    if os.getenv("GEOALIBI_TEST_BROWSER"):
+                        options["executable_path"] = os.environ["GEOALIBI_TEST_BROWSER"]
+                    browser = p.chromium.launch(**options)
+                    page = browser.new_page(viewport={"width": 1500, "height": 1000}, device_scale_factor=1)
+                    errors = []
+                    page.on("pageerror", lambda error: errors.append(str(error)))
+                    page.goto("http://127.0.0.1:8089")
+                    page.wait_for_function("() => document.querySelector('#meta-state').textContent.includes('not configured')")
+                    assert page.locator("#use-meta").is_disabled()
+                    page.locator("#run").click()
+                    page.locator("#results").wait_for(state="visible")
+                    assert page.locator("#count-supported").inner_text() == "2"
+                    assert page.locator("#count-review").inner_text() == "4"
+                    assert page.locator("#base-image").evaluate("img => img.complete && img.naturalWidth > 0")
+                    page.locator('[data-filter="review"]').click()
+                    assert page.locator("#regions .region").count() == 4
+                    page.locator("#regions .region").first.click()
+                    page.get_by_label("Human review decision").select_option("needs_field_check")
+                    page.get_by_label("Review evidence note").fill("Third acquisition needed for shadow review.")
+                    page.get_by_role("button", name="Save review").click()
+                    page.wait_for_function("() => document.querySelector('.review-note').textContent.startsWith('1 review')")
+                    page.locator('[data-view="heatmap"]').click()
+                    page.locator('[data-view="supported_mask"]').click()
+                    page.locator('[data-view="swipe"]').click()
+                    page.locator("#swipe").fill("72")
+                    with page.expect_download() as info:
+                        page.locator("#export").click()
+                    download = info.value
+                    download.save_as(out / "evidence-export.json")
+                    assert json.loads((out / "evidence-export.json").read_text())["audit"][0]["decision"] == "needs_field_check"
+                    page.screenshot(path=str(out / "desktop.png"), full_page=True)
+                    for case in ["shift", "light", "unchanged"]:
+                        page.locator(f'[data-case="{case}"]').click()
+                        with page.expect_response("**/api/demo"):
+                            page.locator("#run").click()
+                        page.locator("#loading").wait_for(state="hidden")
+                        assert page.locator("#count-supported").inner_text() == "0"
+                    a, b, _ = pair("mixed")
+                    before, after = Path(tmp) / "a.png", Path(tmp) / "b.png"
+                    before.write_bytes(png(a))
+                    after.write_bytes(png(b))
+                    page.locator("#toggle-upload").click()
+                    page.locator("#before").set_input_files(before)
+                    page.locator("#after").set_input_files(after)
+                    page.locator("#title").fill("Browser upload verification")
+                    page.get_by_role("button", name="Investigate uploaded pair").click()
+                    page.wait_for_function("() => document.querySelector('#run-title').textContent==='Browser upload verification'")
+                    assert page.locator("#fixture-badge").is_hidden()
+                    page.reload()
+                    page.locator("#history button").first.click()
+                    page.locator("#results").wait_for(state="visible")
+                    assert page.locator("#run-title").inner_text() == "Browser upload verification"
+                    page.set_viewport_size({"width": 390, "height": 844})
+                    page.screenshot(path=str(out / "mobile.png"), full_page=True)
+                    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), "Mobile horizontal overflow"
+                    assert not errors, errors
+                    browser.close()
+                    (out / "ui-results.json").write_text(json.dumps({"status": "passed", "page_errors": errors,
+                        "checks": ["fixture investigation", "image assets", "review filtering", "saved reviewer decision", "image views", "swipe", "JSON download", "three nuisance scenarios", "file upload", "history reload", "390px mobile overflow"]}, indent=2))
+                    print("Browser checks passed: fixture, assets, filters, review, views, slider, download, nuisance scenarios, upload, history, mobile.")
+            finally:
+                server.terminate()
+                server.wait(timeout=10)
+
+
+if __name__ == "__main__":
+    main()

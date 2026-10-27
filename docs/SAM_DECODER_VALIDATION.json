@@ -1,0 +1,12 @@
+{
+  "status": "completed",
+  "concept": "duck",
+  "objects": 5,
+  "mask_pixels": 50090,
+  "dimensions": [
+    1024,
+    767
+  ],
+  "source": "Meta official cookbook ducks.jpg",
+  "scope": "SAM nonempty output and decoder smoke; not satellite accuracy"
+}
