@@ -21,7 +21,7 @@ load_dotenv()
 ROOT = Path(__file__).parent
 store = Store(Path(os.getenv("GEOALIBI_DATA_DIR", ".geoalibi")))
 BUDGET = float(os.getenv("GEOALIBI_API_BUDGET_USD", "10"))
-app = FastAPI(title="GeoAlibi", version="0.4.0")
+app = FastAPI(title="GeoAlibi", version="0.5.0")
 lock = asyncio.Semaphore(1)
 
 
@@ -58,6 +58,17 @@ def status():
 @app.get("/api/runs")
 def recent():
     return store.recent()
+
+
+@app.post('/api/preview')
+async def preview(image: UploadFile = File(...)):
+    try:
+        decoded=decode_image(await image.read(12*1024*1024+1))
+        return Response(png(decoded),media_type='image/png',headers={'Cache-Control':'no-store'})
+    except ValueError as exc:
+        raise HTTPException(422,str(exc)) from exc
+    finally:
+        await image.close()
 
 
 def get_run(run_id):

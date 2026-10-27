@@ -54,3 +54,8 @@ Added per-region challenge logs, per-perturbation measurements, prioritized evid
 ## v0.4 continuation
 
 Added explicit landmark-assisted registration for expert-supplied stable correspondences. Fit first N−2 of 6–20 points, withhold final two; bound residuals, spatial coverage and transform size; fail invalid evidence with no automatic fallback. API and upload UI accept JSON in processed original-image coordinates. Reports disclose the user-provided basis and include residuals, full point rows and hash; packets include numbered landmark overlays. Cache identity now includes alignment evidence. Known-transform and invalid-evidence tests passed; no real satellite landmark annotations were fabricated. Automatic registration on the seven demos is still unresolved. Next: collect independently checked real-image control points or larger contextual imagery, then evaluate conditional verification and false-acceptance behavior separately from the automatic path.
+
+
+## v0.5 continuation
+
+Added dual-image visual landmark picking with exact processed-image previews, click/keyboard input, numbered fit/held-out coloring, undo/clear, explicit application opt-in and stale-pick reset when files change. Manual JSON remains an alternative; picker opt-in disables it and overrides the request through FormData. Previews are not persisted and use the backend decoder. Full browser flow now selects six pairs and confirms a supplied-landmark upload. Registration evidence still needs independently correct landmarks; no real-sample accuracy claims or new API calls. Next priority is to evaluate actual real-image landmark annotations or larger-context automatic registration, then quantify conditional coverage/recall instead of adding more unchecked confidence heuristics.

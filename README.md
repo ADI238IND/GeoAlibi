@@ -135,3 +135,10 @@ Every new region records five alternative-explanation challenges, with explicit 
 Advanced uploads accept 6–20 matched landmarks as `[after_x, after_y, before_x, before_y]` rows in processed original-image pixel coordinates. Supply stationary, independently checked correspondences. The first N−2 rows fit a bounded similarity transform; the final two rows are held out and are never used to refit. Fit points must span 10% of scene area; held-out points must be separated. Fit RMS must be ≤1.5px, held-out RMS ≤2px, and each held-out error ≤3px. The transform is limited to small shifts, ≤5° rotation and scale 0.95–1.05. Invalid evidence fails explicitly.
 
 Reports include all supplied points, their hash, fit/held-out residuals and source disclosure. Evidence packets include numbered landmark overlays: green fitting points and amber held-out points. This checks geometric consistency of user-supplied correspondences, not their real-world truth, acquisition provenance or independent authenticity. Do not generate guessed identity correspondences to bypass an unresolved automatic registration gate. No real-demo landmark annotations have yet been collected; the earlier seven-pair automatic all-abstention result remains unresolved.
+
+
+## Visual landmark picker (v0.5)
+
+Under Upload your imagery, choose both files and open **Pick matched landmarks visually**. Click a stationary landmark in Before, then its match in After. Add at least six well-spread pairs; the final two are held out. Undo/Clear are available. Explicitly enable **Use picked landmarks** before submitting. Selecting another image clears picks. Keyboard users can focus either canvas, move with arrows (Shift for 10px), and select with Enter.
+
+The local preview endpoint uses the same EXIF orientation and resize pipeline as analysis, returns a processed PNG with no-store headers, and does not save an investigation or call a model. Coordinates are image pixels, not latitude/longitude. Geometric checks and user-supplied evidence limitations from v0.4 still apply. The advanced JSON path remains available and is disabled while picked landmarks are opted in.

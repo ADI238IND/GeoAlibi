@@ -87,3 +87,14 @@ def test_landmark_upload_requires_valid_evidence(client):
     points[-1][2]+=20
     assert client.post('/api/analyze',files=files,data={'landmarks':json.dumps(points)}).status_code==422
     assert client.post('/api/analyze',files=files,data={'landmarks':'null'}).status_code==422
+
+
+def test_picker_preview_uses_analysis_processing_and_is_not_persisted(client):
+    from PIL import Image
+    import io
+    image=Image.new('RGB',(1600,800),'green');data=io.BytesIO();image.save(data,'PNG')
+    r=client.post('/api/preview',files={'image':('large.png',data.getvalue(),'image/png')})
+    assert r.status_code==200 and r.headers['cache-control']=='no-store'
+    assert Image.open(io.BytesIO(r.content)).size==(1024,512)
+    assert client.get('/api/runs').json()==[]
+    assert client.post('/api/preview',files={'image':('invalid.png',b'invalid')}).status_code==422
