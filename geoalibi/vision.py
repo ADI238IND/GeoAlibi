@@ -12,7 +12,7 @@ import cv2
 import numpy as np
 from PIL import Image, ImageOps
 
-VERSION = "counterfactual-0.2.0"
+VERSION = "counterfactual-0.3.0"
 MAX_SIDE = 1024
 
 
@@ -175,6 +175,8 @@ def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=
         normalized_value = float(np.mean(norm_d[component]))
         retained = float(np.mean(verified_mask[component]))
         stability = float(np.mean([np.mean(pm[component]) for pm in perturbations]))
+        experiments = [{"dx": dx, "dy": dy, "survival": round(float(np.mean(pm[component])),3)} for (dx,dy),pm in zip([(1,0),(-1,0),(0,1),(0,-1)],perturbations)]
+        worst_survival = float(min(np.mean(pm[component]) for pm in perturbations))
         # Measure edge disagreement in the region and a narrow surrounding ring.
         boundary = cv2.dilate(component.astype(np.uint8), np.ones((7, 7), np.uint8)).astype(bool) & valid
         edge_total = int(((edge_a > 0) | (edge_b > 0))[boundary].sum())
@@ -195,7 +197,7 @@ def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=
             contradictions.append("Most of this difference disappears after global illumination correction.")
         if structural < .16:
             contradictions.append("Edges largely agree; lighting or surface appearance remains a plausible explanation.")
-        if stability < .55:
+        if worst_survival < .55:
             contradictions.append("The candidate is sensitive to a one-pixel alignment perturbation.")
         if not alignment["reliable"]:
             contradictions.append("Image texture or registration evidence is insufficient for a supported verdict.")
@@ -205,9 +207,9 @@ def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=
             reasons.append("A majority of candidate pixels remain different after alignment and illumination correction.")
         if structural >= .16:
             reasons.append("Local edge disagreement provides independent structural evidence.")
-        if stability >= .55:
-            reasons.append("On average, the difference persists across four one-pixel registration stress tests.")
-        if alignment["reliable"] and not appearance_only and retained >= .5 and stability >= .55 and structural >= .16 and area < h * w * .4:
+        if worst_survival >= .55:
+            reasons.append("The difference persists in every tested one-pixel registration perturbation.")
+        if alignment["reliable"] and not appearance_only and retained >= .5 and worst_survival >= .55 and structural >= .16 and area < h * w * .4:
             verdict, title = "supported", "Persistent structural change"
             accepted[component & verified_mask] = 255
         elif retained < .18 and (alignment_reduction > .65 or lighting_reduction > .65):
@@ -223,6 +225,10 @@ def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=
                                    "retained_fraction": round(retained, 3), "structural_disagreement": round(structural, 3), "perturbation_survival": round(stability, 3),
                                    "local_luminance_correlation": round(correlation, 3)},
                         "review": "unreviewed"})
+        from .dossier import challenge_log, evidence_requests
+        regions[-1]['checks']['worst_perturbation_survival'] = worst_survival
+        regions[-1]['challenge_log'] = challenge_log(regions[-1]['checks'], alignment, experiments)
+        regions[-1]['evidence_requests'] = evidence_requests(regions[-1]['checks'], alignment)
     counts = {k: sum(r["verdict"] == k for r in regions) for k in ["supported", "artifact", "review"]}
     flags = []
     if not alignment["reliable"]:
