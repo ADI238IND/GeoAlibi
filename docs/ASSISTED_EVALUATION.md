@@ -37,3 +37,8 @@ The example landmark row is intentionally incomplete; supply 6–20 distinct, sp
 Report automatic and assisted precision, recall, F1 and IoU separately, with the number of evaluated pairs, frozen manifest hash, alignment diagnostics and elapsed times. No-positive precision is null. Rejected, abstained and invalid-border pixels count as negatives over the complete processed footprint, so ignored overlap does not silently increase recall. Metrics remain uncalibrated and conditional on dataset/annotation quality. Full-footprint scoring is deliberately conservative; it is not selective-risk calibration. The raw-RGB mask also uses each arm's valid overlap, so it is diagnostic rather than a common registration-independent baseline.
 
 Do not tune gates on the test set. Publish failed geometry and annotation exclusions before revising a frozen collection. Keep imagery licensing and acquisition provenance separate from geometric agreement.
+
+
+### Label integrity
+
+The evaluator requires label dimensions to match the EXIF-oriented original BEFORE image. Only subsequent downsampling to the processing resolution is allowed. Use single-channel or palette-index labels with background 0 and change 1 or 255. Palette colors do not determine classes. RGB/RGBA masks, mixed positive encodings and other class IDs must be explicitly remapped before evaluation. This prevents silently inflated or corrupted scores from incompatible annotations.

@@ -42,3 +42,28 @@ def checked_landmarks(record, before, after, label):
         if hashlib.sha256(content).hexdigest() != record[field]:
             raise ValueError(f"{record['file']}: {field} mismatch; annotation belongs to different bytes.")
     return record['landmarks']
+
+
+
+def decode_binary_label(content, before_content, processed_shape):
+    """Reject incompatible labels before nearest-neighbor reduction to image size."""
+    from io import BytesIO
+    import cv2
+    import numpy as np
+    from PIL import Image, ImageOps
+
+    with Image.open(BytesIO(before_content)) as before:
+        expected = ImageOps.exif_transpose(before).size
+    with Image.open(BytesIO(content)) as source:
+        image = ImageOps.exif_transpose(source)
+        if image.size != expected:
+            raise ValueError('Label dimensions must match the oriented original BEFORE image; automatic stretching is disabled.')
+        # Preserve categorical indices, including palette labels. Converting to L can
+        # collapse distinct class values or turn colored background into change.
+        values = np.asarray(image)
+        if values.ndim != 2:
+            raise ValueError('Label must be a single-channel binary class map, not RGB/RGBA.')
+        unique = np.unique(values)
+        if not np.isin(unique, [0, 1, 255]).all() or (1 in unique and 255 in unique):
+            raise ValueError('Label must use 0/1 or 0/255 binary classes; remap other class values explicitly.')
+        return cv2.resize((values > 0).astype(np.uint8), (processed_shape[1], processed_shape[0]), interpolation=cv2.INTER_NEAREST).astype(bool)

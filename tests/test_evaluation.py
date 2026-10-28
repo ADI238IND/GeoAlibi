@@ -59,3 +59,28 @@ def test_paired_evaluation_cli_and_wrong_image_rejection(tmp_path):
     result = subprocess.run(command, capture_output=True, text=True, env=env)
     assert result.returncode != 0 and 'mismatch' in result.stderr
     assert not output.exists()
+
+
+
+def test_label_validation_preserves_class_indices_and_rejects_stretching():
+    from io import BytesIO
+    from geoalibi.evaluation import decode_binary_label
+
+    def encoded(image):
+        buffer = BytesIO()
+        image.save(buffer, format='PNG')
+        return buffer.getvalue()
+
+    before = encoded(Image.new('RGB', (20, 10)))
+    mask = np.zeros((10,20), np.uint8)
+    mask[:,10:] = 1
+    label = Image.fromarray(mask, mode='P')
+    label.putpalette([255,255,255, 0,0,0] + [0]*762)
+    result = decode_binary_label(encoded(label), before, (5,10))
+    assert result.sum() == 25  # Indices, not inverted palette luminance.
+    with pytest.raises(ValueError, match='dimensions'):
+        decode_binary_label(encoded(Image.new('L',(10,10))), before, (5,10))
+    with pytest.raises(ValueError, match='single-channel'):
+        decode_binary_label(before, before, (5,10))
+    with pytest.raises(ValueError, match='binary classes'):
+        decode_binary_label(encoded(Image.fromarray(mask*2)), before, (5,10))

@@ -1,15 +1,12 @@
 """Run a held-out A/B/label benchmark. No API calls, no training, no automatic downloads."""
 import argparse
 import json
-from io import BytesIO
 from pathlib import Path
 
-import cv2
 import numpy as np
-from PIL import Image
 
 from geoalibi.vision import decode_image, investigate
-from geoalibi.evaluation import load_landmark_manifest, checked_landmarks
+from geoalibi.evaluation import load_landmark_manifest, checked_landmarks, decode_binary_label
 
 
 def metrics(counts):
@@ -47,12 +44,7 @@ def main():
         landmarks = checked_landmarks(annotations[path.name], before_bytes, after_bytes, label_bytes) if args.landmarks else None
         a = decode_image(before_bytes)
         b = decode_image(after_bytes)
-        with Image.open(BytesIO(label_bytes)) as im:
-            # Binary labels only. Nonzero is change; multiclass maps need explicit remapping.
-            label = np.asarray(im.convert("L"))
-            if len(np.unique(label)) > 2:
-                raise ValueError(f"{path.name}: label must be binary; remap multiclass labels explicitly.")
-            label = cv2.resize(label, (a.shape[1], a.shape[0]), interpolation=cv2.INTER_NEAREST) > 0
+        label = decode_binary_label(label_bytes, before_bytes, a.shape[:2])
         from geoalibi.pretrained import propose
         result = investigate(a, b, threshold=args.threshold, min_area=args.min_area, detector_fn=propose if args.detector=="unet" else None)
         for name, key in [("raw_rgb", "raw_mask"), ("proposals", "proposal_mask"), ("supported", "supported_mask")]:
@@ -87,3 +79,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
