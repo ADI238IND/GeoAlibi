@@ -1,0 +1,831 @@
+{
+  "engine": "counterfactual-0.4.1",
+  "manifest_sha256": "7c3ab8e4f5b0af21ae4c911563ad36bcab261db20f077bd015eff78bc56a23ec",
+  "opencv_version": "4.14.0",
+  "summary": {
+    "actual_pair": {
+      "cases": 7,
+      "reliable": 0
+    },
+    "same_image": {
+      "cases": 7,
+      "reliable": 7
+    },
+    "translated_source": {
+      "cases": 7,
+      "reliable": 7
+    },
+    "mismatched_pair": {
+      "cases": 7,
+      "reliable": 0
+    }
+  },
+  "results": [
+    {
+      "file": "test_102_0512_0000.png",
+      "case": "actual_pair",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 2,
+        "inliers": 0,
+        "phase_response": 0.0706,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 486.85
+      }
+    },
+    {
+      "file": "test_102_0512_0000.png",
+      "case": "same_image",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1099,
+        "inliers": 1099,
+        "phase_response": 1.0,
+        "selected_transform_matches": 1099,
+        "feature_support": true,
+        "phase_support": true,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 486.85
+      },
+      "known_transform_max_corner_error_px": 0.0
+    },
+    {
+      "file": "test_102_0512_0000.png",
+      "case": "translated_source",
+      "alignment": {
+        "method": "phase correlation",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            -3.9377214908599854
+          ],
+          [
+            0.0,
+            1.0,
+            2.951716661453247
+          ]
+        ],
+        "matches": 857,
+        "inliers": 850,
+        "phase_response": 0.6605,
+        "selected_transform_matches": 851,
+        "feature_support": true,
+        "phase_support": true,
+        "reliable": true,
+        "overlap": 0.9575,
+        "texture_variance": 486.85
+      },
+      "known_transform_max_corner_error_px": 0.07880287737083745
+    },
+    {
+      "file": "test_102_0512_0000.png",
+      "case": "mismatched_pair",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 3,
+        "inliers": 0,
+        "phase_response": -0.0118,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 486.85
+      },
+      "after_file": "test_121_0768_0256.png"
+    },
+    {
+      "file": "test_121_0768_0256.png",
+      "case": "actual_pair",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 8,
+        "inliers": 3,
+        "phase_response": -0.01,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 682.89
+      }
+    },
+    {
+      "file": "test_121_0768_0256.png",
+      "case": "same_image",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1623,
+        "inliers": 1623,
+        "phase_response": 1.0,
+        "selected_transform_matches": 1623,
+        "feature_support": true,
+        "phase_support": true,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 682.89
+      },
+      "known_transform_max_corner_error_px": 0.0
+    },
+    {
+      "file": "test_121_0768_0256.png",
+      "case": "translated_source",
+      "alignment": {
+        "method": "ORB + RANSAC",
+        "matrix": [
+          [
+            0.9998186826705933,
+            8.198139403248206e-05,
+            -3.9658846855163574
+          ],
+          [
+            -8.198139403248206e-05,
+            0.9998186826705933,
+            3.039710521697998
+          ]
+        ],
+        "matches": 1167,
+        "inliers": 1156,
+        "phase_response": 0.8234,
+        "selected_transform_matches": 1156,
+        "feature_support": true,
+        "phase_support": true,
+        "reliable": true,
+        "overlap": 0.9575,
+        "texture_variance": 682.89
+      },
+      "known_transform_max_corner_error_px": 0.055406172299369186
+    },
+    {
+      "file": "test_121_0768_0256.png",
+      "case": "mismatched_pair",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 2,
+        "inliers": 0,
+        "phase_response": 0.0427,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 682.89
+      },
+      "after_file": "test_2_0000_0000.png"
+    },
+    {
+      "file": "test_2_0000_0000.png",
+      "case": "actual_pair",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 7,
+        "inliers": 0,
+        "phase_response": 0.0443,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 973.62
+      }
+    },
+    {
+      "file": "test_2_0000_0000.png",
+      "case": "same_image",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1793,
+        "inliers": 1793,
+        "phase_response": 1.0,
+        "selected_transform_matches": 1793,
+        "feature_support": true,
+        "phase_support": true,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 973.62
+      },
+      "known_transform_max_corner_error_px": 0.0
+    },
+    {
+      "file": "test_2_0000_0000.png",
+      "case": "translated_source",
+      "alignment": {
+        "method": "phase correlation",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            -3.9741463661193848
+          ],
+          [
+            0.0,
+            1.0,
+            3.0304927825927734
+          ]
+        ],
+        "matches": 1317,
+        "inliers": 1303,
+        "phase_response": 0.8632,
+        "selected_transform_matches": 1299,
+        "feature_support": true,
+        "phase_support": true,
+        "reliable": true,
+        "overlap": 0.9575,
+        "texture_variance": 973.62
+      },
+      "known_transform_max_corner_error_px": 0.03997774599803049
+    },
+    {
+      "file": "test_2_0000_0000.png",
+      "case": "mismatched_pair",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 3,
+        "inliers": 0,
+        "phase_response": 0.0311,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 973.62
+      },
+      "after_file": "test_2_0000_0512.png"
+    },
+    {
+      "file": "test_2_0000_0512.png",
+      "case": "actual_pair",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 4,
+        "inliers": 0,
+        "phase_response": 0.047,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 1506.8
+      }
+    },
+    {
+      "file": "test_2_0000_0512.png",
+      "case": "same_image",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1938,
+        "inliers": 1938,
+        "phase_response": 1.0,
+        "selected_transform_matches": 1938,
+        "feature_support": true,
+        "phase_support": true,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 1506.8
+      },
+      "known_transform_max_corner_error_px": 0.0
+    },
+    {
+      "file": "test_2_0000_0512.png",
+      "case": "translated_source",
+      "alignment": {
+        "method": "phase correlation",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            -3.9696335792541504
+          ],
+          [
+            0.0,
+            1.0,
+            3.0303640365600586
+          ]
+        ],
+        "matches": 1484,
+        "inliers": 1448,
+        "phase_response": 0.818,
+        "selected_transform_matches": 1453,
+        "feature_support": true,
+        "phase_support": true,
+        "reliable": true,
+        "overlap": 0.9575,
+        "texture_variance": 1506.8
+      },
+      "known_transform_max_corner_error_px": 0.042942918218660225
+    },
+    {
+      "file": "test_2_0000_0512.png",
+      "case": "mismatched_pair",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 2,
+        "inliers": 0,
+        "phase_response": 0.0071,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 1506.8
+      },
+      "after_file": "test_55_0256_0000.png"
+    },
+    {
+      "file": "test_55_0256_0000.png",
+      "case": "actual_pair",
+      "alignment": {
+        "method": "phase correlation",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            3.273381233215332
+          ],
+          [
+            0.0,
+            1.0,
+            1.062203288078308
+          ]
+        ],
+        "matches": 6,
+        "inliers": 0,
+        "phase_response": 0.1404,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 0.969,
+        "texture_variance": 1204.5
+      }
+    },
+    {
+      "file": "test_55_0256_0000.png",
+      "case": "same_image",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1666,
+        "inliers": 1666,
+        "phase_response": 1.0,
+        "selected_transform_matches": 1666,
+        "feature_support": true,
+        "phase_support": true,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 1204.5
+      },
+      "known_transform_max_corner_error_px": 0.0
+    },
+    {
+      "file": "test_55_0256_0000.png",
+      "case": "translated_source",
+      "alignment": {
+        "method": "ORB + RANSAC",
+        "matrix": [
+          [
+            1.0003364086151123,
+            2.2305146558210254e-05,
+            -4.026472568511963
+          ],
+          [
+            -2.2305146558210254e-05,
+            1.0003364086151123,
+            2.9751341342926025
+          ]
+        ],
+        "matches": 1217,
+        "inliers": 1190,
+        "phase_response": 0.8615,
+        "selected_transform_matches": 1190,
+        "feature_support": true,
+        "phase_support": true,
+        "reliable": true,
+        "overlap": 0.9575,
+        "texture_variance": 1204.5
+      },
+      "known_transform_max_corner_error_px": 0.08529558896665726
+    },
+    {
+      "file": "test_55_0256_0000.png",
+      "case": "mismatched_pair",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 4,
+        "inliers": 0,
+        "phase_response": 0.0305,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 1204.5
+      },
+      "after_file": "test_77_0512_0256.png"
+    },
+    {
+      "file": "test_77_0512_0256.png",
+      "case": "actual_pair",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 6,
+        "inliers": 0,
+        "phase_response": 0.0002,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 11928.61
+      }
+    },
+    {
+      "file": "test_77_0512_0256.png",
+      "case": "same_image",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1866,
+        "inliers": 1866,
+        "phase_response": 1.0,
+        "selected_transform_matches": 1866,
+        "feature_support": true,
+        "phase_support": true,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 11928.61
+      },
+      "known_transform_max_corner_error_px": 0.0
+    },
+    {
+      "file": "test_77_0512_0256.png",
+      "case": "translated_source",
+      "alignment": {
+        "method": "ORB + RANSAC",
+        "matrix": [
+          [
+            0.9997207522392273,
+            1.7012853277265094e-05,
+            -3.924809217453003
+          ],
+          [
+            -1.7012853277265094e-05,
+            0.9997207522392273,
+            3.0502734184265137
+          ]
+        ],
+        "matches": 1146,
+        "inliers": 1083,
+        "phase_response": 0.6662,
+        "selected_transform_matches": 1095,
+        "feature_support": true,
+        "phase_support": true,
+        "reliable": true,
+        "overlap": 0.9575,
+        "texture_variance": 11928.61
+      },
+      "known_transform_max_corner_error_px": 0.09044926965054569
+    },
+    {
+      "file": "test_77_0512_0256.png",
+      "case": "mismatched_pair",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 6,
+        "inliers": 0,
+        "phase_response": 0.0059,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 11928.61
+      },
+      "after_file": "test_7_0256_0512.png"
+    },
+    {
+      "file": "test_7_0256_0512.png",
+      "case": "actual_pair",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 6,
+        "inliers": 0,
+        "phase_response": 0.0972,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 3024.8
+      }
+    },
+    {
+      "file": "test_7_0256_0512.png",
+      "case": "same_image",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1933,
+        "inliers": 1933,
+        "phase_response": 1.0,
+        "selected_transform_matches": 1933,
+        "feature_support": true,
+        "phase_support": true,
+        "reliable": true,
+        "overlap": 1.0,
+        "texture_variance": 3024.8
+      },
+      "known_transform_max_corner_error_px": 0.0
+    },
+    {
+      "file": "test_7_0256_0512.png",
+      "case": "translated_source",
+      "alignment": {
+        "method": "ORB + RANSAC",
+        "matrix": [
+          [
+            0.999805748462677,
+            0.0003852451918646693,
+            -3.9932186603546143
+          ],
+          [
+            -0.0003852451918646693,
+            0.999805748462677,
+            3.0974793434143066
+          ]
+        ],
+        "matches": 1369,
+        "inliers": 1331,
+        "phase_response": 0.8295,
+        "selected_transform_matches": 1329,
+        "feature_support": true,
+        "phase_support": true,
+        "reliable": true,
+        "overlap": 0.9575,
+        "texture_variance": 3024.8
+      },
+      "known_transform_max_corner_error_px": 0.11544567572114468
+    },
+    {
+      "file": "test_7_0256_0512.png",
+      "case": "mismatched_pair",
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 1,
+        "inliers": 0,
+        "phase_response": -0.0063,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 3024.8
+      },
+      "after_file": "test_102_0512_0000.png"
+    }
+  ],
+  "limitations": "Selected development samples, not an independent benchmark. Actual-pair transform truth is unknown. Mismatched filenames are negative-control candidates, not independently verified different footprints. Same-image/translation cases are derived controls, not separate acquisitions. No model calls or gate tuning."
+}

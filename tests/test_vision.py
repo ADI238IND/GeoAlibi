@@ -69,3 +69,21 @@ def test_decode_resizes_and_strips_metadata():
 def test_invalid_uploads_fail(payload):
     with pytest.raises(ValueError):
         decode_image(payload)
+
+
+
+def test_registration_evidence_is_specific_to_selected_transform():
+    from geoalibi.vision import alignment_evidence
+    identity = np.float32([[1,0,0],[0,1,0]])
+    shifted = np.float32([[1,0,-12],[0,1,0]])
+    source = np.float32([[20,20],[60,20],[100,20],[20,60],[60,60],[100,60],[20,100],[100,100]])
+    target = source - [12,0]
+    # A rejected feature transform must not make identity reliable.
+    assert not alignment_evidence(identity, source, target, (12,0), .2, 100)['reliable']
+    assert alignment_evidence(shifted, source, target, (12,0), .2, 100)['feature_support']
+    empty = np.empty((0,2))
+    # Merely selecting a weak phase translation does not establish reliability.
+    assert not alignment_evidence(shifted, empty, empty, (12,0), .2, 100)['reliable']
+    assert alignment_evidence(shifted, empty, empty, (12,0), .8, 100)['phase_support']
+    assert not alignment_evidence(identity, empty, empty, (12,0), .8, 100)['reliable']
+    assert not alignment_evidence(shifted, source, target, (12,0), .8, 0)['reliable']

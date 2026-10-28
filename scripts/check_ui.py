@@ -55,6 +55,15 @@ def main():
                     page.get_by_label("Review evidence note").fill("Third acquisition needed for shadow review.")
                     page.get_by_role("button", name="Save review").click()
                     page.wait_for_function("() => document.querySelector('.review-note').textContent.startsWith('1 review')")
+                    page.get_by_label("Evidence source reference").first.fill("field-report-42")
+                    page.get_by_label("Evidence observation").first.fill("Independent observation; date uncertain.")
+                    page.get_by_role("button", name="Record evidence response").first.click()
+                    page.get_by_text("Latest response: provided", exact=True).wait_for()
+                    page.get_by_label("Evidence response status").first.select_option("retracted")
+                    page.get_by_label("Evidence observation").first.fill("Wrong acquisition date.")
+                    page.get_by_role("button", name="Record evidence response").first.click()
+                    page.get_by_text("Latest response: retracted", exact=True).wait_for()
+                    assert page.get_by_text("Independent observation; date uncertain.", exact=False).count() == 1
                     page.locator('[data-view="heatmap"]').click()
                     page.locator('[data-view="supported_mask"]').click()
                     page.locator('[data-view="swipe"]').click()
@@ -139,3 +148,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
