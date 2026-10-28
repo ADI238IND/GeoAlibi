@@ -59,3 +59,8 @@ Added explicit landmark-assisted registration for expert-supplied stable corresp
 ## v0.5 continuation
 
 Added dual-image visual landmark picking with exact processed-image previews, click/keyboard input, numbered fit/held-out coloring, undo/clear, explicit application opt-in and stale-pick reset when files change. Manual JSON remains an alternative; picker opt-in disables it and overrides the request through FormData. Previews are not persisted and use the backend decoder. Full browser flow now selects six pairs and confirms a supplied-landmark upload. Registration evidence still needs independently correct landmarks; no real-sample accuracy claims or new API calls. Next priority is to evaluate actual real-image landmark annotations or larger-context automatic registration, then quantify conditional coverage/recall instead of adding more unchecked confidence heuristics.
+
+
+## 28 October continuation
+
+Inspected main and PR #6: both CI runs for e3f4f8bda1a082c98df1abebcc356c53f382efad succeeded; PR remains open. Added a reproducible local demo runbook with explicit procedural-vs-real evidence boundaries, abstention disclosure, packet verification and paid-call prerequisites. Execution service failed to initialize (exec-server: no such file or directory), so no local tests/inference could run and no credentials/ledger could be accessed. New API calls/reservations: $0. Prior $0.54 reservation is historical, not freshly verified. Next run should restore compute, reconcile the persistent ledger, review PR #6, and prioritize real alignment evidence. No deployment or submission performed.
