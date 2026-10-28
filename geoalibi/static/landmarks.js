@@ -61,8 +61,47 @@
   byId('landmark-picker').ontoggle=()=>{if(byId('landmark-picker').open)for(const side of sides)if(!images[side])prepare(side);};
   byId('undo-landmark').onclick=()=>{if(pending)pending=null;else pairs.pop();update();};
   byId('clear-landmarks').onclick=clear;
+  async function imageIdentity(){
+    const result={};
+    for(const side of sides){
+      const file=byId(side).files[0];
+      if(!file||!images[side])throw new Error('Prepare both image previews first.');
+      const digest=await crypto.subtle.digest('SHA-256',await file.arrayBuffer());
+      result[side]={sha256:Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join(''),width:images[side].width,height:images[side].height};
+    }
+    return result;
+  }
+  const revision=()=>JSON.stringify([versions,pairs,pending]);
+  byId('save-landmark-draft').onclick=async()=>{
+    const initial=revision();
+    try{
+      if(pending)throw new Error('Complete or undo the pending pair before saving.');
+      const identity=await imageIdentity();
+      if(initial!==revision())throw new Error('Images or picks changed; save again.');
+      const draft={schema:'geoalibi-landmark-draft-v1',coordinate_space:'processed-original-images',images:identity,landmarks:pairs,
+        notice:'Unreviewed working draft. Image hashes bind coordinates to file bytes; they do not authenticate correspondences. Final two points are held out when applied.'};
+      const url=URL.createObjectURL(new Blob([JSON.stringify(draft,null,2)],{type:'application/json'}));
+      const link=document.createElement('a');link.href=url;link.download='geoalibi-landmark-draft.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+      status.textContent='Draft saved. Keep the original images for independent review.';
+    }catch(error){status.textContent=error.message;}
+  };
+  byId('restore-landmark-draft').onchange=async event=>{
+    const file=event.target.files[0],initial=revision();event.target.value='';
+    if(!file)return;
+    try{
+      if(file.size>65536)throw new Error('Landmark draft exceeds 64 KB.');
+      const draft=JSON.parse(await file.text()),identity=await imageIdentity();
+      if(initial!==revision())throw new Error('Images or picks changed; restore again.');
+      if(draft.schema!=='geoalibi-landmark-draft-v1'||draft.coordinate_space!=='processed-original-images')throw new Error('Unsupported landmark draft format.');
+      for(const side of sides)for(const key of ['sha256','width','height'])if(draft.images?.[side]?.[key]!==identity[side][key])throw new Error('Draft does not match these original images and processed dimensions.');
+      if(!Array.isArray(draft.landmarks)||draft.landmarks.length>20||draft.landmarks.some(row=>!Array.isArray(row)||row.length!==4||row.some((v,i)=>typeof v!=='number'||!Number.isFinite(v)||v<0||v>=identity[i<2?'after':'before'][i%2?'height':'width'])))throw new Error('Draft contains invalid landmark coordinates.');
+      pairs=draft.landmarks.map(row=>[...row]);pending=null;use.checked=false;update();
+      status.textContent=`Restored ${pairs.length} pairs. Review each correspondence; explicitly enable Use picked landmarks to apply.`;
+    }catch(error){status.textContent=error.message;}
+  };
   use.onchange=update;
   // Add picked points to this form's request only after explicit opt-in.
   byId('upload-form').addEventListener('formdata',event=>{if(use.checked)event.formData.set('landmarks',JSON.stringify(pairs));});
   update();
 })();
+
