@@ -19,6 +19,7 @@ class Store:
             db.executescript("""
             CREATE TABLE IF NOT EXISTS runs(id TEXT PRIMARY KEY, created TEXT, title TEXT, report TEXT);
             CREATE TABLE IF NOT EXISTS reviews(id INTEGER PRIMARY KEY, run_id TEXT, region_id TEXT, decision TEXT, note TEXT, created TEXT);
+            CREATE TABLE IF NOT EXISTS evidence(id INTEGER PRIMARY KEY, run_id TEXT, region_id TEXT, request_index INTEGER, status TEXT, source TEXT, note TEXT, created TEXT);
             CREATE TABLE IF NOT EXISTS reservations(id INTEGER PRIMARY KEY, dollars REAL, created TEXT);
             CREATE TABLE IF NOT EXISTS cache(key TEXT PRIMARY KEY, value TEXT);
             """)
@@ -41,6 +42,7 @@ class Store:
             report["created"] = row["created"]
             report["title"] = row["title"]
             reviews = db.execute("SELECT region_id, decision, note, created FROM reviews WHERE run_id=? ORDER BY id", (run_id,)).fetchall()
+            report["evidence_audit"] = [dict(row) for row in db.execute("SELECT region_id,request_index,status,source,note,created FROM evidence WHERE run_id=? ORDER BY id", (run_id,))]
             report["audit"] = [dict(r) for r in reviews]
             for item in reviews:
                 for region in report["regions"]:
@@ -56,6 +58,11 @@ class Store:
     def review(self, run_id, region_id, decision, note):
         with self.connect() as db:
             db.execute("INSERT INTO reviews(run_id,region_id,decision,note,created) VALUES(?,?,?,?,?)", (run_id, region_id, decision, note, now()))
+
+    def add_evidence(self, run_id, region_id, request_index, status, source, note):
+        with self.connect() as db:
+            db.execute("INSERT INTO evidence(run_id,region_id,request_index,status,source,note,created) VALUES(?,?,?,?,?,?,?)",
+                       (run_id, region_id, request_index, status, source, note, now()))
 
     def reserve(self, dollars, ceiling):
         # A conservative, persistent per-request reservation. Retained even on failure:
@@ -80,4 +87,5 @@ class Store:
     def cache(self, key, value):
         with self.connect() as db:
             db.execute("INSERT OR REPLACE INTO cache VALUES(?,?)", (key, json.dumps(value)))
+
 

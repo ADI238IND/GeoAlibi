@@ -120,6 +120,27 @@ def review(run_id: str, region_id: str, body: Review):
     return get_run(run_id)
 
 
+class EvidenceResponse(BaseModel):
+    request_index: int = Field(ge=0)
+    status: str = Field(pattern="^(provided|unavailable|retracted)$")
+    source: str = Field(default="", max_length=500)
+    note: str = Field(min_length=1, max_length=1500)
+
+
+@app.post("/api/runs/{run_id}/evidence/{region_id}")
+def add_evidence(run_id: str, region_id: str, body: EvidenceResponse):
+    report = get_run(run_id)
+    region = next((r for r in report["regions"] if r["id"] == region_id), None)
+    if region is None:
+        raise HTTPException(404, "Region not found")
+    if body.request_index >= len(region.get("evidence_requests", [])):
+        raise HTTPException(422, "Evidence request does not exist")
+    if not body.note.strip() or (body.status == "provided" and not body.source.strip()):
+        raise HTTPException(422, "Provide a note and a source reference for supplied evidence")
+    store.add_evidence(run_id, region_id, body.request_index, body.status, body.source.strip(), body.note.strip())
+    return get_run(run_id)
+
+
 async def run(a, b, title, threshold, min_area, use_meta, use_sam, synthetic=False, detector="baseline", landmarks=None):
     async with lock:
         try:
@@ -184,3 +205,4 @@ async def upload(before: UploadFile = File(...), after: UploadFile = File(...), 
 
 
 app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
+
