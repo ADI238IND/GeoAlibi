@@ -1,0 +1,935 @@
+{
+  "opencv_version": "4.14.0",
+  "manifest_sha256": "7c3ab8e4f5b0af21ae4c911563ad36bcab261db20f077bd015eff78bc56a23ec",
+  "ratio_threshold": 0.72,
+  "summary": {
+    "SIFT": {
+      "actual": 0,
+      "mismatched": 0,
+      "same": 7,
+      "translated": 7
+    },
+    "AKAZE": {
+      "actual": 0,
+      "mismatched": 0,
+      "same": 6,
+      "translated": 6
+    }
+  },
+  "results": [
+    {
+      "file": "test_102_0512_0000.png",
+      "case": "actual",
+      "method": "SIFT",
+      "matches": 6,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_102_0512_0000.png",
+      "case": "actual",
+      "method": "AKAZE",
+      "matches": 11,
+      "candidate_pass": false,
+      "reason": "insufficient consensus, coverage or bounded transform",
+      "inliers": 5,
+      "scale": 0.0,
+      "rotation_degrees": 0.0,
+      "coverage_fraction": 0.0,
+      "matrix": [
+        [
+          0.0,
+          0.0,
+          76.94206237792969
+        ],
+        [
+          -0.0,
+          0.0,
+          37.17030715942382
+        ]
+      ]
+    },
+    {
+      "file": "test_102_0512_0000.png",
+      "case": "mismatched",
+      "method": "SIFT",
+      "matches": 6,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_102_0512_0000.png",
+      "case": "mismatched",
+      "method": "AKAZE",
+      "matches": 16,
+      "candidate_pass": false,
+      "reason": "insufficient consensus, coverage or bounded transform",
+      "inliers": 11,
+      "scale": 2.811298529151259e-17,
+      "rotation_degrees": 153.1929251804024,
+      "coverage_fraction": 0.0,
+      "matrix": [
+        [
+          -2.509168663582873e-17,
+          -1.267861206008675e-17,
+          76.9420623779297
+        ],
+        [
+          1.267861206008675e-17,
+          -2.509168663582873e-17,
+          37.170307159423835
+        ]
+      ]
+    },
+    {
+      "file": "test_102_0512_0000.png",
+      "case": "same",
+      "method": "SIFT",
+      "matches": 156,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 156,
+      "scale": 1.0,
+      "rotation_degrees": 0.0,
+      "coverage_fraction": 0.8578096913702397,
+      "matrix": [
+        [
+          1.0,
+          -0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "file": "test_102_0512_0000.png",
+      "case": "same",
+      "method": "AKAZE",
+      "matches": 3,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_102_0512_0000.png",
+      "case": "translated",
+      "method": "SIFT",
+      "matches": 147,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 147,
+      "scale": 1.0000541540972245,
+      "rotation_degrees": 0.003976594938779644,
+      "coverage_fraction": 0.8423752988235025,
+      "matrix": [
+        [
+          1.0000541516885897,
+          -6.940843319162516e-05,
+          -3.9914944258524856
+        ],
+        [
+          6.940843319162516e-05,
+          1.0000541516885897,
+          2.981371367949471
+        ]
+      ]
+    },
+    {
+      "file": "test_102_0512_0000.png",
+      "case": "translated",
+      "method": "AKAZE",
+      "matches": 3,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_121_0768_0256.png",
+      "case": "actual",
+      "method": "SIFT",
+      "matches": 4,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_121_0768_0256.png",
+      "case": "actual",
+      "method": "AKAZE",
+      "matches": 3,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_121_0768_0256.png",
+      "case": "mismatched",
+      "method": "SIFT",
+      "matches": 0,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_121_0768_0256.png",
+      "case": "mismatched",
+      "method": "AKAZE",
+      "matches": 2,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_121_0768_0256.png",
+      "case": "same",
+      "method": "SIFT",
+      "matches": 495,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 495,
+      "scale": 1.0,
+      "rotation_degrees": 0.0,
+      "coverage_fraction": 0.9077516698139039,
+      "matrix": [
+        [
+          1.0,
+          -0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "file": "test_121_0768_0256.png",
+      "case": "same",
+      "method": "AKAZE",
+      "matches": 77,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 77,
+      "scale": 1.0,
+      "rotation_degrees": 0.0,
+      "coverage_fraction": 0.3635499612703227,
+      "matrix": [
+        [
+          1.0,
+          -0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "file": "test_121_0768_0256.png",
+      "case": "translated",
+      "method": "SIFT",
+      "matches": 470,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 470,
+      "scale": 0.9999887714209257,
+      "rotation_degrees": 0.0022973010000473817,
+      "coverage_fraction": 0.8763702543136223,
+      "matrix": [
+        [
+          0.9999887706171116,
+          -4.009501613432757e-05,
+          -3.9931350202234173
+        ],
+        [
+          4.009501613432757e-05,
+          0.9999887706171116,
+          2.997276247340447
+        ]
+      ]
+    },
+    {
+      "file": "test_121_0768_0256.png",
+      "case": "translated",
+      "method": "AKAZE",
+      "matches": 73,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 73,
+      "scale": 0.9997835190563773,
+      "rotation_degrees": 0.023948401897266845,
+      "coverage_fraction": 0.3635499612703227,
+      "matrix": [
+        [
+          0.9997834317222908,
+          0.0004178879671580054,
+          -4.034464481284752
+        ],
+        [
+          -0.0004178879671580054,
+          0.9997834317222908,
+          3.1075167697694814
+        ]
+      ]
+    },
+    {
+      "file": "test_2_0000_0000.png",
+      "case": "actual",
+      "method": "SIFT",
+      "matches": 1,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_2_0000_0000.png",
+      "case": "actual",
+      "method": "AKAZE",
+      "matches": 0,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_2_0000_0000.png",
+      "case": "mismatched",
+      "method": "SIFT",
+      "matches": 0,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_2_0000_0000.png",
+      "case": "mismatched",
+      "method": "AKAZE",
+      "matches": 1,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_2_0000_0000.png",
+      "case": "same",
+      "method": "SIFT",
+      "matches": 1147,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 1147,
+      "scale": 1.0,
+      "rotation_degrees": 0.0,
+      "coverage_fraction": 0.9421371727358985,
+      "matrix": [
+        [
+          1.0,
+          -0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "file": "test_2_0000_0000.png",
+      "case": "same",
+      "method": "AKAZE",
+      "matches": 250,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 250,
+      "scale": 1.0,
+      "rotation_degrees": 0.0,
+      "coverage_fraction": 0.5626053780399763,
+      "matrix": [
+        [
+          1.0,
+          -0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "file": "test_2_0000_0000.png",
+      "case": "translated",
+      "method": "SIFT",
+      "matches": 1100,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 1100,
+      "scale": 1.0000535361759069,
+      "rotation_degrees": 0.00047820466895819253,
+      "coverage_fraction": 0.9071830414415751,
+      "matrix": [
+        [
+          1.000053536141075,
+          8.34669279772558e-06,
+          -4.00935352980181
+        ],
+        [
+          -8.34669279772558e-06,
+          1.000053536141075,
+          2.9909072393741036
+        ]
+      ]
+    },
+    {
+      "file": "test_2_0000_0000.png",
+      "case": "translated",
+      "method": "AKAZE",
+      "matches": 227,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 226,
+      "scale": 0.9999973632321616,
+      "rotation_degrees": 0.00037662632278588577,
+      "coverage_fraction": 0.5441877643426898,
+      "matrix": [
+        [
+          0.999997363210557,
+          6.573352049796333e-06,
+          -4.000690014112746
+        ],
+        [
+          -6.573352049796333e-06,
+          0.999997363210557,
+          3.000667063640253
+        ]
+      ]
+    },
+    {
+      "file": "test_2_0000_0512.png",
+      "case": "actual",
+      "method": "SIFT",
+      "matches": 1,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_2_0000_0512.png",
+      "case": "actual",
+      "method": "AKAZE",
+      "matches": 1,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_2_0000_0512.png",
+      "case": "mismatched",
+      "method": "SIFT",
+      "matches": 1,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_2_0000_0512.png",
+      "case": "mismatched",
+      "method": "AKAZE",
+      "matches": 1,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_2_0000_0512.png",
+      "case": "same",
+      "method": "SIFT",
+      "matches": 1319,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 1319,
+      "scale": 1.0,
+      "rotation_degrees": 0.0,
+      "coverage_fraction": 0.9423197047418688,
+      "matrix": [
+        [
+          1.0,
+          -0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "file": "test_2_0000_0512.png",
+      "case": "same",
+      "method": "AKAZE",
+      "matches": 352,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 352,
+      "scale": 1.0,
+      "rotation_degrees": 0.0,
+      "coverage_fraction": 0.5716656936218902,
+      "matrix": [
+        [
+          1.0,
+          -0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "file": "test_2_0000_0512.png",
+      "case": "translated",
+      "method": "SIFT",
+      "matches": 1238,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 1238,
+      "scale": 0.9999805632618229,
+      "rotation_degrees": 0.0011913614006999573,
+      "coverage_fraction": 0.9051969143801311,
+      "matrix": [
+        [
+          0.999980563045649,
+          2.079277487031087e-05,
+          -4.0003761009988565
+        ],
+        [
+          -2.079277487031087e-05,
+          0.999980563045649,
+          3.0037891938258237
+        ]
+      ]
+    },
+    {
+      "file": "test_2_0000_0512.png",
+      "case": "translated",
+      "method": "AKAZE",
+      "matches": 334,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 334,
+      "scale": 1.0000023265786802,
+      "rotation_degrees": 8.645863734402977e-05,
+      "coverage_fraction": 0.5577559847052416,
+      "matrix": [
+        [
+          1.0000023265775415,
+          1.508991399219522e-06,
+          -4.000809953598401
+        ],
+        [
+          -1.508991399219522e-06,
+          1.0000023265775415,
+          3.0007756920952326
+        ]
+      ]
+    },
+    {
+      "file": "test_55_0256_0000.png",
+      "case": "actual",
+      "method": "SIFT",
+      "matches": 5,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_55_0256_0000.png",
+      "case": "actual",
+      "method": "AKAZE",
+      "matches": 8,
+      "candidate_pass": false,
+      "reason": "insufficient consensus, coverage or bounded transform",
+      "inliers": 2,
+      "scale": 1.287953889987905,
+      "rotation_degrees": 108.91820720460022,
+      "coverage_fraction": 0.0,
+      "matrix": [
+        [
+          -0.4175778919336324,
+          1.2183816835882098,
+          -145.75757120206535
+        ],
+        [
+          -1.2183816835882098,
+          -0.4175778919336324,
+          411.64442025644934
+        ]
+      ]
+    },
+    {
+      "file": "test_55_0256_0000.png",
+      "case": "mismatched",
+      "method": "SIFT",
+      "matches": 3,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_55_0256_0000.png",
+      "case": "mismatched",
+      "method": "AKAZE",
+      "matches": 3,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_55_0256_0000.png",
+      "case": "same",
+      "method": "SIFT",
+      "matches": 494,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 494,
+      "scale": 1.0,
+      "rotation_degrees": 0.0,
+      "coverage_fraction": 0.8991987923434578,
+      "matrix": [
+        [
+          1.0,
+          -0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "file": "test_55_0256_0000.png",
+      "case": "same",
+      "method": "AKAZE",
+      "matches": 71,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 71,
+      "scale": 1.0,
+      "rotation_degrees": 0.0,
+      "coverage_fraction": 0.5070159009961194,
+      "matrix": [
+        [
+          1.0,
+          -0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "file": "test_55_0256_0000.png",
+      "case": "translated",
+      "method": "SIFT",
+      "matches": 455,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 455,
+      "scale": 1.0000088141551735,
+      "rotation_degrees": 0.0008427018652085569,
+      "coverage_fraction": 0.8733163066757138,
+      "matrix": [
+        [
+          1.0000088140470111,
+          -1.4708051797964691e-05,
+          -4.000875839777009
+        ],
+        [
+          1.4708051797964691e-05,
+          1.0000088140470111,
+          2.995657915749036
+        ]
+      ]
+    },
+    {
+      "file": "test_55_0256_0000.png",
+      "case": "translated",
+      "method": "AKAZE",
+      "matches": 62,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 62,
+      "scale": 1.0000007534546296,
+      "rotation_degrees": 2.5903517908495017e-05,
+      "coverage_fraction": 0.3914075305071622,
+      "matrix": [
+        [
+          1.0000007534545272,
+          -4.5210201599063815e-07,
+          -3.999676969768525
+        ],
+        [
+          4.5210201599063815e-07,
+          1.0000007534545272,
+          2.9982878468381244
+        ]
+      ]
+    },
+    {
+      "file": "test_77_0512_0256.png",
+      "case": "actual",
+      "method": "SIFT",
+      "matches": 3,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_77_0512_0256.png",
+      "case": "actual",
+      "method": "AKAZE",
+      "matches": 2,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_77_0512_0256.png",
+      "case": "mismatched",
+      "method": "SIFT",
+      "matches": 3,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_77_0512_0256.png",
+      "case": "mismatched",
+      "method": "AKAZE",
+      "matches": 5,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_77_0512_0256.png",
+      "case": "same",
+      "method": "SIFT",
+      "matches": 291,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 291,
+      "scale": 1.0,
+      "rotation_degrees": 0.0,
+      "coverage_fraction": 0.7858004805685197,
+      "matrix": [
+        [
+          1.0,
+          -0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "file": "test_77_0512_0256.png",
+      "case": "same",
+      "method": "AKAZE",
+      "matches": 66,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 66,
+      "scale": 1.0,
+      "rotation_degrees": 0.0,
+      "coverage_fraction": 0.35096739185363734,
+      "matrix": [
+        [
+          1.0,
+          -0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "file": "test_77_0512_0256.png",
+      "case": "translated",
+      "method": "SIFT",
+      "matches": 278,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 277,
+      "scale": 1.000031309540514,
+      "rotation_degrees": 0.00641439066198145,
+      "coverage_fraction": 0.7370619729827701,
+      "matrix": [
+        [
+          1.0000313032736663,
+          0.00011195574149997867,
+          -4.009512099885682
+        ],
+        [
+          -0.00011195574149997867,
+          1.0000313032736663,
+          3.0172544430251853
+        ]
+      ]
+    },
+    {
+      "file": "test_77_0512_0256.png",
+      "case": "translated",
+      "method": "AKAZE",
+      "matches": 62,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 62,
+      "scale": 1.000000000190511,
+      "rotation_degrees": 7.78136737486888e-09,
+      "coverage_fraction": 0.34522138908143507,
+      "matrix": [
+        [
+          1.000000000190511,
+          1.358104810246032e-10,
+          -3.999999986821874
+        ],
+        [
+          -1.358104810246032e-10,
+          1.000000000190511,
+          2.9999999621241633
+        ]
+      ]
+    },
+    {
+      "file": "test_7_0256_0512.png",
+      "case": "actual",
+      "method": "SIFT",
+      "matches": 3,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_7_0256_0512.png",
+      "case": "actual",
+      "method": "AKAZE",
+      "matches": 3,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_7_0256_0512.png",
+      "case": "mismatched",
+      "method": "SIFT",
+      "matches": 0,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_7_0256_0512.png",
+      "case": "mismatched",
+      "method": "AKAZE",
+      "matches": 1,
+      "candidate_pass": false,
+      "reason": "fewer than 8 ratio-filtered matches"
+    },
+    {
+      "file": "test_7_0256_0512.png",
+      "case": "same",
+      "method": "SIFT",
+      "matches": 1187,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 1187,
+      "scale": 1.0,
+      "rotation_degrees": 0.0,
+      "coverage_fraction": 0.9438582617439034,
+      "matrix": [
+        [
+          1.0,
+          -0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "file": "test_7_0256_0512.png",
+      "case": "same",
+      "method": "AKAZE",
+      "matches": 329,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 329,
+      "scale": 1.0,
+      "rotation_degrees": 0.0,
+      "coverage_fraction": 0.566967287969752,
+      "matrix": [
+        [
+          1.0,
+          -0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "file": "test_7_0256_0512.png",
+      "case": "translated",
+      "method": "SIFT",
+      "matches": 1107,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 1106,
+      "scale": 0.9999942942357877,
+      "rotation_degrees": 0.001721711053966986,
+      "coverage_fraction": 0.9031324303394946,
+      "matrix": [
+        [
+          0.9999942937843033,
+          3.0049355199669573e-05,
+          -3.9990890715523437
+        ],
+        [
+          -3.0049355199669573e-05,
+          0.9999942937843033,
+          3.00527153733686
+        ]
+      ]
+    },
+    {
+      "file": "test_7_0256_0512.png",
+      "case": "translated",
+      "method": "AKAZE",
+      "matches": 310,
+      "candidate_pass": true,
+      "reason": "candidate geometry only; no independent held-out truth",
+      "inliers": 310,
+      "scale": 1.0000029755644957,
+      "rotation_degrees": 0.00016342603934840782,
+      "coverage_fraction": 0.5479346468019204,
+      "matrix": [
+        [
+          1.0000029755604278,
+          -2.8523309573891296e-06,
+          -3.9998959059839096
+        ],
+        [
+          2.8523309573891296e-06,
+          1.0000029755604278,
+          2.9999110057045697
+        ]
+      ]
+    }
+  ],
+  "note": "Exploratory development samples. Candidate geometry is not validated registration. Controls are derived or mismatched filenames, not independently adjudicated acquisitions. No production behavior changed or threshold sweep performed.",
+  "reference": "https://docs.opencv.org/4.13.0/db/d70/tutorial_akaze_matching.html"
+}
