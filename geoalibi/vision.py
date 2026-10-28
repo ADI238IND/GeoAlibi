@@ -12,7 +12,7 @@ import cv2
 import numpy as np
 from PIL import Image, ImageOps
 
-VERSION = "counterfactual-0.4.0"
+VERSION = "counterfactual-0.4.1"
 MAX_SIDE = 1024
 
 
@@ -80,11 +80,26 @@ def normalize(a, b, valid):
     return np.clip(out, 0, 255).astype(np.uint8), fits
 
 
+def alignment_evidence(matrix, source, target, phase_shift, response, texture):
+    """Evidence must support the selected transform, not another candidate."""
+    residuals = np.linalg.norm(source @ matrix[:, :2].T + matrix[:, 2] - target, axis=1)
+    consistent = int((residuals <= 2.5).sum())
+    feature_support = len(source) >= 8 and consistent >= 8 and consistent / len(source) >= .4
+    translation = np.array([-phase_shift[0], -phase_shift[1]])
+    phase_support = (np.isfinite(response) and response > .4
+                     and np.linalg.norm(matrix[:, :2] - np.eye(2)) < .01
+                     and np.linalg.norm(matrix[:, 2] - translation) <= 2.5)
+    return {"selected_transform_matches": consistent,
+            "feature_support": bool(feature_support), "phase_support": bool(phase_support),
+            "reliable": bool(texture > 25 and (feature_support or phase_support))}
+
+
 def align(a, b):
     h, w = a.shape[:2]
     ag, bg = gray(a), gray(b)
     identity = np.array([[1., 0., 0.], [0., 1., 0.]], np.float32)
     best, method, matches, inliers = identity, "identity", 0, 0
+    src = dst = np.empty((0, 2), dtype=np.float32)
     orb = cv2.ORB_create(nfeatures=2500, fastThreshold=12)
     ka, da = orb.detectAndCompute(ag, None)
     kb, db = orb.detectAndCompute(bg, None)
@@ -119,9 +134,9 @@ def align(a, b):
         scored.append((score, mat, name, warped, valid))
     _, best, method, warped, valid = min(scored, key=lambda item: item[0])
     texture = float(cv2.Laplacian(ag, cv2.CV_32F).var())
-    reliable = texture > 25 and (method != "identity" or response > .4 or inliers >= 8)
+    evidence = alignment_evidence(best, src, dst, (dx, dy), response, texture)
     return warped, valid, {"method": method, "matrix": best.tolist(), "matches": matches, "inliers": inliers,
-                            "phase_response": round(float(response), 4), "reliable": bool(reliable),
+                            "phase_response": round(float(response), 4), **evidence,
                             "overlap": round(float(valid.mean()), 4), "texture_variance": round(texture, 2)}
 
 
@@ -283,3 +298,4 @@ def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=
                 cv2.putText(overlay_points,str(i+1),point,cv2.FONT_HERSHEY_SIMPLEX,.5,color,1)
             images[name]=overlay_points
     return Analysis(report, images)
+
