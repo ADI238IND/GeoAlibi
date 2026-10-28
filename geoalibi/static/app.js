@@ -95,7 +95,20 @@ function renderDetail(){
   for(const item of r.challenge_log||[]){const row=element('article','challenge');const labels={persists:'DIFFERENCE REMAINS',explained:'DIFFERENCE REDUCED',plausible:'STILL PLAUSIBLE',unresolved:'NEEDS EVIDENCE',untested:'NOT TESTED',sensitive:'SHIFT SENSITIVE'};const titles={registration:'Alignment correction',illumination:'Global lighting correction',local_appearance:'Local appearance check',registration_stress:'One-pixel registration stress',season_cloud_sensor:'Other explanations'};row.append(element('span','model-status',labels[item.result]||item.result.toUpperCase()),element('strong','',titles[item.id]||'Alternative explanation'),element('p','','Alternative: '+item.hypothesis),element('p','',item.scope));
     for(const experiment of item.experiments||[])row.append(element('span','model-status',`Shift (${experiment.dx}, ${experiment.dy}): ${Math.round(experiment.survival*100)}% retained`));dossier.append(row);}
   dossier.append(element('h3','','What evidence would help next?'));
-  for(const request of r.evidence_requests||[])dossier.append(element('p','',`${request.priority}. ${request.request}`));
+  for(const [index,request] of (r.evidence_requests||[]).entries()){
+    const card=element('article','challenge');card.append(element('p','',`${request.priority}. ${request.request}`));
+    const history=(report.evidence_audit||[]).filter(e=>e.region_id===r.id&&e.request_index===index);
+    card.append(element('p','',history.length?'Latest response: '+history.at(-1).status:'Awaiting independent evidence'));
+    for(const entry of history)card.append(element('p','',`${entry.created} · ${entry.status} · ${entry.source||'No source'} · ${entry.note}`));
+    const ef=element('form','review-form'),status=element('select');status.setAttribute('aria-label','Evidence response status');
+    for(const [value,label] of Object.entries({provided:'Evidence supplied',unavailable:'Cannot obtain evidence',retracted:'Retract earlier evidence'})){const o=element('option','',label);o.value=value;status.append(o);}
+    const source=element('input');source.placeholder='Source reference, acquisition ID or field report';source.maxLength=500;source.setAttribute('aria-label','Evidence source reference');
+    const enote=element('input');enote.placeholder='Observation and limitations';enote.maxLength=1500;enote.required=true;enote.setAttribute('aria-label','Evidence observation');
+    const submit=element('button','primary','Record evidence response');submit.type='submit';ef.append(status,source,enote,submit);
+    ef.onsubmit=async event=>{event.preventDefault();submit.disabled=true;try{report=await api(`/api/runs/${report.id}/evidence/${r.id}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({request_index:index,status:status.value,source:source.value,note:enote.value})});renderDetail();}catch(e){showError(e);}finally{submit.disabled=false;}};
+    card.append(ef);dossier.append(card);
+  }
+  dossier.append(element('p','evidence-note','Evidence responses are reviewer statements, not authenticated sources. Recording or retracting evidence does not change automated verdicts.'));
   $('detail-body').append(checks,cols,dossier,form,saved);
 }
 function renderModel(){
@@ -129,3 +142,4 @@ window.addEventListener('resize',drawRegion);
 Promise.all([status(),history()]).catch(showError);
 
 $('packet').onclick=()=>{if(report)window.location.href=`/api/runs/${report.id}/packet`;};
+

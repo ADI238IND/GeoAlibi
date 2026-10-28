@@ -98,3 +98,24 @@ def test_picker_preview_uses_analysis_processing_and_is_not_persisted(client):
     assert Image.open(io.BytesIO(r.content)).size==(1024,512)
     assert client.get('/api/runs').json()==[]
     assert client.post('/api/preview',files={'image':('invalid.png',b'invalid')}).status_code==422
+
+
+
+def test_evidence_responses_are_append_only_and_exported(client):
+    import io, json, zipfile
+    report=client.post('/api/demo',json={'case':'mixed'}).json()
+    region=report['regions'][0]
+    url=f"/api/runs/{report['id']}/evidence/{region['id']}"
+    body={'request_index':0,'status':'provided','source':'field-report-42','note':'Independent observation; date uncertain.'}
+    assert client.post(url,json={**body,'source':' '}).status_code==422
+    assert client.post(url,json={**body,'request_index':999}).status_code==422
+    assert client.post(url,json=body).status_code==200
+    result=client.post(url,json={**body,'status':'retracted','note':'Wrong acquisition date.'}).json()
+    assert len(result['evidence_audit'])==2
+    assert result['regions'][0]['verdict']==region['verdict']
+    assert result['regions'][0]['review']==region['review']
+    packet=client.get(f"/api/runs/{report['id']}/packet")
+    with zipfile.ZipFile(io.BytesIO(packet.content)) as archive:
+        exported=json.loads(archive.read('report.json'))
+    assert exported['evidence_audit']==result['evidence_audit']
+    assert client.get(f"/api/runs/{report['id']}").json()['evidence_audit']==result['evidence_audit']
