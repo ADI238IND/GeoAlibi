@@ -1,0 +1,249 @@
+{
+  "engine": "counterfactual-0.4.1",
+  "mirror_revision": "6a6bb0a5b389403d81c05e33bf08bc0b9e5f13a6",
+  "url": "https://huggingface.co/datasets/satellite-image-deep-learning/LEVIR-CD/resolve/6a6bb0a5b389403d81c05e33bf08bc0b9e5f13a6/test.zip",
+  "image_hashes": {
+    "A/test_102.png": "65b28fed3b378876bc3d73d42cd967e9a2c696cd90dc287fc7829015f184755b",
+    "B/test_102.png": "5fb13b53a95507ba667205edd6f2d54389fc407362404fbc441e76ddc2d31fbe",
+    "A/test_121.png": "e93e612d2dfea538a3fb94228d9208e579f706b69295749044c7d686e9a52cc0",
+    "B/test_121.png": "54837be65cb186193193180b8175d4f070bfde7d43d76879ba8f396b8ba6857e",
+    "A/test_2.png": "100d08c2f080c13db395ea4732a9fa775143e451ff49d00771f1bb30db544c9f",
+    "B/test_2.png": "2a63fb7b7498074c0448c1c7179ed2aedfd1fd790f1e8c7926cbf5e88727cd8c",
+    "A/test_55.png": "5913f7d6a857fdab7a5539dda5b0042dd63f8e61b6c3e46ae5e86ad568bd0736",
+    "B/test_55.png": "007c5518e056e1d0d44ec7ef30738ea787a6aca1ea6f867a24d06703573fe428",
+    "A/test_77.png": "65e16076bf05cf8e72b09a976a7564a897ce88c443616215f84088679dc32105",
+    "B/test_77.png": "485129a931c0b084d8d5ec747cb1387c2502ebc0bf0d92d8e8e1b1ef6fc05eb1",
+    "A/test_7.png": "2dbf1257744af5a55c701179ed15ae76fedc744e34ab7539b4a2d8bf32f01bb0",
+    "B/test_7.png": "95f5f32fa7c6bebbe7add05cc786c1b33a969202b8b6b5efcdbcb21b8634bde0"
+  },
+  "results": [
+    {
+      "crop": "test_102_0512_0000.png",
+      "scene": "test_102.png",
+      "crop_yx": [
+        512,
+        0
+      ],
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 6,
+        "inliers": 0,
+        "phase_response": 0.0516,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 533.77
+      }
+    },
+    {
+      "crop": "test_121_0768_0256.png",
+      "scene": "test_121.png",
+      "crop_yx": [
+        768,
+        256
+      ],
+      "alignment": {
+        "method": "phase correlation",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.48796990513801575
+          ],
+          [
+            0.0,
+            1.0,
+            0.9726658463478088
+          ]
+        ],
+        "matches": 5,
+        "inliers": 0,
+        "phase_response": 0.2328,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 0.9971,
+        "texture_variance": 605.09
+      }
+    },
+    {
+      "crop": "test_2_0000_0000.png",
+      "scene": "test_2.png",
+      "crop_yx": [
+        0,
+        0
+      ],
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 15,
+        "inliers": 4,
+        "phase_response": 0.0974,
+        "selected_transform_matches": 2,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 1428.54
+      }
+    },
+    {
+      "crop": "test_2_0000_0512.png",
+      "scene": "test_2.png",
+      "crop_yx": [
+        0,
+        512
+      ],
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 15,
+        "inliers": 4,
+        "phase_response": 0.0974,
+        "selected_transform_matches": 2,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 1428.54
+      }
+    },
+    {
+      "crop": "test_55_0256_0000.png",
+      "scene": "test_55.png",
+      "crop_yx": [
+        256,
+        0
+      ],
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 13,
+        "inliers": 3,
+        "phase_response": 0.0746,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 756.24
+      }
+    },
+    {
+      "crop": "test_77_0512_0256.png",
+      "scene": "test_77.png",
+      "crop_yx": [
+        512,
+        256
+      ],
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 10,
+        "inliers": 3,
+        "phase_response": 0.0777,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 9900.29
+      }
+    },
+    {
+      "crop": "test_7_0256_0512.png",
+      "scene": "test_7.png",
+      "crop_yx": [
+        256,
+        512
+      ],
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 18,
+        "inliers": 4,
+        "phase_response": 0.1078,
+        "selected_transform_matches": 2,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 2423.21
+      }
+    }
+  ],
+  "limitations": "Exploratory context comparison, selected development scenes. Exact crop pixels checked against original-author samples, ZIP member CRC checked; full archive SHA not verified. No independent transform truth or change accuracy measured. Data remain academic-only; no imagery redistributed.",
+  "remotezip_version": "0.12.6",
+  "unique_scenes": 6,
+  "reliable_unique_scenes": 0
+}
