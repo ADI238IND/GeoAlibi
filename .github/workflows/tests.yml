@@ -10,6 +10,7 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install -e '.[meta,test]'
       - run: python -m pytest -q
+      - run: python scripts/replay_loftr.py docs/LOFTR_AUDIT.json
 
       - run: python -m playwright install --with-deps chromium
       - run: python scripts/check_ui.py
