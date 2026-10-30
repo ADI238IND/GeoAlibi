@@ -11,7 +11,7 @@ The preceding interactive run executed CPU LoFTR outdoor on the seven hash-verif
 | Identical source | 7 | 7 |
 | Translated source | 5 | 7 |
 
-This table is transcribed from observed terminal results. The raw local JSON and inference script were not pushed before the runtime became unavailable; this run has not recovered or rerun them. Do not cite this as a reproducible benchmark yet.
+This table is transcribed from observed terminal results. The raw local JSON and inference script were not pushed before the runtime became unavailable on 29 October. They were recovered on 30 October; the new reproducible runner and raw-match protocol are documented in LOFTR_AUDIT.md. The historical table below remains a transcription, not an independent benchmark.
 
 The passing actual pair was test_7_0256_0512.png: 48 matches, 36 fitting / 12 held out, 33 fitted inliers, held-out RMS 1.4977 pixels, and 11/12 held-out errors within 2.5 pixels. test_55_0256_0000.png had 26 matches but failed its held-out check (4/6 within 2.5 pixels; RMS 3.2165 pixels). Other actual pairs had fewer than 16 matches.
 
