@@ -146,3 +146,5 @@ The local preview endpoint uses the same EXIF orientation and resize pipeline as
 ## Experimental learned-match audit
 
 [LoFTR audit instructions](docs/LOFTR_AUDIT.md) provide a fixed CPU protocol and model-free replay of saved raw correspondences. This research tool does not change production registration. Candidate consistency is not independently verified alignment or change accuracy; the selected demo pairs are not a full benchmark.
+
+The [independent alignment check](docs/INDEPENDENT_ALIGNMENT.md) scores frozen learned transforms against separately collected, image-bound reviewed points without refitting. Real independent annotations are still required; model consistency alone is not validation.
