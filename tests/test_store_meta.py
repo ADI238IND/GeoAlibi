@@ -74,3 +74,44 @@ def test_unknown_model_region_rejected(monkeypatch):
     monkeypatch.setattr(meta.httpx, "AsyncClient", lambda **kw: real_client(transport=httpx.MockTransport(lambda _: httpx.Response(200, json=payload)), **kw))
     with pytest.raises(ValueError, match="invalid"):
         asyncio.run(meta.reason(analysis))
+
+
+def test_adapter_version_invalidates_cached_evidence(tmp_path, monkeypatch):
+    monkeypatch.setenv('MODEL_API_KEY', 'test-key-not-real')
+    calls = []
+    async def reason(analysis):
+        calls.append(True)
+        return {'status': 'completed', 'interpretation': {'summary': 'fixture'}}
+    monkeypatch.setattr(meta, 'reason', reason)
+    a, b, _ = pair()
+    store = Store(tmp_path)
+    asyncio.run(meta.enrich(investigate(a, b), store, 1))
+    monkeypatch.setattr(meta, 'ADAPTER_VERSION', 'future-geometry-fixture')
+    fresh = investigate(a, b)
+    asyncio.run(meta.enrich(fresh, store, 1))
+    assert len(calls) == 2
+    assert not fresh.report['meta'].get('cache_hit', False)
+    assert store.budget(1)['reserved_usd'] == 1
+
+
+def test_bad_sam_geometry_preserves_verdicts_and_is_not_cached(tmp_path, monkeypatch):
+    monkeypatch.setenv('MODEL_API_KEY', 'test-key-not-real')
+    monkeypatch.setattr(meta, 'sam_available', lambda: True)
+    async def segment(image):
+        raise ValueError('invalid geometry fixture')
+    async def reason(analysis):
+        assert analysis.report['sam']['status'] == 'failed'
+        return {'status': 'completed'}
+    monkeypatch.setattr(meta, 'segment', segment)
+    monkeypatch.setattr(meta, 'reason', reason)
+    a, b, _ = pair()
+    store = Store(tmp_path)
+    for _ in range(2):
+        analysis = investigate(a, b)
+        original = json.dumps(analysis.report['regions'], sort_keys=True)
+        asyncio.run(meta.enrich(analysis, store, 1, with_sam=True))
+        assert json.dumps(analysis.report['regions'], sort_keys=True) == original
+        assert analysis.report['sam']['status'] == 'failed'
+        assert 'sam_before_mask' not in analysis.images
+        assert not analysis.report['meta'].get('cache_hit', False)
+    assert store.budget(1)['reserved_usd'] == 1

@@ -142,3 +142,7 @@ Reports include all supplied points, their hash, fit/held-out residuals and sour
 Under Upload your imagery, choose both files and open **Pick matched landmarks visually**. Click a stationary landmark in Before, then its match in After. Add at least six well-spread pairs; the final two are held out. Undo/Clear are available. Explicitly enable **Use picked landmarks** before submitting. Selecting another image clears picks. Keyboard users can focus either canvas, move with arrows (Shift for 10px), and select with Enter.
 
 The local preview endpoint uses the same EXIF orientation and resize pipeline as analysis, returns a processed PNG with no-store headers, and does not save an investigation or call a model. Coordinates are image pixels, not latitude/longitude. Geometric checks and user-supplied evidence limitations from v0.4 still apply. The advanced JSON path remains available and is disabled while picked landmarks are opted in.
+
+## SAM geometry correction
+
+The SAM adapter now respects the official parser's half-open bounds, avoiding an extra row/column during mask placement. It rejects unpaired, duplicate, out-of-bounds or malformed geometry rather than silently dropping or stretching evidence. A published Meta payload is tested through the real parser and decoder offline. This validates protocol placement, not satellite segmentation accuracy. Older cached interpretations are invalidated by the adapter version; historical live mask-area measurements require rerunning before reuse. See [SAM_GEOMETRY.md](docs/SAM_GEOMETRY.md).
