@@ -23,3 +23,6 @@ Next scientific step: independently reviewed stationary landmarks on actual acqu
 ## Observed rerun — 30 October 2026
 
 The fresh CPU run completed all 28 cases using the pinned, hash-verified checkpoint and input files. [LOFTR_AUDIT.json](LOFTR_AUDIT.json) contains raw model outputs and successfully passed model-free replay. Candidate passes: actual pairs **1/7**, mismatched **0/7**, identical **7/7**, translated **5/7**. The actual passing pair remains `test_7_0256_0512.png`. These match the earlier observation despite stricter validation, but still require independent landmark review. No production gate changed and no paid API was used.
+
+
+Replay compares raw matches, selected indices, fitting/held-out membership and candidate decisions exactly. Recomputed matrix/residual/coverage values allow only absolute floating-point roundoff <=1e-9 (zero relative tolerance), with a visible warning reporting the maximum accepted difference. This addresses cross-machine numerical differences without changing model thresholds, fitting, saved evidence or pass/fail decisions. Larger differences fail.

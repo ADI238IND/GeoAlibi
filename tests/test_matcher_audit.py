@@ -67,3 +67,23 @@ def test_empty_output_abstains_and_flat_coordinates_fail():
     assert not replay_matches(audit_matches([], [], []))['candidate_pass']
     with pytest.raises(ValueError):
         audit_matches([1, 2], [1, 2], [1])
+
+
+def test_replay_allows_only_tiny_numeric_roundoff():
+    record = audit_matches(points(), points() + [4, -3], np.ones(16))
+    record['geometry']['held_out_rms_px'] += 1e-12
+    with pytest.warns(RuntimeWarning, match='roundoff'):
+        assert replay_matches(record)['candidate_pass']
+    record['geometry']['held_out_rms_px'] += 1e-5
+    with pytest.raises(ValueError, match='differs'):
+        replay_matches(record)
+
+
+def test_replay_never_tolerates_changed_selection_or_membership():
+    record = audit_matches(points(), points(), np.ones(16))
+    for section, field in [(record, 'retained_indices'), (record['geometry'], 'held_out_indices')]:
+        original = section[field][:]
+        section[field] = original[::-1]
+        with pytest.raises(ValueError, match='differs'):
+            replay_matches(record)
+        section[field] = original
