@@ -3,11 +3,14 @@ import argparse
 import json
 import hashlib
 import math
+import platform
+import cv2
 from pathlib import Path
 
 import numpy as np
 
 from geoalibi.vision import decode_image, investigate
+from geoalibi.verification_metrics import transition_counts, summarize_transitions
 from geoalibi.benchmark_manifest import dataset_records, validate_frozen_manifest
 from geoalibi.evaluation import load_landmark_manifest, checked_landmarks, decode_binary_label
 
@@ -44,6 +47,8 @@ def main():
     assisted_totals = {k: [0, 0, 0, 0] for k in totals}
     assisted_pairs = []
     pairs = []
+    transition_totals = {}
+    assisted_transition_totals = {}
     for path in paths:
         before_bytes = path.read_bytes()
         after_bytes = (args.dataset / "B" / path.name).read_bytes()
@@ -57,11 +62,16 @@ def main():
         label = decode_binary_label(label_bytes, before_bytes, a.shape[:2])
         from geoalibi.pretrained import propose
         result = investigate(a, b, threshold=args.threshold, min_area=args.min_area, detector_fn=propose if args.detector=="unet" else None)
+        per_pair = {}
         for name, key in [("raw_rgb", "raw_mask"), ("proposals", "proposal_mask"), ("supported", "supported_mask")]:
             mask = result.images[key] > 0
             counts = [int((mask & label).sum()), int((mask & ~label).sum()), int((~mask & label).sum()), int((~mask & ~label).sum())]
             totals[name] = [x + y for x, y in zip(totals[name], counts)]
-        pairs.append({"file": path.name, "source_hashes": bound[path.name], "hash": result.report["input_hash"], "elapsed_ms": result.report["elapsed_ms"], "counts": result.report["counts"],
+            per_pair[name] = metrics(counts)
+        transitions = transition_counts(result.images['proposal_mask'] > 0, result.images['supported_mask'] > 0, label)
+        for key, value in transitions.items():
+            transition_totals[key] = transition_totals.get(key, 0) + value
+        pairs.append({"file": path.name, "source_hashes": bound[path.name], "engine": result.report["engine"], "model_provenance": result.report.get("model_provenance"), "metrics": per_pair, "verification_tradeoff": summarize_transitions(transitions), "all_candidates_abstained": result.report["all_candidates_abstained"], "inspected_regions": len(result.report["regions"]), "omitted_regions": result.report["candidate_count"] - len(result.report["regions"]), "hash": result.report["input_hash"], "elapsed_ms": result.report["elapsed_ms"], "counts": result.report["counts"],
                       "alignment": result.report["alignment"], "candidate_pixels": int((result.images['proposal_mask']>0).sum()),
                       "accepted_pixels": int((result.images['supported_mask']>0).sum()), "warnings": result.report['warnings']})
         if landmarks is not None:
@@ -73,14 +83,20 @@ def main():
                 counts = [int((mask & label).sum()), int((mask & ~label).sum()), int((~mask & label).sum()), int((~mask & ~label).sum())]
                 assisted_totals[name] = [x + y for x, y in zip(assisted_totals[name], counts)]
                 per_pair[name] = metrics(counts)
-            assisted_pairs.append({"file": path.name, "metrics": per_pair, "alignment": assisted.report["alignment"],
+            transitions = transition_counts(assisted.images['proposal_mask'] > 0, assisted.images['supported_mask'] > 0, label)
+            for key, value in transitions.items():
+                assisted_transition_totals[key] = assisted_transition_totals.get(key, 0) + value
+            assisted_pairs.append({"file": path.name, "metrics": per_pair, "verification_tradeoff": summarize_transitions(transitions), "all_candidates_abstained": assisted.report["all_candidates_abstained"], "alignment": assisted.report["alignment"],
                                    "counts": assisted.report["counts"], "elapsed_ms": assisted.report["elapsed_ms"]})
         print(f"Evaluated {path.name}", flush=True)
-    output = {"dataset": str(args.dataset), "dataset_manifest_sha256": dataset_hash, "dataset_frozen": dataset_hash is not None, "pairs": len(pairs), "subset_limit": args.limit, "threshold": args.threshold, "min_area": args.min_area, "detector": args.detector,
+    output = {"dataset": str(args.dataset), "dataset_manifest_sha256": dataset_hash, "dataset_frozen": dataset_hash is not None, "environment": {"python": platform.python_version(), "numpy": np.__version__, "opencv": cv2.__version__}, "pairs": len(pairs), "subset_limit": args.limit, "threshold": args.threshold, "min_area": args.min_area, "detector": args.detector,
               "metrics": {k: metrics(v) for k, v in totals.items()}, "pair_results": pairs,
+              "verification_tradeoff": summarize_transitions(transition_totals),
+              "all_candidates_abstained_pairs": sum(p["all_candidates_abstained"] for p in pairs),
               "note": "Pixel metrics in processed image coordinates, maximum side 1024. Rejected/abstained pixels count as negative. Precision/recall are null when their denominator is zero. No calibration or real-world deployment claim."}
     if args.landmarks:
-        output["assisted"] = {"manifest_sha256": annotation_hash, "metrics": {k: metrics(v) for k, v in assisted_totals.items()},
+        output["assisted"] = {"manifest_sha256": annotation_hash, "verification_tradeoff": summarize_transitions(assisted_transition_totals),
+                              "all_candidates_abstained_pairs": sum(p["all_candidates_abstained"] for p in assisted_pairs), "metrics": {k: metrics(v) for k, v in assisted_totals.items()},
                               "pair_results": assisted_pairs,
                               "note": "Conditional on supplied reviewed correspondences. Reviewer identities are recorded assertions, not authenticated. Full processed footprint scored; invalid borders count as negative. Labels must be in BEFORE coordinates. No automatic-registration claim."}
     args.output.write_text(json.dumps(output, indent=2))

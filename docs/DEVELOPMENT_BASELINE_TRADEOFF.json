@@ -1,0 +1,781 @@
+{
+  "dataset": "../geoalibi/datasets/levir-author-demo",
+  "dataset_manifest_sha256": "6faa56192998d53c784de73684ed029334209fe0119feb15c2cc6dba718b45b5",
+  "dataset_frozen": true,
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "opencv": "4.14.0"
+  },
+  "pairs": 7,
+  "subset_limit": 0,
+  "threshold": 0.12,
+  "min_area": 70,
+  "detector": "baseline",
+  "metrics": {
+    "raw_rgb": {
+      "tp": 54906,
+      "fp": 211413,
+      "fn": 29086,
+      "tn": 163347,
+      "precision": 0.20616628929967445,
+      "recall": 0.6537051147728355,
+      "f1": 0.3134700309153866,
+      "iou": 0.18586686075049508
+    },
+    "proposals": {
+      "tp": 63822,
+      "fp": 253487,
+      "fn": 20170,
+      "tn": 121273,
+      "precision": 0.20113517107929493,
+      "recall": 0.7598580817220688,
+      "f1": 0.31807545956775585,
+      "iou": 0.1891139893148907
+    },
+    "supported": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 83992,
+      "tn": 374760,
+      "precision": null,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    }
+  },
+  "pair_results": [
+    {
+      "file": "test_102_0512_0000.png",
+      "source_hashes": {
+        "file": "test_102_0512_0000.png",
+        "A_sha256": "8e3221cef502953e06538e1ebddfdb609780c0c1cb6366aa3eee9208012aeab3",
+        "B_sha256": "c9ec0d2f4f58e3537a1f4685ef16368c5546300d04aef9e8a84d9a6dd3a3cc48",
+        "label_sha256": "a4223b16cda4fda2bda583e4232603ad91a8700676d1a977401851fb746818ff"
+      },
+      "engine": "counterfactual-0.4.1",
+      "model_provenance": null,
+      "metrics": {
+        "raw_rgb": {
+          "tp": 13083,
+          "fp": 22434,
+          "fn": 470,
+          "tn": 29549,
+          "precision": 0.36835881408902776,
+          "recall": 0.9653213310706117,
+          "f1": 0.5332382310984308,
+          "iou": 0.36354794787006417
+        },
+        "proposals": {
+          "tp": 13165,
+          "fp": 26030,
+          "fn": 388,
+          "tn": 25953,
+          "precision": 0.33588467916826126,
+          "recall": 0.9713716520327603,
+          "f1": 0.49916584515052703,
+          "iou": 0.3325922744612586
+        },
+        "supported": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 13553,
+          "tn": 51983,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "iou": 0.0
+        }
+      },
+      "verification_tradeoff": {
+        "pixels": 65536,
+        "truth_change_pixels": 13553,
+        "proposal_pixels": 39195,
+        "supported_pixels": 0,
+        "proposal_true_positive_pixels": 13165,
+        "proposal_false_positive_pixels": 26030,
+        "removed_true_positive_pixels": 13165,
+        "removed_false_positive_pixels": 26030,
+        "added_true_positive_pixels": 0,
+        "added_false_positive_pixels": 0,
+        "retained_proposal_pixels": 0,
+        "proposal_retention_fraction": 0.0,
+        "removed_true_positive_fraction": 1.0,
+        "removed_false_positive_fraction": 1.0,
+        "net_recall_change": -0.9713716520327603,
+        "net_false_positive_reduction_pixels": 26030,
+        "note": "Removed proposal pixels include review, nuisance rejection, small/omitted regions and filtering; they are not all abstentions. These are pixel transitions, not calibrated selective risk or physical area."
+      },
+      "all_candidates_abstained": false,
+      "inspected_regions": 9,
+      "omitted_regions": 0,
+      "hash": "1888029dc32ea135f04519ed9776914a8b8cd20f2f1a7e4505a8dc66b2d0e887",
+      "elapsed_ms": 92,
+      "counts": {
+        "supported": 0,
+        "artifact": 1,
+        "review": 8
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 2,
+        "inliers": 0,
+        "phase_response": 0.0706,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 486.85
+      },
+      "candidate_pixels": 39195,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change."
+      ]
+    },
+    {
+      "file": "test_121_0768_0256.png",
+      "source_hashes": {
+        "file": "test_121_0768_0256.png",
+        "A_sha256": "f51526b822696395992565a70f0d2223f6af7c5a1bf1dfef47edc9cd7450e257",
+        "B_sha256": "867fdc2fdad0292cc6561e5aab71fc97c8d67bedd6ebd8d1012e094e3b6092b9",
+        "label_sha256": "ce1fec32f2d6792ea3eddcea7861899c5985ccdfde61a179098694f28d927a3a"
+      },
+      "engine": "counterfactual-0.4.1",
+      "model_provenance": null,
+      "metrics": {
+        "raw_rgb": {
+          "tp": 3982,
+          "fp": 22605,
+          "fn": 8847,
+          "tn": 30102,
+          "precision": 0.14977244517997518,
+          "recall": 0.3103905214747837,
+          "f1": 0.20204992896285773,
+          "iou": 0.11237794208951854
+        },
+        "proposals": {
+          "tp": 6991,
+          "fp": 26444,
+          "fn": 5838,
+          "tn": 26263,
+          "precision": 0.20909226858082847,
+          "recall": 0.5449372515394809,
+          "f1": 0.30222203008818954,
+          "iou": 0.17801033789117204
+        },
+        "supported": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 12829,
+          "tn": 52707,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "iou": 0.0
+        }
+      },
+      "verification_tradeoff": {
+        "pixels": 65536,
+        "truth_change_pixels": 12829,
+        "proposal_pixels": 33435,
+        "supported_pixels": 0,
+        "proposal_true_positive_pixels": 6991,
+        "proposal_false_positive_pixels": 26444,
+        "removed_true_positive_pixels": 6991,
+        "removed_false_positive_pixels": 26444,
+        "added_true_positive_pixels": 0,
+        "added_false_positive_pixels": 0,
+        "retained_proposal_pixels": 0,
+        "proposal_retention_fraction": 0.0,
+        "removed_true_positive_fraction": 1.0,
+        "removed_false_positive_fraction": 1.0,
+        "net_recall_change": -0.5449372515394809,
+        "net_false_positive_reduction_pixels": 26444,
+        "note": "Removed proposal pixels include review, nuisance rejection, small/omitted regions and filtering; they are not all abstentions. These are pixel transitions, not calibrated selective risk or physical area."
+      },
+      "all_candidates_abstained": true,
+      "inspected_regions": 16,
+      "omitted_regions": 0,
+      "hash": "c4c896c6c5ba35679042424a24bb813bf30bc91a10751f5bc736ef0c257b2e69",
+      "elapsed_ms": 91,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 16
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 8,
+        "inliers": 3,
+        "phase_response": -0.01,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 682.89
+      },
+      "candidate_pixels": 33435,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    },
+    {
+      "file": "test_2_0000_0000.png",
+      "source_hashes": {
+        "file": "test_2_0000_0000.png",
+        "A_sha256": "99572d7b22f39f2c3947f817ab857784ab85cdbd1307fa0892d41c564f1966bd",
+        "B_sha256": "c37302e1bde614f032291544d371bbe3631f773e3cf4d7130cee5dabfdbae961",
+        "label_sha256": "c2094d81c4dbd1739cf5b028dff2bdad9eb0c0c6a8c8150f863fa08de338e107"
+      },
+      "engine": "counterfactual-0.4.1",
+      "model_provenance": null,
+      "metrics": {
+        "raw_rgb": {
+          "tp": 9814,
+          "fp": 32260,
+          "fn": 6688,
+          "tn": 16774,
+          "precision": 0.23325569235157104,
+          "recall": 0.5947157920252091,
+          "f1": 0.3350860420650096,
+          "iou": 0.20126327878265862
+        },
+        "proposals": {
+          "tp": 11384,
+          "fp": 38840,
+          "fn": 5118,
+          "tn": 10194,
+          "precision": 0.22666454284804077,
+          "recall": 0.6898557750575688,
+          "f1": 0.3412163174774451,
+          "iou": 0.20570272126052547
+        },
+        "supported": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 16502,
+          "tn": 49034,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "iou": 0.0
+        }
+      },
+      "verification_tradeoff": {
+        "pixels": 65536,
+        "truth_change_pixels": 16502,
+        "proposal_pixels": 50224,
+        "supported_pixels": 0,
+        "proposal_true_positive_pixels": 11384,
+        "proposal_false_positive_pixels": 38840,
+        "removed_true_positive_pixels": 11384,
+        "removed_false_positive_pixels": 38840,
+        "added_true_positive_pixels": 0,
+        "added_false_positive_pixels": 0,
+        "retained_proposal_pixels": 0,
+        "proposal_retention_fraction": 0.0,
+        "removed_true_positive_fraction": 1.0,
+        "removed_false_positive_fraction": 1.0,
+        "net_recall_change": -0.6898557750575688,
+        "net_false_positive_reduction_pixels": 38840,
+        "note": "Removed proposal pixels include review, nuisance rejection, small/omitted regions and filtering; they are not all abstentions. These are pixel transitions, not calibrated selective risk or physical area."
+      },
+      "all_candidates_abstained": true,
+      "inspected_regions": 1,
+      "omitted_regions": 0,
+      "hash": "950e99e95d028810c1f99525e69e899c377c238ad012c18a735bcfd54b12ac02",
+      "elapsed_ms": 60,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 1
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 7,
+        "inliers": 0,
+        "phase_response": 0.0443,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 973.62
+      },
+      "candidate_pixels": 50224,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    },
+    {
+      "file": "test_2_0000_0512.png",
+      "source_hashes": {
+        "file": "test_2_0000_0512.png",
+        "A_sha256": "2b53d8b252e3aa0d205c0d5af432163d4637cc4e6793480ff74d27de5959de10",
+        "B_sha256": "a3235f14acf81726e9036f0e4fe16b87e8d59d75975b3e688bf47ee7f532626a",
+        "label_sha256": "8d6ce41349c2b149edd5700acc0c42657c2ce553d2f52b39cc795e0924828509"
+      },
+      "engine": "counterfactual-0.4.1",
+      "model_provenance": null,
+      "metrics": {
+        "raw_rgb": {
+          "tp": 7113,
+          "fp": 35067,
+          "fn": 4889,
+          "tn": 18467,
+          "precision": 0.1686344238975818,
+          "recall": 0.5926512247958674,
+          "f1": 0.2625595216123436,
+          "iou": 0.15111857060910577
+        },
+        "proposals": {
+          "tp": 9543,
+          "fp": 41051,
+          "fn": 2459,
+          "tn": 12483,
+          "precision": 0.188619203858165,
+          "recall": 0.79511748041993,
+          "f1": 0.3049076618314269,
+          "iou": 0.17987672704653837
+        },
+        "supported": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 12002,
+          "tn": 53534,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "iou": 0.0
+        }
+      },
+      "verification_tradeoff": {
+        "pixels": 65536,
+        "truth_change_pixels": 12002,
+        "proposal_pixels": 50594,
+        "supported_pixels": 0,
+        "proposal_true_positive_pixels": 9543,
+        "proposal_false_positive_pixels": 41051,
+        "removed_true_positive_pixels": 9543,
+        "removed_false_positive_pixels": 41051,
+        "added_true_positive_pixels": 0,
+        "added_false_positive_pixels": 0,
+        "retained_proposal_pixels": 0,
+        "proposal_retention_fraction": 0.0,
+        "removed_true_positive_fraction": 1.0,
+        "removed_false_positive_fraction": 1.0,
+        "net_recall_change": -0.79511748041993,
+        "net_false_positive_reduction_pixels": 41051,
+        "note": "Removed proposal pixels include review, nuisance rejection, small/omitted regions and filtering; they are not all abstentions. These are pixel transitions, not calibrated selective risk or physical area."
+      },
+      "all_candidates_abstained": true,
+      "inspected_regions": 1,
+      "omitted_regions": 0,
+      "hash": "869b038d46e68ff4ae9dd4d90a5007ee9436fb137196a11fd3a0c20aa3c8c542",
+      "elapsed_ms": 67,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 1
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 4,
+        "inliers": 0,
+        "phase_response": 0.047,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 1506.8
+      },
+      "candidate_pixels": 50594,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    },
+    {
+      "file": "test_55_0256_0000.png",
+      "source_hashes": {
+        "file": "test_55_0256_0000.png",
+        "A_sha256": "fab174503235b57c43a8cf8b8bf4d4a2fb952990b03ef23aa7b86f3d9eb69cab",
+        "B_sha256": "be7248f746cfdb1c592489be9fe23ae2b689961a668f8d047a7b0c398ec94018",
+        "label_sha256": "9a4506913ea0880e2deb487bbf59206ff62ad2a1db3935befb34352302b8037d"
+      },
+      "engine": "counterfactual-0.4.1",
+      "model_provenance": null,
+      "metrics": {
+        "raw_rgb": {
+          "tp": 2611,
+          "fp": 23159,
+          "fn": 6034,
+          "tn": 33732,
+          "precision": 0.10131936360108654,
+          "recall": 0.3020242914979757,
+          "f1": 0.15173616155746042,
+          "iou": 0.08209659162369513
+        },
+        "proposals": {
+          "tp": 3394,
+          "fp": 30031,
+          "fn": 5251,
+          "tn": 26860,
+          "precision": 0.10154076290201945,
+          "recall": 0.39259687680740313,
+          "f1": 0.16135013073449014,
+          "iou": 0.08775467990485056
+        },
+        "supported": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 8645,
+          "tn": 56891,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "iou": 0.0
+        }
+      },
+      "verification_tradeoff": {
+        "pixels": 65536,
+        "truth_change_pixels": 8645,
+        "proposal_pixels": 33425,
+        "supported_pixels": 0,
+        "proposal_true_positive_pixels": 3394,
+        "proposal_false_positive_pixels": 30031,
+        "removed_true_positive_pixels": 3394,
+        "removed_false_positive_pixels": 30031,
+        "added_true_positive_pixels": 0,
+        "added_false_positive_pixels": 0,
+        "retained_proposal_pixels": 0,
+        "proposal_retention_fraction": 0.0,
+        "removed_true_positive_fraction": 1.0,
+        "removed_false_positive_fraction": 1.0,
+        "net_recall_change": -0.39259687680740313,
+        "net_false_positive_reduction_pixels": 30031,
+        "note": "Removed proposal pixels include review, nuisance rejection, small/omitted regions and filtering; they are not all abstentions. These are pixel transitions, not calibrated selective risk or physical area."
+      },
+      "all_candidates_abstained": false,
+      "inspected_regions": 5,
+      "omitted_regions": 0,
+      "hash": "ca8a20f7d259fb76a2161127d688f1252605957867dc432356541017add99582",
+      "elapsed_ms": 84,
+      "counts": {
+        "supported": 0,
+        "artifact": 1,
+        "review": 4
+      },
+      "alignment": {
+        "method": "phase correlation",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            3.273381233215332
+          ],
+          [
+            0.0,
+            1.0,
+            1.062203288078308
+          ]
+        ],
+        "matches": 6,
+        "inliers": 0,
+        "phase_response": 0.1404,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 0.969,
+        "texture_variance": 1204.5
+      },
+      "candidate_pixels": 33425,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change."
+      ]
+    },
+    {
+      "file": "test_77_0512_0256.png",
+      "source_hashes": {
+        "file": "test_77_0512_0256.png",
+        "A_sha256": "fe56308b53815e8b8c81705741236a93d1f75948ce3ad66168a0aed56f51684a",
+        "B_sha256": "4f53af9029bce438330555c491bbf901b8252eb0062f27351954b5e898eccdaa",
+        "label_sha256": "32618a3acc9c976e30915c4689d93cde1d99cba623de625e17b2037b0cf56c9a"
+      },
+      "engine": "counterfactual-0.4.1",
+      "model_provenance": null,
+      "metrics": {
+        "raw_rgb": {
+          "tp": 10479,
+          "fp": 39111,
+          "fn": 1021,
+          "tn": 14925,
+          "precision": 0.21131276467029644,
+          "recall": 0.9112173913043479,
+          "f1": 0.343067605172696,
+          "iou": 0.20704985082294364
+        },
+        "proposals": {
+          "tp": 10756,
+          "fp": 42031,
+          "fn": 744,
+          "tn": 12005,
+          "precision": 0.20376228995775475,
+          "recall": 0.935304347826087,
+          "f1": 0.3346244186227387,
+          "iou": 0.20093030206796061
+        },
+        "supported": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 11500,
+          "tn": 54036,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "iou": 0.0
+        }
+      },
+      "verification_tradeoff": {
+        "pixels": 65536,
+        "truth_change_pixels": 11500,
+        "proposal_pixels": 52787,
+        "supported_pixels": 0,
+        "proposal_true_positive_pixels": 10756,
+        "proposal_false_positive_pixels": 42031,
+        "removed_true_positive_pixels": 10756,
+        "removed_false_positive_pixels": 42031,
+        "added_true_positive_pixels": 0,
+        "added_false_positive_pixels": 0,
+        "retained_proposal_pixels": 0,
+        "proposal_retention_fraction": 0.0,
+        "removed_true_positive_fraction": 1.0,
+        "removed_false_positive_fraction": 1.0,
+        "net_recall_change": -0.935304347826087,
+        "net_false_positive_reduction_pixels": 42031,
+        "note": "Removed proposal pixels include review, nuisance rejection, small/omitted regions and filtering; they are not all abstentions. These are pixel transitions, not calibrated selective risk or physical area."
+      },
+      "all_candidates_abstained": false,
+      "inspected_regions": 2,
+      "omitted_regions": 0,
+      "hash": "feb6608927f9b1da196f400abe8a273780a73979b8c7ef6bac616eff41510886",
+      "elapsed_ms": 64,
+      "counts": {
+        "supported": 0,
+        "artifact": 1,
+        "review": 1
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 6,
+        "inliers": 0,
+        "phase_response": 0.0002,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 11928.61
+      },
+      "candidate_pixels": 52787,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change."
+      ]
+    },
+    {
+      "file": "test_7_0256_0512.png",
+      "source_hashes": {
+        "file": "test_7_0256_0512.png",
+        "A_sha256": "b6c49095a63807ed29acaadef7153a4e66e7b22f9fa974c07a58f2831fcfe7f3",
+        "B_sha256": "034282f91bfe65709bb147a31f03b4cf713f0980f2da00a576ed30c535628eb0",
+        "label_sha256": "bcdb87fed6c57ac3cf5b57439c52824909f888e59322a106b45363b7aae45ef4"
+      },
+      "engine": "counterfactual-0.4.1",
+      "model_provenance": null,
+      "metrics": {
+        "raw_rgb": {
+          "tp": 7824,
+          "fp": 36777,
+          "fn": 1137,
+          "tn": 19798,
+          "precision": 0.17542207573821214,
+          "recall": 0.8731168396384332,
+          "f1": 0.29214741794555843,
+          "iou": 0.17106126197035287
+        },
+        "proposals": {
+          "tp": 8589,
+          "fp": 49060,
+          "fn": 372,
+          "tn": 7515,
+          "precision": 0.14898784020538083,
+          "recall": 0.958486776029461,
+          "f1": 0.25788920582495123,
+          "iou": 0.14803260888299064
+        },
+        "supported": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 8961,
+          "tn": 56575,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "iou": 0.0
+        }
+      },
+      "verification_tradeoff": {
+        "pixels": 65536,
+        "truth_change_pixels": 8961,
+        "proposal_pixels": 57649,
+        "supported_pixels": 0,
+        "proposal_true_positive_pixels": 8589,
+        "proposal_false_positive_pixels": 49060,
+        "removed_true_positive_pixels": 8589,
+        "removed_false_positive_pixels": 49060,
+        "added_true_positive_pixels": 0,
+        "added_false_positive_pixels": 0,
+        "retained_proposal_pixels": 0,
+        "proposal_retention_fraction": 0.0,
+        "removed_true_positive_fraction": 1.0,
+        "removed_false_positive_fraction": 1.0,
+        "net_recall_change": -0.958486776029461,
+        "net_false_positive_reduction_pixels": 49060,
+        "note": "Removed proposal pixels include review, nuisance rejection, small/omitted regions and filtering; they are not all abstentions. These are pixel transitions, not calibrated selective risk or physical area."
+      },
+      "all_candidates_abstained": true,
+      "inspected_regions": 1,
+      "omitted_regions": 0,
+      "hash": "39335a7701c724abe132a8c46b868123349299a4f076483a89f5ec88139f3fce",
+      "elapsed_ms": 65,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 1
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 6,
+        "inliers": 0,
+        "phase_response": 0.0972,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 3024.8
+      },
+      "candidate_pixels": 57649,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    }
+  ],
+  "verification_tradeoff": {
+    "pixels": 458752,
+    "truth_change_pixels": 83992,
+    "proposal_pixels": 317309,
+    "supported_pixels": 0,
+    "proposal_true_positive_pixels": 63822,
+    "proposal_false_positive_pixels": 253487,
+    "removed_true_positive_pixels": 63822,
+    "removed_false_positive_pixels": 253487,
+    "added_true_positive_pixels": 0,
+    "added_false_positive_pixels": 0,
+    "retained_proposal_pixels": 0,
+    "proposal_retention_fraction": 0.0,
+    "removed_true_positive_fraction": 1.0,
+    "removed_false_positive_fraction": 1.0,
+    "net_recall_change": -0.7598580817220688,
+    "net_false_positive_reduction_pixels": 253487,
+    "note": "Removed proposal pixels include review, nuisance rejection, small/omitted regions and filtering; they are not all abstentions. These are pixel transitions, not calibrated selective risk or physical area."
+  },
+  "all_candidates_abstained_pairs": 4,
+  "note": "Pixel metrics in processed image coordinates, maximum side 1024. Rejected/abstained pixels count as negative. Precision/recall are null when their denominator is zero. No calibration or real-world deployment claim."
+}
