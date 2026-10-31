@@ -2,8 +2,8 @@
   ".env.example": "0140bea5acd41f1c27fc8f1001925af238a8ec04800d5594968fe98ec18ef435",
   ".github/workflows/tests.yml": "b4c22b3b958aff0dd489bbdcfaa0acbb261a5a43a09358b6f09bb42544fe4b9a",
   ".gitignore": "bd7695d69ebeafd64248ffe2599cb8d611d59c23a2d883a910f9f9d6516ddaa1",
-  "README.md": "97937d8f2177f5d8a61202be0976385fdd57fe938cacae5a29bdea511d05c52b",
-  "docs/BUILD_CHECKPOINT.md": "386b36171c92cae1da5e08f9c7630f2153bf2e3d0c95e34bd29751b211b0054c",
+  "README.md": "e2479695ebb86b70022bad15b77bbc118b22b218d88511cb4bc960275d940601",
+  "docs/BUILD_CHECKPOINT.md": "230de8d5ffcdd238d3173e5a94ac9995dea8dae01c9391fff6dfe577f66f434a",
   "docs/LIVE_VALIDATION.json": "7d30bc55c7d0e9c3d6f50ec2be63f0eccb4cde5348143789b8d5cbfeb4714e6d",
   "docs/REAL_SAMPLE_EVALUATION.json": "404765d07cbec37f590569545ba2507239eadc7677b94d19d9adaf49db7fcef2",
   "docs/REAL_SAMPLE_MANIFEST.json": "b151bbdf656374061b68bbfc9fa36526881a58113e2a90a1c24188d67b00f355",
@@ -54,5 +54,9 @@
   "geoalibi/matcher_audit.py": "1c0d7e9b780477bd043e92293b9f932f2de6cf3b9c8b48bc11471d15dc99e401",
   "scripts/evaluate_loftr.py": "bbc4fa478a36df4e90372d3e92c0ac6993a6f7ba33932262b7da18793b6d4080",
   "scripts/replay_loftr.py": "8844f72fd0d904ec5fa6f2e27def6d7dbf2553c0cf5696f8878d373eafaa587b",
-  "tests/test_matcher_audit.py": "8d4ac5c15a9aa3885132d8911420db69957696be807063a08d11b5a7a210aaf6"
+  "tests/test_matcher_audit.py": "8d4ac5c15a9aa3885132d8911420db69957696be807063a08d11b5a7a210aaf6",
+  "docs/INDEPENDENT_ALIGNMENT.md": "5f898ba45b67543f118180402914e3d766a5bca0fc44671aa95ced0a0d566073",
+  "geoalibi/independent_alignment.py": "3d8723a50d47148749bfd61e28b042b171f2a66dc20d887a2e8764bc66d48140",
+  "scripts/check_independent_alignment.py": "b40b05aa2f0a5e546acbc2ea4c086fe11c7e009e529b2ccbc9d61085956e4412",
+  "tests/test_independent_alignment.py": "8f3c41b00811e600e82cdd67e5887edc1760238cccfca148435a19d461ace505"
 }
