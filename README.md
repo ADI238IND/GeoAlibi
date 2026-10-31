@@ -165,3 +165,5 @@ The [independent alignment check](docs/INDEPENDENT_ALIGNMENT.md) scores frozen l
 ## SAM geometry correction
 
 The SAM adapter now respects the official parser's half-open bounds, avoiding an extra row/column during mask placement. It rejects unpaired, duplicate, out-of-bounds or malformed geometry rather than silently dropping or stretching evidence. A published Meta payload is tested through the real parser and decoder offline. This validates protocol placement, not satellite segmentation accuracy. Older cached interpretations are invalidated by the adapter version; historical live mask-area measurements require rerunning before reuse. See [SAM_GEOMETRY.md](docs/SAM_GEOMETRY.md).
+
+For new real-data evaluation, [freeze the exact input split](docs/FROZEN_BENCHMARK.md) before inspecting results. The evaluator can verify original A/B/label bytes against that manifest and discloses whether a run used frozen inputs.

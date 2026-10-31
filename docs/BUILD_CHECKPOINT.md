@@ -126,3 +126,11 @@ Consolidated local validation: 82 tests passed; raw LoFTR audit replay passed; f
 
 
 Combined CI exposed an exact-float replay comparison failure after all 82 tests passed. Added a strictly bounded absolute 1e-9 tolerance only for recomputed numerical geometry, with visible maximum-delta warnings; all raw data, match indices, holdout membership and decisions remain exact. Stored experimental results and registration thresholds are unchanged. Added regressions for tiny roundoff versus changed errors/indices. Require a fresh complete CI run before reporting consolidation as validated.
+
+## 31 October frozen benchmark inputs
+
+Rechecked main c6be37f and consolidated draft #20 4166fb4; both final consolidation CI runs passed. Added a benchmark input freeze/validation path on top of that consolidated branch. Exact A/B/label filename sets and original image/label SHA-256s are checked before inference; the manifest binds the explicit subset limit and refuses silent overwrites. Evaluated bytes are checked again after preflight. Outputs disclose frozen/unfrozen status and all source hashes. No model thresholds changed and no broader real benchmark or synthetic accuracy claim was made.
+
+Existing runtime dependencies needed restoring; source remained available. No secure credential, historical ledger or account billing access was established, so no paid API calls or reservations were made ($0 new; historical $0.54 unreconciled). Next: freeze an independently selected licensed split before inspecting predictions and run it once compute/inputs are ready. Independent landmark review and corrected real-image Meta validation remain outstanding.
+
+Validation: 90 local unit/API/CLI tests passed, including a complete frozen-evaluation CLI fixture and rejection of changed labels before any pair evaluation. Existing saved LoFTR replay passed and source hashes verified. Fixture metrics are not reported as satellite accuracy. Require full branch CI, including browser/demo generation, before accepting the follow-up.

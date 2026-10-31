@@ -1,11 +1,14 @@
 """Run a held-out A/B/label benchmark. No API calls, no training, no automatic downloads."""
 import argparse
 import json
+import hashlib
+import math
 from pathlib import Path
 
 import numpy as np
 
 from geoalibi.vision import decode_image, investigate
+from geoalibi.benchmark_manifest import dataset_records, validate_frozen_manifest
 from geoalibi.evaluation import load_landmark_manifest, checked_landmarks, decode_binary_label
 
 
@@ -24,11 +27,15 @@ def main():
     parser.add_argument("--detector", choices=["baseline", "unet"], default="baseline")
     parser.add_argument("--limit", type=int, default=0, help="0 = all pairs; positive = explicitly limited subset")
     parser.add_argument("--landmarks", type=Path, help="Reviewed image-hash-bound manifest; run assisted and automatic arms separately")
+    parser.add_argument('--dataset-manifest', type=Path, help='Frozen original image/label hashes; verified before inference')
     args = parser.parse_args()
+    if args.limit < 0 or args.min_area <= 0 or not math.isfinite(args.threshold) or not 0 < args.threshold < 1:
+        parser.error('Require limit >= 0, min-area > 0 and finite threshold between 0 and 1.')
+    records = dataset_records(args.dataset, args.limit)
+    dataset_hash = validate_frozen_manifest(args.dataset_manifest, records, args.limit) if args.dataset_manifest else None
+    bound = {r['file']: r for r in records}
     annotations, annotation_hash = load_landmark_manifest(args.landmarks) if args.landmarks else ({}, None)
-    paths = sorted(p for p in (args.dataset / "A").iterdir() if p.suffix.lower() in {".png", ".jpg", ".jpeg", ".webp"})
-    if args.limit:
-        paths = paths[:args.limit]
+    paths = [args.dataset / 'A' / r['file'] for r in records]
     if not paths:
         parser.error("No image pairs found.")
     if args.landmarks and set(annotations) != {p.name for p in paths}:
@@ -41,6 +48,9 @@ def main():
         before_bytes = path.read_bytes()
         after_bytes = (args.dataset / "B" / path.name).read_bytes()
         label_bytes = (args.dataset / "label" / path.name).read_bytes()
+        for part, content in [('A', before_bytes), ('B', after_bytes), ('label', label_bytes)]:
+            if hashlib.sha256(content).hexdigest() != bound[path.name][part + '_sha256']:
+                raise ValueError('Dataset bytes changed after preflight: ' + path.name)
         landmarks = checked_landmarks(annotations[path.name], before_bytes, after_bytes, label_bytes) if args.landmarks else None
         a = decode_image(before_bytes)
         b = decode_image(after_bytes)
@@ -51,7 +61,7 @@ def main():
             mask = result.images[key] > 0
             counts = [int((mask & label).sum()), int((mask & ~label).sum()), int((~mask & label).sum()), int((~mask & ~label).sum())]
             totals[name] = [x + y for x, y in zip(totals[name], counts)]
-        pairs.append({"file": path.name, "hash": result.report["input_hash"], "elapsed_ms": result.report["elapsed_ms"], "counts": result.report["counts"],
+        pairs.append({"file": path.name, "source_hashes": bound[path.name], "hash": result.report["input_hash"], "elapsed_ms": result.report["elapsed_ms"], "counts": result.report["counts"],
                       "alignment": result.report["alignment"], "candidate_pixels": int((result.images['proposal_mask']>0).sum()),
                       "accepted_pixels": int((result.images['supported_mask']>0).sum()), "warnings": result.report['warnings']})
         if landmarks is not None:
@@ -66,7 +76,7 @@ def main():
             assisted_pairs.append({"file": path.name, "metrics": per_pair, "alignment": assisted.report["alignment"],
                                    "counts": assisted.report["counts"], "elapsed_ms": assisted.report["elapsed_ms"]})
         print(f"Evaluated {path.name}", flush=True)
-    output = {"dataset": str(args.dataset), "pairs": len(pairs), "subset_limit": args.limit, "threshold": args.threshold, "min_area": args.min_area, "detector": args.detector,
+    output = {"dataset": str(args.dataset), "dataset_manifest_sha256": dataset_hash, "dataset_frozen": dataset_hash is not None, "pairs": len(pairs), "subset_limit": args.limit, "threshold": args.threshold, "min_area": args.min_area, "detector": args.detector,
               "metrics": {k: metrics(v) for k, v in totals.items()}, "pair_results": pairs,
               "note": "Pixel metrics in processed image coordinates, maximum side 1024. Rejected/abstained pixels count as negative. Precision/recall are null when their denominator is zero. No calibration or real-world deployment claim."}
     if args.landmarks:
