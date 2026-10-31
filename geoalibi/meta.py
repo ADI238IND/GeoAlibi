@@ -8,12 +8,12 @@ import io
 import hashlib
 from contextlib import aclosing
 
-import cv2
 import httpx
 import numpy as np
 from PIL import Image
 
 from .vision import data_url, png
+from .sam_geometry import ADAPTER_VERSION, rasterize_records
 
 MODEL = "muse-spark-1.3"
 BASE_URL = "https://api.meta.ai/v1"
@@ -106,30 +106,16 @@ async def segment(image, concept="building"):
             result = await parse_responses_stream(source, image_segmentation_format()).final_result()
     if result.outcome.status != "completed" or any(d.severity == "error" for d in result.diagnostics):
         raise ValueError("SAM returned incomplete or malformed segmentation.")
-    boxes = {r.object_id: r for r in result.records if r.kind == "box"}
-    union = np.zeros(image.shape[:2], np.uint8)
-    objects = []
-    for r in result.records:
-        if r.kind != "mask" or r.object_id not in boxes:
-            continue
-        box = boxes[r.object_id]
-        x1, y1, x2, y2 = [int(v) for v in (box.left, box.top, box.right, box.bottom)]
-        x1, x2 = max(0, x1), min(image.shape[1], x2 + 1)
-        y1, y2 = max(0, y1), min(image.shape[0], y2 + 1)
-        if x2 <= x1 or y2 <= y1:
-            raise ValueError("SAM returned invalid geometry.")
-        raster = np.frombuffer(bytes(decode_mask_to_raster(r.mask)), dtype=np.uint8).reshape(r.mask.height, r.mask.width)
-        mask = cv2.resize(raster, (x2-x1, y2-y1), interpolation=cv2.INTER_NEAREST)
-        union[y1:y2, x1:x2] |= (mask > 0).astype(np.uint8) * 255
-        objects.append({"id": str(r.object_id), "bbox": [x1, y1, x2-x1, y2-y1], "pixels": int((mask > 0).sum())})
-    return {"objects": objects, "concept": concept}, union
+    objects, union = rasterize_records(result.records, image.shape, decode_mask_to_raster)
+    return {"objects": objects, "concept": concept, "adapter_version": ADAPTER_VERSION,
+            "coordinate_space": "source-image-half-open-bounds"}, union
 
 
 async def enrich(analysis, store, ceiling, *, with_sam=False):
     if not available():
         analysis.report["meta"] = {"status": "unavailable", "reason": "MODEL_API_KEY is not configured. No credit was consumed."}
         return
-    cache_key = analysis.report["input_hash"] + analysis.report["engine"] + analysis.report['detector'] + analysis.report.get('model_provenance',{}).get('sha256','') + str(analysis.report["threshold"]) + str(analysis.report["min_area"]) + str(with_sam) + hashlib.sha256(json.dumps(analysis.report['alignment'],sort_keys=True).encode()).hexdigest()
+    cache_key = ADAPTER_VERSION + analysis.report["input_hash"] + analysis.report["engine"] + analysis.report['detector'] + analysis.report.get('model_provenance',{}).get('sha256','') + str(analysis.report["threshold"]) + str(analysis.report["min_area"]) + str(with_sam) + hashlib.sha256(json.dumps(analysis.report['alignment'],sort_keys=True).encode()).hexdigest()
     cached = store.cached(cache_key)
     if cached:
         analysis.report["meta"] = {**cached["meta"], "cache_hit": True}

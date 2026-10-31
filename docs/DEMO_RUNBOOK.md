@@ -27,7 +27,16 @@ Record commit SHA, dependency versions, detector/checkpoint identity, scenario o
 
 ## Release gates before November 3 readiness
 
-- Obtain independently reviewed real correspondences or larger-context registration evidence; evaluate automatic and assisted arms separately using PR #6's protocol after review/merge.
+- Obtain independently reviewed real correspondences or larger-context registration evidence; evaluate automatic and assisted arms separately using docs/ASSISTED_EVALUATION.md.
 - Validate Muse/SAM on appropriately licensed real imagery without claiming protocol success establishes accuracy.
 - Confirm participant submission requirements from the authenticated organizer materials.
 - Rehearse from a clean environment, retain exact failures and prepare an offline local demonstration if provider access fails.
+
+
+## One-command offline rehearsal
+
+Run `python scripts/build_demo_bundle.py --output dist/offline-demo` after installation. The builder verifies the checked-in source manifest, generates four fixed-seed procedural scenarios, verifies every evidence packet, and writes a summary with dependency versions and source digest. It never loads API credentials, an application ledger or downloaded imagery/weights. It refuses existing output directories; use a new directory for each rehearsal.
+
+Read `dist/offline-demo/README.md`, inspect its local images and open the evidence ZIPs. The bundle uses only procedural imagery and makes no benchmark-accuracy claim. GitHub CI retains the generated bundle and browser screenshots for seven days as `geoalibi-rehearsal-<commit>`. Download it from the successful workflow run; source scripts can reproduce it after artifact expiry. Runtime/ZIP metadata may differ across runs; source/fixture identity is recorded rather than claiming byte-identical archives.
+
+The SAM half-open-bounds fix invalidates earlier spatial foreground counts. Do not reuse those counts in a pitch; see SAM_GEOMETRY.md before any new live demonstration.

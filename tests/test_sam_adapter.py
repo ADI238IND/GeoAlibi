@@ -33,7 +33,7 @@ def test_sam_adapter_finalizes_lane_and_places_decoded_bytes(monkeypatch):
             async for event in source: seen.append(event)
             mask = NS(width=2, height=2)
             return NS(outcome=NS(status="completed"), diagnostics=[], records=[
-                NS(kind="box", object_id=7, left=1, top=2, right=2, bottom=3), NS(kind="mask", object_id=7, mask=mask)])
+                NS(kind="box", object_id=7, left=1, top=2, right=3, bottom=4), NS(kind="mask", object_id=7, mask=mask, bounds=NS(left=1, top=2, right=3, bottom=4))])
         return NS(final_result=final)
     monkeypatch.setattr(openai, "AsyncOpenAI", API)
     monkeypatch.setattr(meta_sam_parser, "parse_responses_stream", parse)

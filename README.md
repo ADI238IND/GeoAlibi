@@ -4,6 +4,18 @@
 
 Built for Aditya Singhal's Meta Global AI Developer Hackathon idea, Indie Dev Track. This is a working local research prototype. Live Muse Spark interpretation and SAM response decoding have been exercised; real satellite accuracy and deployment readiness remain to be established. It is not a completed hackathon submission.
 
+## Consolidated build — 31 October
+
+The release branch combines the classical/larger-context experiments, replayable learned-match audit, independent-landmark scorer, and corrected SAM mask geometry. Research matchers remain separate from production registration. See [release status](docs/RELEASE_STATUS.md) for established evidence and remaining blockers.
+
+Generate a credential-free offline rehearsal with four clearly labelled procedural scenarios and verified evidence packets:
+
+```bash
+python scripts/build_demo_bundle.py --output dist/offline-demo
+```
+
+Use a new output directory for each run. CI builds this bundle and retains it with desktop/mobile screenshots as a downloadable workflow artifact for seven days. This is a local demo deliverable, not a hosted deployment or competition submission.
+
 ## Start on Windows PowerShell
 
 Install Python 3.10 or newer. Extract this project, open its folder in PowerShell, then:
@@ -142,3 +154,14 @@ Reports include all supplied points, their hash, fit/held-out residuals and sour
 Under Upload your imagery, choose both files and open **Pick matched landmarks visually**. Click a stationary landmark in Before, then its match in After. Add at least six well-spread pairs; the final two are held out. Undo/Clear are available. Explicitly enable **Use picked landmarks** before submitting. Selecting another image clears picks. Keyboard users can focus either canvas, move with arrows (Shift for 10px), and select with Enter.
 
 The local preview endpoint uses the same EXIF orientation and resize pipeline as analysis, returns a processed PNG with no-store headers, and does not save an investigation or call a model. Coordinates are image pixels, not latitude/longitude. Geometric checks and user-supplied evidence limitations from v0.4 still apply. The advanced JSON path remains available and is disabled while picked landmarks are opted in.
+
+## Experimental learned-match audit
+
+[LoFTR audit instructions](docs/LOFTR_AUDIT.md) provide a fixed CPU protocol and model-free replay of saved raw correspondences. This research tool does not change production registration. Candidate consistency is not independently verified alignment or change accuracy; the selected demo pairs are not a full benchmark.
+
+The [independent alignment check](docs/INDEPENDENT_ALIGNMENT.md) scores frozen learned transforms against separately collected, image-bound reviewed points without refitting. Real independent annotations are still required; model consistency alone is not validation.
+
+
+## SAM geometry correction
+
+The SAM adapter now respects the official parser's half-open bounds, avoiding an extra row/column during mask placement. It rejects unpaired, duplicate, out-of-bounds or malformed geometry rather than silently dropping or stretching evidence. A published Meta payload is tested through the real parser and decoder offline. This validates protocol placement, not satellite segmentation accuracy. Older cached interpretations are invalidated by the adapter version; historical live mask-area measurements require rerunning before reuse. See [SAM_GEOMETRY.md](docs/SAM_GEOMETRY.md).

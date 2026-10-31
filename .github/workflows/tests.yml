@@ -10,6 +10,17 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install -e '.[meta,test]'
       - run: python -m pytest -q
+      - run: python scripts/replay_loftr.py docs/LOFTR_AUDIT.json
 
       - run: python -m playwright install --with-deps chromium
       - run: python scripts/check_ui.py
+      - run: python scripts/build_demo_bundle.py --output dist/offline-demo
+      - uses: actions/upload-artifact@v4
+        with:
+          name: geoalibi-rehearsal-${{ github.sha }}
+          path: |
+            dist/offline-demo/
+            test-results/*.png
+            test-results/ui-results.json
+          if-no-files-found: error
+          retention-days: 7

@@ -73,3 +73,53 @@ The release/integrated-evidence-workstation branch combines PRs #6–#11: review
 ## Portable landmark drafts — 28 October
 
 Added local JSON save/restore for visual landmark work. Drafts bind original Before/After file SHA-256 values and processed dimensions to coordinates, carry an explicit unreviewed notice, and contain no imagery. Restore rejects unsupported schema, wrong images/dimensions, nonfinite/out-of-bounds coordinates and >20 points; file size limited to 64 KB. Async revision checks reject images or picks changed during hashing. Restoring preserves held-out ordering and requires fresh explicit application opt-in. This is a working draft, not an independently reviewed evaluation manifest. Browser regression now covers six-pair export/clear/restore and wrong-image rejection. No paid calls; ledger/credential remain unavailable. Next priority: independently review real landmark correspondence drafts and evaluate conditional verification. Preserve strict automatic abstention.
+
+
+## 29 October learned-matcher handoff
+
+Current main c6be37f includes validated landmark draft preservation; PR #15 context experiment CI passed. Prior interactive LoFTR run observed one candidate pass among seven actual pairs, 0/7 mismatches, 7/7 identical and 5/7 translated controls. Raw local experiment artifacts are not recoverable in this run: compute environment unavailable. Preserve only explicitly transcribed observations in LEARNED_MATCHER_HANDOFF.md, not fabricated raw JSON. Added a separate experimental correspondence geometry checker and regression tests for holdout isolation, known translation, excessive shift, clustered/insufficient evidence and malformed inputs. It is not wired into production and adds stricter duplicate/bounds validation requiring a fresh model rerun. GitHub CI must validate this branch; no local tests or inference possible. No credentials accessed or paid calls made; new reservations $0. Historical $0.54 reserve remains unreconciled. Next: recover/reconstruct inference runner, preserve raw correspondences, independently review the passing pair, and evaluate a frozen broader split. Do not present these candidate counts as verified real alignment or change accuracy.
+
+## 30 October replayable learned-match audit
+
+Read main c6be37f and PR #16 b7df0cd; both had passing CI. Local execution recovered, including prior script, checkpoint and seven development pairs. Built a separate branch atop PR #16 to preserve its unmerged geometry work. Added explicit CPU LoFTR runner, raw correspondence/confidence retention, selected/held-out index mapping, input/checkpoint hashes and environment versions; atomic incomplete/complete reporting; model-free replay rejecting missing/duplicate cases or inconsistent conclusions. No production integration or weakened thresholds.
+
+Fresh hash-verified 28-case run and replay completed: actual candidate consistency 1/7, mismatched 0/7, identical 7/7, translated 5/7. Raw results preserved in docs/LOFTR_AUDIT.json; these are selected development diagnostics, not benchmark accuracy or independently verified registration. All 57 local unit/API tests passed. Local Chromium download failed with a corrupt/zero-byte archive; use GitHub browser CI for this branch. Next: independently review stationary correspondences on the passing actual pair and freeze a broader untouched evaluation split; real-satellite Muse/SAM validation remains outstanding.
+
+Paid API usage and reservations this run: $0. No credential or billing access established; historical $0.54 reservation remains unreconciled and must not be reset. Do not use credentials from chat history. No deployment or submission made.
+
+## 31 October independent alignment scoring
+
+Rechecked main c6be37f and draft #17 673b22f; latest unit/replay/browser CI passed. Added a separate research evaluator for frozen LoFTR transforms against independently collected, image-bound reviewed landmarks. All actual pairs must be included; all review points are evaluation-only, never used for fitting. Record original-image-review declaration, distinct annotator/reviewer IDs, image hashes, both manifest hashes, identity versus transform residuals and explicit missing-transform results. No favourable subset, refitting or promotion of model candidate status. Documentation gives collection procedure and clearly states that real independent annotations remain unavailable.
+
+No API calls or new reservations ($0); historical $0.54 reserve remains unreconciled. Secure credential/billing state has not been established. Next scientific blocker: independently collect and review real stationary landmarks without viewing model outputs, then run the new check and freeze a broader evaluation split. Production gates remain unchanged; no deployment or submission.
+
+Validation for this change: 67 local unit/API/CLI tests passed, including a full fixture command-line run and wrong-image rejection before report creation. Existing 28-case raw audit replay passed; source manifest hashes match. Fixtures exercise behaviour only, not real satellite accuracy. GitHub CI will run the full browser suite on the dedicated draft branch.
+
+
+## 31 October SAM half-open bounds correction
+
+Re-read current main c6be37f and checked CI: research PR #18 and its predecessors passed. This fix branches directly from main, independent of the research PR stack. Found that the official parser already converts wire endpoints to half-open bounds; GeoAlibi added another pixel, enlarging masks. Corrected exact mask placement, rejected ambiguous/unpaired/malformed geometry and added an adapter-version cache namespace. No production verdict thresholds changed. Real official sample payload now goes through the installed parser and decoder in an offline regression; prior mocked adapter fixture was corrected to reflect actual parser semantics.
+
+Historical live segmentation foreground counts were generated before this fix and require rerunning before spatial validation claims. Connectivity/nonempty decoding observations remain historical facts. No paid calls or new reservations ($0); historical $0.54 reserve remains unreconciled, with secure credentials/billing/ledger unavailable to this work. Next: corrected live satellite-pair validation when those prerequisites are restored; independent real landmarks remain needed for the research registration path. No deployment or submission.
+
+Local validation: 57 unit/API/protocol tests passed on the main-based fix branch, including the real parser/decoder payload regression and cache/failure handling. This count is separate from the 67-test research stack. Full browser CI is required on the dedicated draft PR.
+
+
+## Matcher comparison — 28 October
+
+Added a reproducible offline SIFT/AKAZE comparison on all hash-verified real demo images: 56 cases across actual, mismatched, identical and translated pairs. Fixed ratio 0.72, RANSAC residual 2.5px, >=8 inliers and >=40% consensus, bounded scale/rotation/translation and >=10% hull coverage; no sweep or test-label tuning. Neither matcher passed candidate geometry for any of 7 actual pairs; neither passed any of 7 mismatched controls. SIFT passed 14/14 derived positives, AKAZE 12/14. Candidate geometry is not independently validated alignment. Kept production behavior unchanged. Results and OpenCV version in MATCHER_COMPARISON.json. Next move beyond these classical matcher substitutions: larger surrounding imagery or independently annotated correspondences, then a separately frozen evaluation. No API calls/spend; prior secure ledger remains unavailable.
+
+
+## Larger-context experiment — 28 October
+
+Retrieved 12 parent images (six distinct 1024x1024 scenes) from a pinned LEVIR-CD mirror archive using bounded ZIP member reads. All seven original-author demo crops matched the parent pixels exactly in both dates; original crop hashes and ZIP member CRCs checked. Parent image SHA-256s and mirror revision recorded; full archive SHA was not downloaded/verified. Engine 0.4.1 still marked all six unique scenes unreliable: feature matches 5–18, fitted inliers at most 4. Seven report rows reflect seven original crops, with test_2 repeated; they are not seven independent parent scenes. No thresholds changed or model accuracy claim. Added context_registration.py and CONTEXT_REGISTRATION.json; 44 existing tests pass. Install remotezip separately to reproduce, then run PYTHONPATH=. python scripts/context_registration.py after restoring original-author crops. Data remain academic-only, never committed. No paid API calls or reservations. Next: independently reviewed control points or separately evaluated learned correspondence methods; simply enlarging context did not solve this sample set.
+
+## 31 October consolidated release and offline deliverables
+
+User requested all updates together. Combined unchanged, CI-passing heads of #13, #15, #18 (including #16–#17), and #19 into one main-targeted release branch. Preserved experiment JSON/scripts, all checkpoint sections, corrected SAM production adapter and research isolation. Rebuilt a single source manifest. No contributor branches were overwritten or discarded.
+
+Added one-command offline rehearsal generation: four fixed-seed procedural scenarios, verified evidence ZIPs, local preview images, source/dependency identity and explicit limitations. Output refuses overwrites, stages generation before publishing the directory, and never loads credentials, a ledger, model weights or external imagery. CI now builds the bundle and retains it with browser screenshots for seven days. README, runbook and RELEASE_STATUS.md distinguish established evidence from missing validation.
+
+New paid API usage/reservations $0; historical $0.54 reserve remains unreconciled. Independent real landmarks, broader frozen benchmark, corrected real-image Meta validation and authenticated submission rules remain outstanding. No deployment or submission. This consolidated PR is intended to replace the separate review stack once accepted.
+
+Consolidated local validation: 82 tests passed; raw LoFTR audit replay passed; four-scenario rehearsal bundle generated and all four ten-file packets verified. The mixed illustration has two supported and four review regions; nuisance illustrations have no supported regions. These are behavioural fixtures, not benchmark scores. Local Chromium download again returned corrupt archives, so combined browser validation must come from GitHub CI before acceptance.
