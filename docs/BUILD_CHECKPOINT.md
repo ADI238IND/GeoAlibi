@@ -134,3 +134,13 @@ Rechecked main c6be37f and consolidated draft #20 4166fb4; both final consolidat
 Existing runtime dependencies needed restoring; source remained available. No secure credential, historical ledger or account billing access was established, so no paid API calls or reservations were made ($0 new; historical $0.54 unreconciled). Next: freeze an independently selected licensed split before inspecting predictions and run it once compute/inputs are ready. Independent landmark review and corrected real-image Meta validation remain outstanding.
 
 Validation: 90 local unit/API/CLI tests passed, including a complete frozen-evaluation CLI fixture and rejection of changed labels before any pair evaluation. Existing saved LoFTR replay passed and source hashes verified. Fixture metrics are not reported as satellite accuracy. Require full branch CI, including browser/demo generation, before accepting the follow-up.
+
+## 31 October verification trade-off accounting
+
+Read current main and PR #21 b5f82cf; both latest CI runs passed. Added proposal-to-supported transition counts/rates to the benchmark, separately for automatic and assisted arms, plus per-pair automatic confusion metrics, inspected/omitted counts and all-candidate-abstention indicators. Aggregate ratios use pooled pixels and zero denominators remain null. Removed proposals are explicitly not equated with abstention; additions are counted too, so new false alarms cannot be hidden.
+
+Verified all 21 original author-demo image/label hashes and ran the RGB baseline on the frozen seven-pair development set. Proposals contained 63,822 true-positive and 253,487 false-positive pixels; verification removed all of both. Supported recall 0, precision undefined. Four pairs had all inspected candidates in review; seven had zero supported pixels. This is not the optional U-Net result, an untouched benchmark, or a success claim. Saved original-input manifest and full measured output with environment/source identity. No thresholds were tuned.
+
+No paid API calls or reservations ($0 new); historical $0.54 remains unreconciled. Secure credential, ledger and billing access remain unavailable for live Meta validation. Next scientific priority remains independent real registration evidence and a broader frozen split. No public deployment or competition submission.
+
+Validation: 95 local tests passed, including all-abstention cost, empty denominators, introduced false positives, pixel-weighted aggregation, invalid-mask rejection and full CLI reporting. The seven-pair measured diagnostic completed successfully; CI must additionally validate browser and offline demo workflows on this branch.

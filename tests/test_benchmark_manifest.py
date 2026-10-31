@@ -56,6 +56,10 @@ def test_cli_frozen_evaluation_and_changed_label_failure(tmp_path):
     report = json.loads(output.read_text())
     assert report['dataset_frozen'] is True and report['pairs'] == 2
     assert report['pair_results'][0]['source_hashes']['label_sha256']
+    assert report['verification_tradeoff']['pixels'] == 2 * 64 * 64
+    assert report['verification_tradeoff']['net_recall_change'] is None
+    assert report['pair_results'][0]['metrics']['supported']['tp'] == 0
+    assert report['pair_results'][0]['verification_tradeoff']['truth_change_pixels'] == 0
     output.unlink()
     Image.new('L', (64, 64), 255).save(root / 'label/two.png')
     result = subprocess.run(command, capture_output=True, text=True)

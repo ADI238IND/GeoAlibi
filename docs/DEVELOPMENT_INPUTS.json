@@ -1,0 +1,50 @@
+{
+  "schema": "geoalibi-benchmark-inputs-v1",
+  "description": "Seven previously inspected original-author LEVIR demo test pairs; development diagnostic only, NOT untouched held-out benchmark. Source and academic-only/Google Earth terms: docs/REAL_SAMPLE_MANIFEST.json. No thresholds tuned for this run.",
+  "subset_limit": 0,
+  "pairs": [
+    {
+      "file": "test_102_0512_0000.png",
+      "A_sha256": "8e3221cef502953e06538e1ebddfdb609780c0c1cb6366aa3eee9208012aeab3",
+      "B_sha256": "c9ec0d2f4f58e3537a1f4685ef16368c5546300d04aef9e8a84d9a6dd3a3cc48",
+      "label_sha256": "a4223b16cda4fda2bda583e4232603ad91a8700676d1a977401851fb746818ff"
+    },
+    {
+      "file": "test_121_0768_0256.png",
+      "A_sha256": "f51526b822696395992565a70f0d2223f6af7c5a1bf1dfef47edc9cd7450e257",
+      "B_sha256": "867fdc2fdad0292cc6561e5aab71fc97c8d67bedd6ebd8d1012e094e3b6092b9",
+      "label_sha256": "ce1fec32f2d6792ea3eddcea7861899c5985ccdfde61a179098694f28d927a3a"
+    },
+    {
+      "file": "test_2_0000_0000.png",
+      "A_sha256": "99572d7b22f39f2c3947f817ab857784ab85cdbd1307fa0892d41c564f1966bd",
+      "B_sha256": "c37302e1bde614f032291544d371bbe3631f773e3cf4d7130cee5dabfdbae961",
+      "label_sha256": "c2094d81c4dbd1739cf5b028dff2bdad9eb0c0c6a8c8150f863fa08de338e107"
+    },
+    {
+      "file": "test_2_0000_0512.png",
+      "A_sha256": "2b53d8b252e3aa0d205c0d5af432163d4637cc4e6793480ff74d27de5959de10",
+      "B_sha256": "a3235f14acf81726e9036f0e4fe16b87e8d59d75975b3e688bf47ee7f532626a",
+      "label_sha256": "8d6ce41349c2b149edd5700acc0c42657c2ce553d2f52b39cc795e0924828509"
+    },
+    {
+      "file": "test_55_0256_0000.png",
+      "A_sha256": "fab174503235b57c43a8cf8b8bf4d4a2fb952990b03ef23aa7b86f3d9eb69cab",
+      "B_sha256": "be7248f746cfdb1c592489be9fe23ae2b689961a668f8d047a7b0c398ec94018",
+      "label_sha256": "9a4506913ea0880e2deb487bbf59206ff62ad2a1db3935befb34352302b8037d"
+    },
+    {
+      "file": "test_77_0512_0256.png",
+      "A_sha256": "fe56308b53815e8b8c81705741236a93d1f75948ce3ad66168a0aed56f51684a",
+      "B_sha256": "4f53af9029bce438330555c491bbf901b8252eb0062f27351954b5e898eccdaa",
+      "label_sha256": "32618a3acc9c976e30915c4689d93cde1d99cba623de625e17b2037b0cf56c9a"
+    },
+    {
+      "file": "test_7_0256_0512.png",
+      "A_sha256": "b6c49095a63807ed29acaadef7153a4e66e7b22f9fa974c07a58f2831fcfe7f3",
+      "B_sha256": "034282f91bfe65709bb147a31f03b4cf713f0980f2da00a576ed30c535628eb0",
+      "label_sha256": "bcdb87fed6c57ac3cf5b57439c52824909f888e59322a106b45363b7aae45ef4"
+    }
+  ],
+  "warning": "Hashes freeze bytes, not independence, licensing or annotation truth. Freeze before inspecting results; never tune on the evaluation split."
+}

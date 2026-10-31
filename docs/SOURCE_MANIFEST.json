@@ -2,9 +2,9 @@
   ".env.example": "0140bea5acd41f1c27fc8f1001925af238a8ec04800d5594968fe98ec18ef435",
   ".github/workflows/tests.yml": "b67a722dc4ca1bbce1e844bdf708ed677fa003e1ae2120dc5625643980b7d03d",
   ".gitignore": "bd7695d69ebeafd64248ffe2599cb8d611d59c23a2d883a910f9f9d6516ddaa1",
-  "README.md": "845beb92d868c48820b5a53dbcd2421b099a51b1eede0ac42a5dd1e2af6fba87",
+  "README.md": "c7a0b46bfd100743b4fbc4fdec6e659c42f564c0e5c36933919a8d47cd28b747",
   "docs/ASSISTED_EVALUATION.md": "22d3ae4428c4b5220dc47f6e295ed1935cfd4abbb1ba70e4e20db013df1583ee",
-  "docs/BUILD_CHECKPOINT.md": "5e066435c38eedcf0a660a53df4aaa9904740461f610c1d3290230ef048dc611",
+  "docs/BUILD_CHECKPOINT.md": "fcf6e5fb60d35f67f8b57e5442c47b9825294f395396448d50c140f470f9ee39",
   "docs/CONTEXT_REGISTRATION.json": "96ae3a832f8396dc30c709f0d1471ee8d533f2b782554548382c84fd3d28b878",
   "docs/DEMO_RUNBOOK.md": "59a7f47a7b6017549c35489566c8b2dbc3c8ba0181a58ddb4d26e1ffd37daad9",
   "docs/INDEPENDENT_ALIGNMENT.md": "5f898ba45b67543f118180402914e3d766a5bca0fc44671aa95ced0a0d566073",
@@ -50,7 +50,7 @@
   "scripts/compare_matchers.py": "5b950670618e541ae3e517c89943a68fdb1273810f1c53bd5ad3ffadac37681a",
   "scripts/context_registration.py": "7cee487dc22bae53af0116b50c7870a22bf2891842cbacfce80e14edddc24619",
   "scripts/download_detector.py": "12f19b59bfe59307b45679edeaf06b456c6a89df6b1b18577b97c1df98066dfd",
-  "scripts/evaluate.py": "100d2fcfa4612b0068f382f5ee51f54955e1ec38ae03e619eb5146a60057f82a",
+  "scripts/evaluate.py": "d5a0c9dbd4d98e5875d245da06081df1d11d29b834bac44854499f31a21e7712",
   "scripts/evaluate_loftr.py": "bbc4fa478a36df4e90372d3e92c0ac6993a6f7ba33932262b7da18793b6d4080",
   "scripts/replay_loftr.py": "8844f72fd0d904ec5fa6f2e27def6d7dbf2553c0cf5696f8878d373eafaa587b",
   "scripts/smoke_meta.py": "eed9215b8365baf324e60ae545c4857196b976e9083473c58d1caeba7302a99f",
@@ -72,5 +72,10 @@
   "docs/FROZEN_BENCHMARK.md": "1a064c553edf5448dbeef349a8304a1bf1368febf0d3d3ec4a39401d6f03b5b8",
   "geoalibi/benchmark_manifest.py": "b80117f13799dba230efe3eeb6d93ea78aacebd685e2b0ff25b8989f5b41c4c9",
   "scripts/freeze_benchmark.py": "4f7e92ebbbe4bbc5cc7790aa2d6214523084b1fcea947444bbd331e9cbebdaef",
-  "tests/test_benchmark_manifest.py": "133b1d394ac8d3ba42dd287d84a03c1567690989d68fa94eebc566e96e57c561"
+  "tests/test_benchmark_manifest.py": "72b22a4a518ea605706f6396f8ea42019a743068506df95b516408efafd9b1fd",
+  "docs/VERIFICATION_TRADEOFF.md": "05c1696a6c67e6c032621de10e061fb06c9a195f0521d4fe05105eb74416eb47",
+  "docs/DEVELOPMENT_INPUTS.json": "6faa56192998d53c784de73684ed029334209fe0119feb15c2cc6dba718b45b5",
+  "docs/DEVELOPMENT_BASELINE_TRADEOFF.json": "8dd70ceaa82538e709a2e79e91de8d47d445698c26b6f8dc42b4471759091a45",
+  "geoalibi/verification_metrics.py": "a44aa08938b80735a25f495ad32f3feff60a703a91ccd8a65204fa124149de91",
+  "tests/test_verification_metrics.py": "f65ba60243d54474de2866ceea314cbb906f5eeb4591fc145dbb520eec972ed8"
 }
