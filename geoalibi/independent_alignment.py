@@ -27,7 +27,10 @@ def landmark_errors(matrix, landmarks, width=256, height=256):
     matrix = np.asarray(matrix, dtype=float)
     if matrix.shape != (2, 3) or not np.isfinite(matrix).all():
         raise ValueError('Frozen transform must be a finite 2 by 3 matrix.')
-    errors = np.linalg.norm(source @ matrix[:, :2].T + matrix[:, 2] - target, axis=1)
+    with np.errstate(over='ignore', invalid='ignore'):
+        errors = np.linalg.norm(source @ matrix[:, :2].T + matrix[:, 2] - target, axis=1)
+    if not np.isfinite(errors).all():
+        raise ValueError('Frozen transform produces nonfinite residuals.')
     return {**result, 'transform_errors_px': errors.tolist(),
             'transform_rms_px': float(np.sqrt(np.mean(errors ** 2))),
             'transform_max_error_px': float(errors.max()),

@@ -1,0 +1,102 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<title>GeoAlibi · Independent alignment review</title>
+<style>
+:root{font:16px system-ui,sans-serif;color:#e7edf8;background:#101623;color-scheme:dark}body{margin:0}main{max-width:1500px;margin:auto;padding:24px}h1{font-size:1.7rem;margin:8px 0}p{line-height:1.5}.muted{color:#afbcd3}.bar{display:flex;gap:12px;flex-wrap:wrap;align-items:end;margin:18px 0}label{display:grid;gap:6px;min-width:0;max-width:100%}input,select,button{box-sizing:border-box;max-width:100%;font:inherit;border:1px solid #52627e;border-radius:7px;padding:9px;background:#202c42;color:#fff}button{cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}input[type=checkbox]{width:20px;height:20px}.check{display:flex;align-items:center;gap:10px}.panels{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{min-width:0}.viewport{overflow:auto;height:62vh;border:1px solid #52627e;border-radius:8px;background:#050912}canvas{display:block;width:100%;height:auto;touch-action:manipulation;cursor:crosshair}h2{font-size:1rem}.pill{display:inline-block;background:#293b5c;border-radius:20px;padding:6px 12px}#status{min-height:24px;color:#b7d7ff}#points{max-height:140px;overflow:auto;white-space:pre-wrap}.warning{border-left:3px solid #e7b459;padding-left:12px}a{color:#c0d7ff}@media(max-width:700px){main{padding:14px}.panels{grid-template-columns:1fr}.viewport{height:45vh}}
+</style></head><body><main>
+<span class="pill">GeoAlibi · Independent review</span><h1>Check stationary points in the original images</h1>
+<p class="muted">Choose 6–20 matching stationary features spread across each scene. Click <strong>After</strong>, then the same feature in <strong>Before</strong>. Every point will evaluate a frozen transform; none will fit it. This page contains original image pairs only.</p>
+<p class="warning">Collect without seeing model results, transforms, matches or change labels. A different person must review all pairs. Names and declarations record responsibility; they cannot prove independence. This bundle contains source imagery: keep it private and follow its academic-use terms.</p>
+<div class="bar"><label>Mode<select id="mode"><option value="collect">1 · Collect landmarks</option><option value="review">2 · Independently review a draft</option></select></label>
+<label>Annotator ID<input id="annotator" maxlength="120" autocomplete="off"></label><label>Reviewer ID<input id="reviewer" maxlength="120" autocomplete="off" disabled></label>
+<label>Import saved draft<input id="import" type="file" accept="application/json,.json"></label></div>
+<label class="check"><input id="attest" type="checkbox"><span id="attestText">I collected these points from original images without viewing model evidence or change labels.</span></label>
+<div class="bar"><label>Scene<select id="scene"></select></label><label>Image zoom<select id="zoom"><option value="1">Fit width</option><option value="2">2×</option><option value="3">3×</option></select></label><button id="undo">Undo last point</button><button id="clear">Clear this scene</button><button id="draft">Save unreviewed draft</button></div>
+<p id="progress"></p><p id="status" role="status" aria-live="polite"></p>
+<div class="panels"><section class="panel"><h2>Before · click second</h2><div class="viewport"><canvas id="before" aria-label="Before image"></canvas></div></section><section class="panel"><h2>After · click first</h2><div class="viewport"><canvas id="after" aria-label="After image"></canvas></div></section></div>
+<pre id="points"></pre><label class="check"><input id="approve" type="checkbox" disabled><span>I checked every listed correspondence in this scene against the original images.</span></label>
+<div class="bar"><button id="export" disabled>Export all reviewed landmarks</button></div>
+<p class="muted">Save a draft before closing: this page does not autosave or send data. Use browser zoom and the image zoom control for precise picking. Reviewed export requires valid geometry and a separate reviewer for every scene. The Python scorer rechecks all points and source hashes.</p>
+</main><script>
+'use strict';
+const task=/* REVIEW_TASK */;
+const $=id=>document.getElementById(id), clone=x=>JSON.parse(JSON.stringify(x));
+let imageGeneration=0;
+let records=task.pairs.map(p=>({...p,landmarks:[],collection_basis:null})), approvals=records.map(()=>null), pending=null, loaded=false;
+const images={before:new Image(),after:new Image()};
+const index=()=>Number($('scene').value), current=()=>records[index()], reviewing=()=>$('mode').value==='review';
+const normalize=s=>s.trim().toLocaleLowerCase();
+const message=s=>$('status').textContent=s;
+function hullArea(xy){
+ const pts=xy.map(p=>p.slice()).sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
+ const cross=(o,a,b)=>(a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0]);
+ const build=ps=>{let h=[];for(const p of ps){while(h.length>=2&&cross(h[h.length-2],h[h.length-1],p)<=0)h.pop();h.push(p);}return h;};
+ const a=build(pts),b=build(pts.slice().reverse()),h=a.slice(0,-1).concat(b.slice(0,-1));
+ return Math.abs(h.reduce((s,p,i)=>s+p[0]*h[(i+1)%h.length][1]-p[1]*h[(i+1)%h.length][0],0))/2;
+}
+function geometry(r,complete=true){
+ const rows=r.landmarks;
+ if(!Array.isArray(rows)||rows.length>20||complete&&rows.length<6)return 'Choose 6–20 correspondences.';
+ if(rows.some(p=>!Array.isArray(p)||p.length!==4||p.some(v=>typeof v!=='number'||!Number.isFinite(v))||p.some((v,i)=>v<0||v>=(i%2===0?r.width:r.height))))return 'A point is outside its original image bounds.';
+ if(!complete)return '';
+ for(const offset of [0,2]){const xy=rows.map(p=>p.slice(offset,offset+2));
+  for(let i=0;i<xy.length;i++)for(let j=0;j<i;j++)if(Math.hypot(xy[i][0]-xy[j][0],xy[i][1]-xy[j][1])<2)return 'Points must be distinct in both images.';
+  if(hullArea(xy)<.1*r.width*r.height)return 'Spread points across at least 10% of each scene.';
+ }return '';
+}
+function sameIdentity(r,p){return ['file','before_sha256','after_sha256','label_sha256','width','height'].every(k=>r[k]===p[k]);}
+function draw(){for(const side of ['before','after']){
+ const c=$(side),ctx=c.getContext('2d'),r=current();c.width=r.width;c.height=r.height;c.style.width=(100*Number($('zoom').value))+'%';
+ if(images[side].complete&&images[side].naturalWidth)ctx.drawImage(images[side],0,0,c.width,c.height);
+ const off=side==='after'?0:2;const points=r.landmarks.map(p=>p.slice(off,off+2));if(side==='after'&&pending)points.push(pending);
+ points.forEach((p,i)=>{ctx.strokeStyle='#fff';ctx.fillStyle='#ffcf58';ctx.lineWidth=2;ctx.beginPath();ctx.arc(p[0],p[1],7,0,Math.PI*2);ctx.stroke();ctx.font='bold 19px sans-serif';ctx.fillText(String(i+1),p[0]+10,p[1]-8);});
+}}
+function controls(){
+ const r=current(),review=reviewing(),reviewer=$('reviewer').value.trim(),author=$('annotator').value.trim();
+ const validReviewer=reviewer&&author&&normalize(reviewer)!==normalize(author)&&$('attest').checked;
+ $('annotator').disabled=review;$('reviewer').disabled=!review;$('undo').disabled=review;$('clear').disabled=review;
+ $('approve').disabled=!review||!validReviewer||!!geometry(r)||r.collection_basis!=='independent-original-image-review';
+ $('approve').checked=approvals[index()]===reviewer&&!!reviewer;
+ $('export').disabled=!review||!validReviewer||records.some((p,i)=>geometry(p)||p.collection_basis!=='independent-original-image-review'||approvals[i]!==reviewer);
+ $('progress').textContent=`Scene ${index()+1} of ${records.length} · ${r.landmarks.length}/20 points · ${approvals.filter(Boolean).length}/${records.length} reviewed`;
+ $('points').textContent=r.landmarks.map((p,i)=>`${i+1}: After (${p[0].toFixed(2)}, ${p[1].toFixed(2)}) → Before (${p[2].toFixed(2)}, ${p[3].toFixed(2)})`).join('\n');
+}
+async function show(){const generation=++imageGeneration;loaded=false;pending=null;message('Loading original pair…');const r=current(),nextImages={before:new Image(),after:new Image()};
+ const load=(side)=>new Promise((resolve,reject)=>{nextImages[side].onload=resolve;nextImages[side].onerror=reject;nextImages[side].src=r[side];});
+ try{await Promise.all([load('before'),load('after')]);if(generation!==imageGeneration)return;Object.assign(images,nextImages);loaded=true;draw();controls();message(reviewing()?'Review every point against both original images.':'Click After, then Before for each matching feature.');}catch{if(generation===imageGeneration)message('Could not decode this image pair.');}
+}
+function changed(){approvals[index()]=null;current().collection_basis=null;$('attest').checked=false;draw();controls();}
+for(const side of ['before','after'])$(side).addEventListener('click',event=>{
+ if(reviewing()||!loaded)return;const c=$(side),rect=c.getBoundingClientRect(),p=[(event.clientX-rect.left)*c.width/rect.width,(event.clientY-rect.top)*c.height/rect.height];
+ if(p[0]<0||p[1]<0||p[0]>=c.width||p[1]>=c.height)return;
+ if(side==='after'){if(current().landmarks.length>=20){message('Maximum 20 points; undo one to replace it.');return;}pending=p;draw();message('Now click the matching feature in Before.');}
+ else if(pending){current().landmarks.push([...pending,...p]);pending=null;changed();message('Point saved. Click After for the next pair.');}else message('Click the After image first.');
+});
+$('undo').onclick=()=>{if(reviewing())return;if(pending)pending=null;else current().landmarks.pop();changed();};
+$('clear').onclick=()=>{if(reviewing())return;current().landmarks=[];pending=null;changed();};
+$('scene').onchange=show;$('zoom').onchange=draw;
+$('mode').onchange=()=>{approvals=records.map(()=>null);$('attest').checked=false;pending=null;$('attestText').textContent=reviewing()?'I am a different reviewer and checked the original images without viewing model evidence or change labels.':'I collected these points from original images without viewing model evidence or change labels.';draw();controls();message(reviewing()?'Import an independently collected draft, then review every scene.':'Collect from originals and save an unreviewed draft.');};
+for(const id of ['annotator','reviewer','attest'])$(id).onchange=()=>{approvals=records.map(()=>null);controls();};
+$('approve').onchange=()=>{if($('approve').disabled)return;approvals[index()]=$('approve').checked?$('reviewer').value.trim():null;controls();};
+function download(object,name){const blob=new Blob([JSON.stringify(object,null,2)+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function row(r){const {before,after,...data}=r;return data;}
+$('draft').onclick=()=>{
+ const author=$('annotator').value.trim();if(!author){message('Enter the annotator ID before saving.');return;}
+ const basis=!reviewing()&&$('attest').checked?'independent-original-image-review':null;
+ if(!reviewing())records.forEach(r=>r.collection_basis=basis);
+ download({schema:'geoalibi-alignment-draft-v1',dataset_manifest_sha256:task.dataset_manifest_sha256,annotator:author,pairs:records.map(row)},'alignment-unreviewed-draft.json');controls();message('Unreviewed draft saved. Send it with this private image bundle to a different reviewer.');
+};
+$('import').onchange=async()=>{
+ try{const file=$('import').files[0];if(!file)return;if(file.size>256000)throw Error('Draft is too large.');const d=JSON.parse(await file.text());
+ if(d.schema!=='geoalibi-alignment-draft-v1'||d.dataset_manifest_sha256!==task.dataset_manifest_sha256||typeof d.annotator!=='string'||!d.annotator.trim()||!Array.isArray(d.pairs)||d.pairs.length!==task.pairs.length)throw Error('Draft schema, task binding or complete pair set differs.');
+ const map=new Map(d.pairs.map(r=>[r.file,r]));if(map.size!==task.pairs.length)throw Error('Duplicate draft filenames.');
+ const next=task.pairs.map(p=>{const r=map.get(p.file);if(!r||!sameIdentity(r,p)||geometry(r,false))throw Error('Draft image binding or coordinates differ.');return {...p,landmarks:clone(r.landmarks),collection_basis:r.collection_basis==='independent-original-image-review'?r.collection_basis:null};});
+ records=next;$('annotator').value=d.annotator.trim();approvals=records.map(()=>null);$('attest').checked=false;await show();message('Draft imported. All prior approvals are cleared.');
+ }catch(error){message('Import rejected: '+error.message);}finally{$('import').value='';}
+};
+$('export').onclick=()=>{
+ controls();if($('export').disabled)return;
+ download({schema:'geoalibi-landmarks-v1',dataset_manifest_sha256:task.dataset_manifest_sha256,pairs:records.map(r=>({...row(r),coordinate_space:'processed-original-images',annotator:$('annotator').value.trim(),reviewer:$('reviewer').value.trim(),reviewed:true}))},'alignment-reviewed-landmarks.json');message('Reviewed manifest exported. Freeze it before scoring; do not edit points to improve residuals.');
+};
+task.pairs.forEach((p,i)=>{const option=document.createElement('option');option.value=String(i);option.textContent=p.file;$('scene').append(option);});controls();show();
+</script></body></html>
