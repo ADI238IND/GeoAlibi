@@ -50,7 +50,7 @@ def main():
                     assert page.locator("#assessment-panel").get_attribute("data-state") == "review_required"
                     page.locator("#inspect-proposals").click()
                     assert page.locator('[data-view="proposal_mask"]').get_attribute("aria-pressed") == "true"
-                    assert page.locator("#base-image").evaluate("img => img.complete && img.naturalWidth > 0")
+                    page.wait_for_function("() => {const img=document.querySelector('#base-image');return img.complete && img.naturalWidth > 0;}")
                     page.locator('[data-filter="review"]').click()
                     assert page.locator("#regions .region").count() == 4
                     page.locator("#regions .region").first.click()

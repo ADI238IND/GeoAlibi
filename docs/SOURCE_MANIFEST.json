@@ -46,7 +46,7 @@
   "scripts/audit_registration.py": "8d22a3354c1245a45ef596ae6f7459a0f3d7ddc9f00938c3c0d66f7e5475e9bf",
   "scripts/build_demo_bundle.py": "7e07fcdbd14cbee355e580f83145f7aca47e393ea201edef386976a8964c6800",
   "scripts/check_independent_alignment.py": "b40b05aa2f0a5e546acbc2ea4c086fe11c7e009e529b2ccbc9d61085956e4412",
-  "scripts/check_ui.py": "d9a1f3c0c477833d10fef1a8d7b6c0356d715b0e8bf91e2e9d821b72f498b14c",
+  "scripts/check_ui.py": "ef0c1196203ea0f093320ae6e927569fa98e9d1accd2741ce6506b6ec7366bf9",
   "scripts/compare_matchers.py": "5b950670618e541ae3e517c89943a68fdb1273810f1c53bd5ad3ffadac37681a",
   "scripts/context_registration.py": "7cee487dc22bae53af0116b50c7870a22bf2891842cbacfce80e14edddc24619",
   "scripts/download_detector.py": "12f19b59bfe59307b45679edeaf06b456c6a89df6b1b18577b97c1df98066dfd",
