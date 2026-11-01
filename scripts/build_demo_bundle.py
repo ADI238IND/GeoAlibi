@@ -11,6 +11,7 @@ from pathlib import Path
 from geoalibi.demo import CASES, pair
 from geoalibi.dossier import build_packet, verify_packet
 from geoalibi.vision import investigate, png
+from geoalibi.release_evidence import FILES, saved_evidence
 
 
 def build_bundle(output, root=None):
@@ -24,10 +25,20 @@ def build_bundle(output, root=None):
         path = root / name
         if not path.resolve().is_relative_to(root.resolve()) or hashlib.sha256(path.read_bytes()).hexdigest() != expected:
             raise ValueError('Source manifest mismatch: ' + name)
+    evidence = saved_evidence(root)
+    for key, path in FILES.items():
+        if sources.get(path) != evidence['source_sha256'][key]:
+            raise ValueError('Research evidence is not bound to the source manifest: ' + path)
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='geoalibi-rehearsal-', dir=output.parent) as temporary:
         stage = Path(temporary) / 'bundle'
         stage.mkdir()
+        (stage / 'recorded-research-evidence.json').write_text(json.dumps(evidence, indent=2, allow_nan=False) + '\n')
+        for key, path in FILES.items():
+            data = (root / path).read_bytes()
+            if hashlib.sha256(data).hexdigest() != evidence['source_sha256'][key]:
+                raise ValueError('Research source changed during bundle generation: ' + path)
+            (stage / ('research-' + key + '.json')).write_bytes(data)
         results = []
         for case, title in CASES.items():
             before, after, _ = pair(case, seed=18)
@@ -49,6 +60,8 @@ def build_bundle(output, root=None):
                    'source_manifest_sha256': hashlib.sha256(source_bytes).hexdigest(),
                    'environment': {'python': platform.python_version(), **{p: version(p) for p in ('numpy', 'opencv-python-headless', 'Pillow')}},
                    'api_calls': 0, 'new_api_reservations_usd': 0, 'scenarios': results,
+                   'recorded_real_evidence': 'recorded-research-evidence.json',
+                   'evidence_scope': 'Scenario images are procedural. Separate saved real-data reports are included but not rerun.',
                    'limitations': 'Procedural rehearsal only; no accuracy estimate, trained detector or live Meta inference. '
                                   'Historical $0.54 reservation is unreconciled; this bundle does not reset the ledger.'}
         (stage / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
@@ -59,7 +72,10 @@ def build_bundle(output, root=None):
                  'Open each PNG locally. Each ZIP contains a report, source/derived images and an unsigned checksum manifest.',
                  'Verify a ZIP with `python scripts/verify_packet.py PATH_TO_ZIP` from the source repository.', '',
                  '## Evidence limits', '',
-                 'The recorded seven-pair development experiment achieved 91.44% proposal F1 but automatic verification abstained on all candidates.',
+                 f"Saved eight-scene diagnostic: U-Net proposal F1 {100*evidence['arms']['unet']['metrics']['proposals']['f1']:.2f}%; RGB proposal F1 {100*evidence['arms']['baseline']['metrics']['proposals']['f1']:.2f}%.",
+                 f"U-Net supported recall {100*evidence['arms']['unet']['metrics']['supported']['recall']:.2f}%; supported precision is undefined when no pixels are accepted. Registration flagged reliable in {evidence['arms']['unet']['registration_flagged_reliable_pairs']}/{evidence['pair_count']} scenes.",
+                 'This is a saved small test-subset diagnostic, not full-benchmark accuracy or a new inference run. Original imagery, labels and model weights are excluded.',
+                 '[Arithmetic-checked evidence summary](recorded-research-evidence.json) · [Frozen input hashes](research-inputs.json) · [Saved baseline report](research-baseline.json) · [Saved U-Net report](research-unet.json)',
                  'The separate LoFTR research audit found 1/7 actual candidate-consistent alignments, not independently verified truth.',
                  'The corrected SAM adapter is protocol-tested; real satellite segmentation quality and independent landmark review remain outstanding.', '',
                  '## Scenarios', '']

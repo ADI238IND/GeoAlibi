@@ -4,9 +4,9 @@
 
 Built for Aditya Singhal's Meta Global AI Developer Hackathon idea, Indie Dev Track. This is a working local research prototype. Live Muse Spark interpretation and SAM response decoding have been exercised; real satellite accuracy and deployment readiness remain to be established. It is not a completed hackathon submission.
 
-## Consolidated build — 31 October
+## Integrated release — 1 November
 
-The release branch combines the classical/larger-context experiments, replayable learned-match audit, independent-landmark scorer, and corrected SAM mask geometry. Research matchers remain separate from production registration. See [release status](docs/RELEASE_STATUS.md) for established evidence and remaining blockers.
+The main-targeted [release PR #20](https://github.com/ADI238IND/GeoAlibi/pull/20) brings together the classical/larger-context experiments, replayable learned-match audit, corrected SAM geometry, frozen eight-scene evaluation, blind independent-review workflow and current offline deliverables. Research matchers remain separate from production registration. See [release status](docs/RELEASE_STATUS.md) for established evidence and remaining blockers.
 
 Generate a credential-free offline rehearsal with four clearly labelled procedural scenarios and verified evidence packets:
 
@@ -14,11 +14,13 @@ Generate a credential-free offline rehearsal with four clearly labelled procedur
 python scripts/build_demo_bundle.py --output dist/offline-demo
 ```
 
+The bundle also includes a separate summary of the saved eight-scene results and source reports, checked for complete frozen coverage, consistent counts and explicit missed changes. It runs no new model inference.
+
 Use a new output directory for each run. CI builds this bundle and retains it with desktop/mobile screenshots as a downloadable workflow artifact for seven days. This is a local demo deliverable, not a hosted deployment or competition submission.
 
 ## Frozen eight-scene diagnostic — 1 November
 
-A preregistered subset of eight new full LEVIR test scenes gives U-Net proposals 78.66% pixel F1 (baseline 8.08%). Both verified arms accept zero pixels: registration is unreliable in all eight scenes. This is a small research diagnostic, not full-benchmark accuracy or end-to-end readiness. See [protocol, all-scene results and reproduction](docs/EXPANDED_EVALUATION.md).
+A preregistered subset of eight new full LEVIR test scenes gives U-Net proposals 78.66% pixel F1 (baseline 8.08%). Both verified arms accept zero pixels: registration is flagged unreliable by the current gate in all eight scenes. This is a small research diagnostic, not full-benchmark accuracy or end-to-end readiness. See [protocol, all-scene results and reproduction](docs/EXPANDED_EVALUATION.md).
 
 Collect independent geometry evidence with the [offline blind landmark-review workflow](docs/BLIND_ALIGNMENT_REVIEW.md). It shows original pairs only, requires a separate reviewer and scores saved production transforms without refitting. Real reviewed annotations are still needed.
 
@@ -76,7 +78,7 @@ Uses standard model mode. It does not select contributor/training mode.
 ## What is not established
 
 - The default detector remains the RGB baseline. An optional author-released trained U-Net is now integrated; see [trained detector setup and evaluation](docs/TRAINED_DETECTOR.md). GeoAlibi did not train these weights.
-- Seven selected real author-demo pairs were evaluated with the trained detector. Proposal F1 was 91.44%, but the verifier abstained on every candidate. This is a development diagnostic, not a full benchmark or evidence of automatic-verification quality. The built-in scenes remain procedural illustrations.
+- Current real-data evidence uses eight newly selected full test scenes: pinned U-Net proposal F1 78.66%, baseline 8.08%, supported recall 0 in both arms. The older seven selected demo crops remain historical development evidence. See docs/EXPANDED_EVALUATION.md for all cases and limitations. Built-in scenario images are procedural illustrations.
 - **Live Muse Spark and SAM calls passed on an illustrative image pair on 27 October.** This validates the API integration, not accuracy on satellite imagery. Real-image SAM mask geometry and interpretation quality still need evaluation.
 - Verdicts and diagnostic scores are not calibrated probabilities, ground truth or emergency guidance. SAM does not automatically prove an object changed.
 - Input images must depict the same footprint and have the same processed dimensions. The app does not validate provenance or georeferencing. It handles rendered RGB imagery, not full multispectral GeoTIFF workflows.
@@ -152,7 +154,7 @@ Every new region records five alternative-explanation challenges, with explicit 
 
 Advanced uploads accept 6–20 matched landmarks as `[after_x, after_y, before_x, before_y]` rows in processed original-image pixel coordinates. Supply stationary, independently checked correspondences. The first N−2 rows fit a bounded similarity transform; the final two rows are held out and are never used to refit. Fit points must span 10% of scene area; held-out points must be separated. Fit RMS must be ≤1.5px, held-out RMS ≤2px, and each held-out error ≤3px. The transform is limited to small shifts, ≤5° rotation and scale 0.95–1.05. Invalid evidence fails explicitly.
 
-Reports include all supplied points, their hash, fit/held-out residuals and source disclosure. Evidence packets include numbered landmark overlays: green fitting points and amber held-out points. This checks geometric consistency of user-supplied correspondences, not their real-world truth, acquisition provenance or independent authenticity. Do not generate guessed identity correspondences to bypass an unresolved automatic registration gate. No real-demo landmark annotations have yet been collected; the earlier seven-pair automatic all-abstention result remains unresolved.
+Reports include all supplied points, their hash, fit/held-out residuals and source disclosure. Evidence packets include numbered landmark overlays: green fitting points and amber held-out points. This checks geometric consistency of user-supplied correspondences, not their real-world truth, acquisition provenance or independent authenticity. Do not generate guessed identity correspondences to bypass an unresolved automatic registration gate. No real independently reviewed landmark manifest has yet been collected; the latest eight-scene zero-supported-pixel result remains unresolved.
 
 
 ## Visual landmark picker (v0.5)
@@ -174,4 +176,4 @@ The SAM adapter now respects the official parser's half-open bounds, avoiding an
 
 For new real-data evaluation, [freeze the exact input split](docs/FROZEN_BENCHMARK.md) before inspecting results. The evaluator can verify original A/B/label bytes against that manifest and discloses whether a run used frozen inputs.
 
-Benchmark output now reports [verification benefit and missed-change cost](docs/VERIFICATION_TRADEOFF.md) together, including per-pair metrics and separate automatic/assisted pixel transitions. The latest seven-pair RGB development rerun still produced zero supported pixels; removing false alarms also removed every correctly proposed change pixel.
+Benchmark output now reports [verification benefit and missed-change cost](docs/VERIFICATION_TRADEOFF.md) together, including per-pair metrics and separate automatic/assisted pixel transitions. Both the historical seven-pair RGB rerun and the latest eight-scene experiment produced zero supported pixels; removing false alarms also removed every correctly proposed change pixel.

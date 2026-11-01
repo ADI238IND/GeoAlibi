@@ -12,7 +12,7 @@ Start with Meta options disabled. Record whether the detector is the default RGB
 2. Run a built-in illustrative scenario. Explicitly call it procedural imagery. Compare before/after, proposal and supported masks. Open a region's challenge log and show unresolved explanations and requested evidence.
 3. Demonstrate a nuisance scenario and human-review outcome. Show the append-only review history. Do not promise all nuisances will be rejected.
 4. Export an evidence ZIP and run `python scripts/verify_packet.py evidence.zip`. Explain that unsigned checksums detect content changes relative to the manifest; they do not authenticate acquisition or correctness.
-5. Disclose the real-data result: seven selected author-demo pairs gave 91.44% proposal F1 in the recorded development experiment, while verification abstained on every candidate. This is neither a full benchmark nor automatic-verification accuracy.
+5. Disclose the current saved real-data result: eight new complete LEVIR test scenes gave 78.66% U-Net proposal F1 versus 8.08% baseline proposal F1, while both supported arms accepted zero pixels (recall 0, precision undefined). All eight alignments failed the current reliability gate. This small prospective diagnostic does not establish full-benchmark or verified-change accuracy. Show the separate recorded-research-evidence.json, including removed true-positive pixels, rather than treating procedural scenario outcomes as real-data results.
 6. If demonstrating landmarks, use actual independently checked correspondences. State that the final two points are withheld from transform fitting and that geometric agreement does not authenticate the points. Never insert identity points merely to bypass abstention.
 
 ## Optional live Meta segment
@@ -27,7 +27,7 @@ Record commit SHA, dependency versions, detector/checkpoint identity, scenario o
 
 ## Release gates before November 3 readiness
 
-- Obtain independently reviewed real correspondences or larger-context registration evidence; evaluate automatic and assisted arms separately using docs/ASSISTED_EVALUATION.md.
+- Complete the offline blind collection/separate-review workflow in docs/BLIND_ALIGNMENT_REVIEW.md; independently reviewed real correspondences remain missing. Larger context alone did not solve the earlier examples; evaluate automatic and assisted arms separately using docs/ASSISTED_EVALUATION.md.
 - Validate Muse/SAM on appropriately licensed real imagery without claiming protocol success establishes accuracy.
 - Confirm participant submission requirements from the authenticated organizer materials.
 - Rehearse from a clean environment, retain exact failures and prepare an offline local demonstration if provider access fails.
@@ -37,6 +37,6 @@ Record commit SHA, dependency versions, detector/checkpoint identity, scenario o
 
 Run `python scripts/build_demo_bundle.py --output dist/offline-demo` after installation. The builder verifies the checked-in source manifest, generates four fixed-seed procedural scenarios, verifies every evidence packet, and writes a summary with dependency versions and source digest. It never loads API credentials, an application ledger or downloaded imagery/weights. It refuses existing output directories; use a new directory for each rehearsal.
 
-Read `dist/offline-demo/README.md`, inspect its local images and open the evidence ZIPs. The bundle uses only procedural imagery and makes no benchmark-accuracy claim. GitHub CI retains the generated bundle and browser screenshots for seven days as `geoalibi-rehearsal-<commit>`. Download it from the successful workflow run; source scripts can reproduce it after artifact expiry. Runtime/ZIP metadata may differ across runs; source/fixture identity is recorded rather than claiming byte-identical archives.
+Read `dist/offline-demo/README.md`, inspect its local images and open the evidence ZIPs. All bundled images are procedural. The separate recorded-research-evidence.json derives the saved eight-scene results from their source JSON, with arithmetic, complete-set and frozen-hash validation. These reports are not newly inferred by the builder, and original satellite imagery, labels and weights are excluded. Undefined supported precision and zero recall remain explicit. GitHub CI retains the generated bundle and browser screenshots for seven days as `geoalibi-rehearsal-<commit>`. Download it from the successful workflow run; source scripts can reproduce it after artifact expiry. Runtime/ZIP metadata may differ across runs; source/fixture identity is recorded rather than claiming byte-identical archives.
 
 The SAM half-open-bounds fix invalidates earlier spatial foreground counts. Do not reuse those counts in a pitch; see SAM_GEOMETRY.md before any new live demonstration.

@@ -1,29 +1,41 @@
-# Consolidated release status — 31 October 2026
+# Integrated release status — 1 November 2026
 
-## Integrated work
+The main-targeted release PR #20 is the review entry point for the combined build. Its history preserves the original contributor/research commits. The release includes the following validated work; topic PRs retain their discussions and provenance.
 
-| Original PR | Preserved contribution | Production impact |
+| Original PR | Included contribution | Effect |
 |---|---|---|
-| #13 | SIFT/AKAZE script and 56-case recorded diagnostic | None; experimental |
-| #15 | Larger-context script, six-parent-scene diagnostic and provenance | None; experimental |
-| #16–#18 | Geometry tests, raw LoFTR audit/replay and independent-landmark scorer | None; experimental |
-| #19 | Correct half-open SAM mask placement, malformed-geometry rejection and cache version | Corrected optional SAM evidence |
+| #13, #15 | Classical and larger-context experiments | Recorded research; no production matcher promotion |
+| #16–#18 | Tested geometry, raw LoFTR replay, independent research scorer | Auditable research evidence |
+| #19 | Correct SAM half-open placement, invalid-mask rejection, cache version | Corrected optional SAM evidence |
+| #20 | Consolidated application and reproducible offline rehearsal | One local demo command and retained CI artifacts |
+| #21–#22 | Frozen source hashes and missed-change/false-alarm accounting | Reproducible evaluation and visible rejection cost |
+| #23 | Prospective eight-parent-scene CPU baseline/U-Net diagnostic | New complete-scene evidence; no tuning |
+| #24 | Offline blind landmark collection/review and frozen production scorer | Enables actual independent review; no real reviewed annotations yet |
 
-The consolidated branch retains all experiment results and checkpoint notes. Earlier PRs remain available for review until the consolidated change is accepted. No automatic registration thresholds were relaxed. Reviewer declarations remain assertions, not authenticated independence.
+## Current real-data evidence
 
-## What the evidence establishes
+Eight newly selected full LEVIR test scenes (8,388,608 pixels) were frozen before inference. This is a small test-subset diagnostic, not the model author's full protocol or an audited geographically/training-independent split. No thresholds were adapted to the result.
 
-- The local workstation handles uploads, investigations, challenge logs, human reviews, evidence responses, exports and portable landmark drafts.
-- A pinned pretrained change detector was exercised on seven selected real author-demo pairs: recorded proposal F1 91.44%, with automatic verification abstaining on all candidates. This is a development diagnostic, not a full benchmark.
-- Classical and larger-context experiments did not solve real-pair registration. The separately reproduced LoFTR audit produced candidate consistency on 1/7 actual pairs. Those matches are not independently verified alignment truth.
-- The official SAM parser/decoder regression now checks exact half-open raster placement. Earlier live requests established connectivity, but corrected satellite segmentation quality remains unmeasured. Historical mask foreground counts require rerunning.
-- Offline rehearsal generation produces four explicitly procedural scenarios, evidence ZIPs with verified checksums, source hashes and environment versions. CI retains the bundle with browser screenshots for seven days. It does not package credentials, real imagery or model weights.
+| Measured stage | Precision | Recall | F1 | IoU |
+|---|---:|---:|---:|---:|
+| RGB baseline proposals | 4.30% | 66.50% | 8.08% | 4.21% |
+| Pinned U-Net proposals | 81.97% | 75.60% | 78.66% | 64.82% |
+| Both supported arms | undefined | 0.00% | 0.00% | 0.00% |
 
-## Remaining submission-readiness blockers
+All eight production alignments are **flagged unreliable by the current gate**, which does not independently establish their geometric error. Verification removes all 272,155 true-positive and 59,847 false-positive U-Net proposal pixels. Proposal scores cannot be presented as verified-change performance. See [all-scene protocol/results](EXPANDED_EVALUATION.md).
 
-1. Collect independent, reviewed real-image stationary landmarks without viewing model outputs; score frozen transforms on every actual pair.
-2. Freeze and evaluate a broader untouched satellite split, reporting precision, recall, false alarms and abstention together. Do not tune on that split.
-3. Restore authorized secure Meta credentials and the existing ledger, reconcile the historical $0.54 reservation and account billing, then validate one licensed real pair with corrected SAM/Muse. New usage in this consolidation: $0; initial cumulative ceiling remains $10 within the stated $150 budget.
-4. Confirm authenticated participant deliverables/rules, rehearse the consolidated commit and prepare the final recording by November 3. This work does not submit or publicly deploy anything.
+The older seven selected 256px demo crops remain historical development evidence. Their 91.44% U-Net proposal F1 is not the current broader result or a controlled before/after comparison. The separate LoFTR audit's 1/7 candidate-consistent result is not independently verified alignment truth.
 
-These are evidence gaps, not completed milestones. Unit/browser success does not establish satellite accuracy or winning readiness.
+## Reproducible deliverables
+
+`python scripts/build_demo_bundle.py --output dist/offline-demo` creates four explicitly procedural scenario images and verified evidence ZIPs, plus a separate arithmetic-checked summary of the saved eight-scene results and their source JSON. It validates exact frozen file coverage, source hashes, pooled/per-scene confusion counts, metric denominators, transition conservation, settings and pinned-model provenance. It does not rerun model inference or access original satellite imagery, weights, credentials, an application ledger or billing. CI retains the bundle and desktop/mobile application/review screenshots for seven days.
+
+[Blind alignment review](BLIND_ALIGNMENT_REVIEW.md) privately embeds original A/B imagery for a collector and a different reviewer. It excludes labels/predictions/transforms and scores every point against saved transforms without refitting. The real eight-scene pack has been generated locally; it remains uncommitted under source-image terms. Names and independence/review declarations remain assertions, not authentication.
+
+## Remaining readiness work
+
+1. Collect and separately review real stationary landmarks without viewing model evidence or labels; freeze the manifest before scoring. No real independent landmark result currently exists. Any policy change then needs a separate frozen evaluation.
+2. Restore securely supplied Meta credentials and the existing ledger, reconcile the historical $0.54 reservation and account billing, and run corrected SAM/Muse on an appropriately licensed real pair. Existing parser/geometry tests and historical connectivity do not establish satellite segmentation quality; earlier spatial mask counts need rerunning.
+3. Confirm authenticated participant deliverables/rules and rehearse the final recording by November 3. Submission readiness is not established by test success.
+
+New API spend and reservations for this update: $0. The initial cumulative testing ceiling remains $10 within the user's stated $150 budget; neither account balance nor billing is established here. No submission, public deployment or infrastructure purchase is included.
