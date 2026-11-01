@@ -20,6 +20,8 @@ Use a new output directory for each run. CI builds this bundle and retains it wi
 
 A preregistered subset of eight new full LEVIR test scenes gives U-Net proposals 78.66% pixel F1 (baseline 8.08%). Both verified arms accept zero pixels: registration is unreliable in all eight scenes. This is a small research diagnostic, not full-benchmark accuracy or end-to-end readiness. See [protocol, all-scene results and reproduction](docs/EXPANDED_EVALUATION.md).
 
+Collect independent geometry evidence with the [offline blind landmark-review workflow](docs/BLIND_ALIGNMENT_REVIEW.md). It shows original pairs only, requires a separate reviewer and scores saved production transforms without refitting. Real reviewed annotations are still needed.
+
 ## Start on Windows PowerShell
 
 Install Python 3.10 or newer. Extract this project, open its folder in PowerShell, then:
