@@ -77,5 +77,12 @@
   "docs/DEVELOPMENT_INPUTS.json": "6faa56192998d53c784de73684ed029334209fe0119feb15c2cc6dba718b45b5",
   "docs/DEVELOPMENT_BASELINE_TRADEOFF.json": "8dd70ceaa82538e709a2e79e91de8d47d445698c26b6f8dc42b4471759091a45",
   "geoalibi/verification_metrics.py": "a44aa08938b80735a25f495ad32f3feff60a703a91ccd8a65204fa124149de91",
-  "tests/test_verification_metrics.py": "f65ba60243d54474de2866ceea314cbb906f5eeb4591fc145dbb520eec972ed8"
+  "tests/test_verification_metrics.py": "f65ba60243d54474de2866ceea314cbb906f5eeb4591fc145dbb520eec972ed8",
+  "docs/EXPANDED_EVAL_PLAN.json": "f878631ef2d6b9b4edc08939273534b7c4b4c99bfe4263b547d1b7a2f1b059e5",
+  "docs/EXPANDED_EVAL_ENV.txt": "04cff25e869969dffdf8dedda034e705cf5f3f596aa479bea7b1da625eec8632",
+  "docs/EXPANDED_EVALUATION.md": "8ccbd05680567be7ef5ef64f6111dda886bd483669c008927ac02c2e00915947",
+  "geoalibi/evaluation_selection.py": "1e3648efc2e8b4fa2137d437735b49fdefa5b5f49f379ca01bf1408e47cf4139",
+  "scripts/prepare_evaluation_subset.py": "6cff6b94cf52fc8c61fef2e5016f3814d891d96750981f1da858164c24c23878",
+  "tests/test_evaluation_selection.py": "ab9f30ac819632f30e2e035d2395cea7cd071f1be7f21ae6b2c0b014185bfa9a",
+  "tests/test_prepare_evaluation_subset.py": "405800f72a6a61eb9e9e9ae2bcc9079b6d22b500728255ac50574cf322fc6272"
 }

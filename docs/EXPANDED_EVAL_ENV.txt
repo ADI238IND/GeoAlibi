@@ -1,0 +1,8 @@
+torch==2.6.0+cpu
+torchvision==0.21.0+cpu
+segmentation-models-pytorch==0.3.3
+timm==0.9.2
+numpy==2.3.5
+opencv-python-headless==4.14.0.94
+Pillow==12.3.0
+remotezip==0.12.6
