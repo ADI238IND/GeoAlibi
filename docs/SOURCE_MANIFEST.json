@@ -37,7 +37,7 @@
   "geoalibi/pretrained.py": "d6a874bc81c74cf18a951999c0c9a8dbeacdd66c6d0cf1dfc132433338afe4e7",
   "geoalibi/sam_geometry.py": "c144869be27d6c9e9b837bfd29f4223a78f324bb3e572cd876e33ab6bf332c68",
   "geoalibi/static/app.js": "a0ab90d9defefcf7b47b1d8596703feee2dac761e4f8a7be919454744e8c0b9e",
-  "geoalibi/static/index.html": "5cdda85c87f04e825a13e4733f10e4d49c10e3b6be611a63a04641515fbedca5",
+  "geoalibi/static/index.html": "e325d199ba3032220a3372cf998020fc8a16d0294919726751c3542f4157a1bc",
   "geoalibi/static/landmarks.js": "7bac7a478ab119d4fb9bfd7a29ae922dda4f44604f745ac94cf91e1935ff38f1",
   "geoalibi/static/style.css": "b8715d7483c456aa504162c2da33ad27e5ea8f239ad5b3153176fd93e9abb462",
   "geoalibi/store.py": "59ab3ed3c3fd70052a91db7199aff7f0d6e207065055b292fa68cac85f8418de",
