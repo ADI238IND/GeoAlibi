@@ -84,5 +84,7 @@
   "geoalibi/evaluation_selection.py": "1e3648efc2e8b4fa2137d437735b49fdefa5b5f49f379ca01bf1408e47cf4139",
   "scripts/prepare_evaluation_subset.py": "6cff6b94cf52fc8c61fef2e5016f3814d891d96750981f1da858164c24c23878",
   "tests/test_evaluation_selection.py": "ab9f30ac819632f30e2e035d2395cea7cd071f1be7f21ae6b2c0b014185bfa9a",
-  "tests/test_prepare_evaluation_subset.py": "405800f72a6a61eb9e9e9ae2bcc9079b6d22b500728255ac50574cf322fc6272"
+  "tests/test_prepare_evaluation_subset.py": "405800f72a6a61eb9e9e9ae2bcc9079b6d22b500728255ac50574cf322fc6272",
+  "docs/EXPANDED_EVAL_INPUTS.json": "7c6c85414ed0ea12d2e9ab30eb97dcfdef018788c62faa6a53726c4e1af176db",
+  "docs/EXPANDED_EVAL_SELECTION.json": "eb3aa28051bbbcf96f43aef228ddac584dbe7f9bfe4811dc85df2b3590385597"
 }

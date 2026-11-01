@@ -1,0 +1,56 @@
+{
+  "schema": "geoalibi-benchmark-inputs-v1",
+  "description": "Prospective small test-subset evaluation, frozen before downloading selected imagery or examining labels/predictions; not a full benchmark or independent geospatial split. LEVIR academic research only, no commercial use; underlying Google Earth terms apply. No imagery redistributed. Model weights CC-BY-4.0 with original attribution. Mirror membership does not establish geographic independence or audit the author's training split.",
+  "subset_limit": 0,
+  "pairs": [
+    {
+      "file": "test_103.png",
+      "A_sha256": "baafa33aa1f6c072c19b06ffbc55daf9600f5e540f403a118c31f9efd4b58024",
+      "B_sha256": "e4f53a4f87683a1a4d3090b4383a5a0570236bad71c4f3dab85006d9e84d1602",
+      "label_sha256": "51819bc7744a49adc637853d4048a617cb988e208beef2df53794b13e13fec62"
+    },
+    {
+      "file": "test_112.png",
+      "A_sha256": "d45ca387a21f7b3d4c3d114fd486d1619ef2a76ae7eb435e621026a3db2accee",
+      "B_sha256": "ce3b22cd3d1d0ceb8828dbcd320c0d510e0c5056f311b9019ce9950ec4a4e335",
+      "label_sha256": "973da9eadfd73b096d42480cd49d7ac658300ec01ba22256452d7fdea66f1feb"
+    },
+    {
+      "file": "test_113.png",
+      "A_sha256": "bdbad10a1e6b574852cf703edaa5a1aecbbe86e468c2731b652420714d66dd67",
+      "B_sha256": "89c85cb3b38dedc2573de5fc7a511be201365542b030dc3cbd7136466930e926",
+      "label_sha256": "d1236298fcaf5860b67560081335bc007b5c12aaa4d586584e43dd9a257fd608"
+    },
+    {
+      "file": "test_13.png",
+      "A_sha256": "653c48cd7e075844c146fa6351f9818b7f50c3d8a06ce697c3f8215d06be3146",
+      "B_sha256": "de0571ee82579cf4217cbf3fa8c811941b2e10abc6ce735af50f8f36e65c957c",
+      "label_sha256": "5f20f850221f4acaf915ae40add444a1bf47a97c2a970e3d89d5d66286b6bf85"
+    },
+    {
+      "file": "test_30.png",
+      "A_sha256": "3775e3e9e07313e92ae317448dd4a18348bd8fee4780bd1f4175369088ae7a59",
+      "B_sha256": "421a2820b70e1b0ddc39ac914c3b738b6530a6250a6f9fb5c7b3df2243853030",
+      "label_sha256": "69c4730cea7b4c0c9ad9ed25fb819387e6df974b730a3e640b67bccd134d4d8b"
+    },
+    {
+      "file": "test_37.png",
+      "A_sha256": "e470eb9a87c9e6e59dfb2ea5bc50e9924d18f7970f1e6ca15e6bc604c8104fc5",
+      "B_sha256": "b08016d0e0041a82496c1f01a3c89218f02d7dafba3eff61d28086910ed34324",
+      "label_sha256": "168afe22d662d1bcb59b2b50625417fff226efa225053a0f81f2602e32cd426c"
+    },
+    {
+      "file": "test_52.png",
+      "A_sha256": "3b48fc9322f966137bc23f5aef9290e8aa682f9c0eef0b0d22ea4765837ef6dc",
+      "B_sha256": "22103f04f4f45e290aedd59464d939b0072220e441919673c53184d1f0b99b65",
+      "label_sha256": "288d3e558c90426b35aa37183e440ca32caa6818bf09cd26eabc57169e5e828f"
+    },
+    {
+      "file": "test_88.png",
+      "A_sha256": "7abcd4f8d95b50f864465566392e541ca803bc72b1808252414cf62c229738c3",
+      "B_sha256": "c73885e7c71f6d8b3c28bd2c8372a4dbc48be9ec902d0205527df7a8e44e4e82",
+      "label_sha256": "19722c0cfd19ca3a59b9d79cb56f1a34d66454abf52c13cc2b9ad08d80e4a349"
+    }
+  ],
+  "warning": "Hashes freeze bytes, not independence, licensing or annotation truth. Freeze before inspecting results; never tune on the evaluation split."
+}

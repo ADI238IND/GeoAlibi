@@ -1,0 +1,138 @@
+{
+  "plan_sha256": "f878631ef2d6b9b4edc08939273534b7c4b4c99bfe4263b547d1b7a2f1b059e5",
+  "selected": [
+    "test_13.png",
+    "test_103.png",
+    "test_30.png",
+    "test_52.png",
+    "test_112.png",
+    "test_88.png",
+    "test_37.png",
+    "test_113.png"
+  ],
+  "archive_url": "https://huggingface.co/datasets/satellite-image-deep-learning/LEVIR-CD/resolve/6a6bb0a5b389403d81c05e33bf08bc0b9e5f13a6/test.zip",
+  "member_crc_verified": true,
+  "whole_archive_sha256_verified": false,
+  "files": {
+    "A/test_13.png": {
+      "sha256": "653c48cd7e075844c146fa6351f9818b7f50c3d8a06ce697c3f8215d06be3146",
+      "bytes": 1556553,
+      "crc32": 403956416
+    },
+    "A/test_103.png": {
+      "sha256": "baafa33aa1f6c072c19b06ffbc55daf9600f5e540f403a118c31f9efd4b58024",
+      "bytes": 1508936,
+      "crc32": 3062143886
+    },
+    "A/test_30.png": {
+      "sha256": "3775e3e9e07313e92ae317448dd4a18348bd8fee4780bd1f4175369088ae7a59",
+      "bytes": 2725306,
+      "crc32": 748175705
+    },
+    "A/test_52.png": {
+      "sha256": "3b48fc9322f966137bc23f5aef9290e8aa682f9c0eef0b0d22ea4765837ef6dc",
+      "bytes": 1729916,
+      "crc32": 3420777159
+    },
+    "A/test_112.png": {
+      "sha256": "d45ca387a21f7b3d4c3d114fd486d1619ef2a76ae7eb435e621026a3db2accee",
+      "bytes": 2292562,
+      "crc32": 1427724576
+    },
+    "A/test_88.png": {
+      "sha256": "7abcd4f8d95b50f864465566392e541ca803bc72b1808252414cf62c229738c3",
+      "bytes": 1616134,
+      "crc32": 1472121630
+    },
+    "A/test_37.png": {
+      "sha256": "e470eb9a87c9e6e59dfb2ea5bc50e9924d18f7970f1e6ca15e6bc604c8104fc5",
+      "bytes": 1979930,
+      "crc32": 1134708168
+    },
+    "A/test_113.png": {
+      "sha256": "bdbad10a1e6b574852cf703edaa5a1aecbbe86e468c2731b652420714d66dd67",
+      "bytes": 2281114,
+      "crc32": 1019960440
+    },
+    "B/test_13.png": {
+      "sha256": "de0571ee82579cf4217cbf3fa8c811941b2e10abc6ce735af50f8f36e65c957c",
+      "bytes": 2100188,
+      "crc32": 1531698604
+    },
+    "B/test_103.png": {
+      "sha256": "e4f53a4f87683a1a4d3090b4383a5a0570236bad71c4f3dab85006d9e84d1602",
+      "bytes": 2116819,
+      "crc32": 4235538094
+    },
+    "B/test_30.png": {
+      "sha256": "421a2820b70e1b0ddc39ac914c3b738b6530a6250a6f9fb5c7b3df2243853030",
+      "bytes": 2062588,
+      "crc32": 635419606
+    },
+    "B/test_52.png": {
+      "sha256": "22103f04f4f45e290aedd59464d939b0072220e441919673c53184d1f0b99b65",
+      "bytes": 1472740,
+      "crc32": 2692860648
+    },
+    "B/test_112.png": {
+      "sha256": "ce3b22cd3d1d0ceb8828dbcd320c0d510e0c5056f311b9019ce9950ec4a4e335",
+      "bytes": 1849011,
+      "crc32": 990294592
+    },
+    "B/test_88.png": {
+      "sha256": "c73885e7c71f6d8b3c28bd2c8372a4dbc48be9ec902d0205527df7a8e44e4e82",
+      "bytes": 1363465,
+      "crc32": 2123673339
+    },
+    "B/test_37.png": {
+      "sha256": "b08016d0e0041a82496c1f01a3c89218f02d7dafba3eff61d28086910ed34324",
+      "bytes": 1868097,
+      "crc32": 320953316
+    },
+    "B/test_113.png": {
+      "sha256": "89c85cb3b38dedc2573de5fc7a511be201365542b030dc3cbd7136466930e926",
+      "bytes": 1857409,
+      "crc32": 1525387762
+    },
+    "label/test_13.png": {
+      "sha256": "5f20f850221f4acaf915ae40add444a1bf47a97c2a970e3d89d5d66286b6bf85",
+      "bytes": 13875,
+      "crc32": 2100294122
+    },
+    "label/test_103.png": {
+      "sha256": "51819bc7744a49adc637853d4048a617cb988e208beef2df53794b13e13fec62",
+      "bytes": 5732,
+      "crc32": 3426360991
+    },
+    "label/test_30.png": {
+      "sha256": "69c4730cea7b4c0c9ad9ed25fb819387e6df974b730a3e640b67bccd134d4d8b",
+      "bytes": 9801,
+      "crc32": 3370280875
+    },
+    "label/test_52.png": {
+      "sha256": "288d3e558c90426b35aa37183e440ca32caa6818bf09cd26eabc57169e5e828f",
+      "bytes": 8060,
+      "crc32": 260637495
+    },
+    "label/test_112.png": {
+      "sha256": "973da9eadfd73b096d42480cd49d7ac658300ec01ba22256452d7fdea66f1feb",
+      "bytes": 1779,
+      "crc32": 2201890307
+    },
+    "label/test_88.png": {
+      "sha256": "19722c0cfd19ca3a59b9d79cb56f1a34d66454abf52c13cc2b9ad08d80e4a349",
+      "bytes": 1483,
+      "crc32": 2514038086
+    },
+    "label/test_37.png": {
+      "sha256": "168afe22d662d1bcb59b2b50625417fff226efa225053a0f81f2602e32cd426c",
+      "bytes": 14077,
+      "crc32": 3884415840
+    },
+    "label/test_113.png": {
+      "sha256": "d1236298fcaf5860b67560081335bc007b5c12aaa4d586584e43dd9a257fd608",
+      "bytes": 6942,
+      "crc32": 4039124968
+    }
+  }
+}
