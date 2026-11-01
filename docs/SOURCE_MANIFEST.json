@@ -2,9 +2,9 @@
   ".env.example": "0140bea5acd41f1c27fc8f1001925af238a8ec04800d5594968fe98ec18ef435",
   ".github/workflows/tests.yml": "b67a722dc4ca1bbce1e844bdf708ed677fa003e1ae2120dc5625643980b7d03d",
   ".gitignore": "bd7695d69ebeafd64248ffe2599cb8d611d59c23a2d883a910f9f9d6516ddaa1",
-  "README.md": "c7a0b46bfd100743b4fbc4fdec6e659c42f564c0e5c36933919a8d47cd28b747",
+  "README.md": "c29c061218b1a95ed53b6fdaed8b5c9d275ca7c3a8ca4fb1cd57670d43825ac6",
   "docs/ASSISTED_EVALUATION.md": "22d3ae4428c4b5220dc47f6e295ed1935cfd4abbb1ba70e4e20db013df1583ee",
-  "docs/BUILD_CHECKPOINT.md": "fcf6e5fb60d35f67f8b57e5442c47b9825294f395396448d50c140f470f9ee39",
+  "docs/BUILD_CHECKPOINT.md": "59ff7539f9a250a218dbc66978c8ffd3875d9d14da025d18b7fdff87226b94a9",
   "docs/CONTEXT_REGISTRATION.json": "96ae3a832f8396dc30c709f0d1471ee8d533f2b782554548382c84fd3d28b878",
   "docs/DEMO_RUNBOOK.md": "59a7f47a7b6017549c35489566c8b2dbc3c8ba0181a58ddb4d26e1ffd37daad9",
   "docs/INDEPENDENT_ALIGNMENT.md": "5f898ba45b67543f118180402914e3d766a5bca0fc44671aa95ced0a0d566073",
@@ -80,11 +80,13 @@
   "tests/test_verification_metrics.py": "f65ba60243d54474de2866ceea314cbb906f5eeb4591fc145dbb520eec972ed8",
   "docs/EXPANDED_EVAL_PLAN.json": "f878631ef2d6b9b4edc08939273534b7c4b4c99bfe4263b547d1b7a2f1b059e5",
   "docs/EXPANDED_EVAL_ENV.txt": "04cff25e869969dffdf8dedda034e705cf5f3f596aa479bea7b1da625eec8632",
-  "docs/EXPANDED_EVALUATION.md": "8ccbd05680567be7ef5ef64f6111dda886bd483669c008927ac02c2e00915947",
+  "docs/EXPANDED_EVALUATION.md": "76803953035ddad8e4b78b059fea2e93140087657087d92abb1b79fb1bf53268",
   "geoalibi/evaluation_selection.py": "1e3648efc2e8b4fa2137d437735b49fdefa5b5f49f379ca01bf1408e47cf4139",
   "scripts/prepare_evaluation_subset.py": "6cff6b94cf52fc8c61fef2e5016f3814d891d96750981f1da858164c24c23878",
   "tests/test_evaluation_selection.py": "ab9f30ac819632f30e2e035d2395cea7cd071f1be7f21ae6b2c0b014185bfa9a",
   "tests/test_prepare_evaluation_subset.py": "405800f72a6a61eb9e9e9ae2bcc9079b6d22b500728255ac50574cf322fc6272",
   "docs/EXPANDED_EVAL_INPUTS.json": "7c6c85414ed0ea12d2e9ab30eb97dcfdef018788c62faa6a53726c4e1af176db",
-  "docs/EXPANDED_EVAL_SELECTION.json": "eb3aa28051bbbcf96f43aef228ddac584dbe7f9bfe4811dc85df2b3590385597"
+  "docs/EXPANDED_EVAL_SELECTION.json": "eb3aa28051bbbcf96f43aef228ddac584dbe7f9bfe4811dc85df2b3590385597",
+  "docs/EXPANDED_BASELINE_EVALUATION.json": "36f6ab9c97a491c4a141796d5a5ef5ceb2169797f0d490aad8c8ca4581d0ea9e",
+  "docs/EXPANDED_UNET_EVALUATION.json": "d7c688c5984a06f2bad0bc836bd5bdaad21dae4caf8ca56d301bf6e01030c320"
 }
