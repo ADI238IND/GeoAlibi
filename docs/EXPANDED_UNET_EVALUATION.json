@@ -1,0 +1,971 @@
+{
+  "dataset": "datasets/levir-frozen-eight",
+  "dataset_manifest_sha256": "7c6c85414ed0ea12d2e9ab30eb97dcfdef018788c62faa6a53726c4e1af176db",
+  "dataset_frozen": true,
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "opencv": "4.14.0"
+  },
+  "pairs": 8,
+  "subset_limit": 0,
+  "threshold": 0.12,
+  "min_area": 70,
+  "detector": "unet",
+  "metrics": {
+    "raw_rgb": {
+      "tp": 208639,
+      "fp": 4594183,
+      "fn": 151352,
+      "tn": 3434434,
+      "precision": 0.043440918693218276,
+      "recall": 0.5795672669594517,
+      "f1": 0.08082376797300231,
+      "iou": 0.04211378122770819
+    },
+    "proposals": {
+      "tp": 272155,
+      "fp": 59847,
+      "fn": 87836,
+      "tn": 7968770,
+      "precision": 0.8197390377166403,
+      "recall": 0.756005011236392,
+      "f1": 0.7865831012741459,
+      "iou": 0.6482381299453599
+    },
+    "supported": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 359991,
+      "tn": 8028617,
+      "precision": null,
+      "recall": 0.0,
+      "f1": 0.0,
+      "iou": 0.0
+    }
+  },
+  "pair_results": [
+    {
+      "file": "test_103.png",
+      "source_hashes": {
+        "file": "test_103.png",
+        "A_sha256": "baafa33aa1f6c072c19b06ffbc55daf9600f5e540f403a118c31f9efd4b58024",
+        "B_sha256": "e4f53a4f87683a1a4d3090b4383a5a0570236bad71c4f3dab85006d9e84d1602",
+        "label_sha256": "51819bc7744a49adc637853d4048a617cb988e208beef2df53794b13e13fec62"
+      },
+      "engine": "counterfactual-0.4.1",
+      "model_provenance": {
+        "name": "Corley et al. LEVIR-CD U-Net / ResNet-50",
+        "revision": "52e7fdb42ddf4e89661c56ef8b8900528a20df0a",
+        "sha256": "fd113f39d69c45cddee18d780ac8392f3d96dfc097402cd6c2b77b69565629e9",
+        "weights_license": "CC-BY-4.0",
+        "authors": "Isaac Corley, Caleb Robinson, Anthony Ortiz (2024)",
+        "source": "https://huggingface.co/isaaccorley/a-change-detection-reality-check",
+        "preprocessing_source": "https://github.com/isaaccorley/a-change-detection-reality-check/blob/main/src/datasets/levircd.py",
+        "preprocessing": "RGB / 127.5 - 1; before RGB followed by after RGB; 256px tiles; class 1 argmax",
+        "note": "Model softmax scores are not calibrated confidence. External pretrained model; not trained by GeoAlibi."
+      },
+      "metrics": {
+        "raw_rgb": {
+          "tp": 9950,
+          "fp": 405188,
+          "fn": 8258,
+          "tn": 625180,
+          "precision": 0.02396793355462521,
+          "recall": 0.5464630931458699,
+          "f1": 0.045921734595450285,
+          "iou": 0.02350045819988852
+        },
+        "proposals": {
+          "tp": 6202,
+          "fp": 5455,
+          "fn": 12006,
+          "tn": 1024913,
+          "precision": 0.532040833833748,
+          "recall": 0.3406195079086116,
+          "f1": 0.41533567721413023,
+          "iou": 0.26209694459705024
+        },
+        "supported": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 18208,
+          "tn": 1030368,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "iou": 0.0
+        }
+      },
+      "verification_tradeoff": {
+        "pixels": 1048576,
+        "truth_change_pixels": 18208,
+        "proposal_pixels": 11657,
+        "supported_pixels": 0,
+        "proposal_true_positive_pixels": 6202,
+        "proposal_false_positive_pixels": 5455,
+        "removed_true_positive_pixels": 6202,
+        "removed_false_positive_pixels": 5455,
+        "added_true_positive_pixels": 0,
+        "added_false_positive_pixels": 0,
+        "retained_proposal_pixels": 0,
+        "proposal_retention_fraction": 0.0,
+        "removed_true_positive_fraction": 1.0,
+        "removed_false_positive_fraction": 1.0,
+        "net_recall_change": -0.3406195079086116,
+        "net_false_positive_reduction_pixels": 5455,
+        "note": "Removed proposal pixels include review, nuisance rejection, small/omitted regions and filtering; they are not all abstentions. These are pixel transitions, not calibrated selective risk or physical area."
+      },
+      "all_candidates_abstained": true,
+      "inspected_regions": 8,
+      "omitted_regions": 0,
+      "hash": "c3cebabecf77005af8cb6d2ef57f9d6c4dbfdace46ecd3fb37a4140dca744f24",
+      "elapsed_ms": 8945,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 8
+      },
+      "alignment": {
+        "method": "phase correlation",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            1.6778833866119385
+          ],
+          [
+            0.0,
+            1.0,
+            1.6954686641693115
+          ]
+        ],
+        "matches": 6,
+        "inliers": 0,
+        "phase_response": 0.2125,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 0.9922,
+        "texture_variance": 765.78
+      },
+      "candidate_pixels": 11657,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    },
+    {
+      "file": "test_112.png",
+      "source_hashes": {
+        "file": "test_112.png",
+        "A_sha256": "d45ca387a21f7b3d4c3d114fd486d1619ef2a76ae7eb435e621026a3db2accee",
+        "B_sha256": "ce3b22cd3d1d0ceb8828dbcd320c0d510e0c5056f311b9019ce9950ec4a4e335",
+        "label_sha256": "973da9eadfd73b096d42480cd49d7ac658300ec01ba22256452d7fdea66f1feb"
+      },
+      "engine": "counterfactual-0.4.1",
+      "model_provenance": {
+        "name": "Corley et al. LEVIR-CD U-Net / ResNet-50",
+        "revision": "52e7fdb42ddf4e89661c56ef8b8900528a20df0a",
+        "sha256": "fd113f39d69c45cddee18d780ac8392f3d96dfc097402cd6c2b77b69565629e9",
+        "weights_license": "CC-BY-4.0",
+        "authors": "Isaac Corley, Caleb Robinson, Anthony Ortiz (2024)",
+        "source": "https://huggingface.co/isaaccorley/a-change-detection-reality-check",
+        "preprocessing_source": "https://github.com/isaaccorley/a-change-detection-reality-check/blob/main/src/datasets/levircd.py",
+        "preprocessing": "RGB / 127.5 - 1; before RGB followed by after RGB; 256px tiles; class 1 argmax",
+        "note": "Model softmax scores are not calibrated confidence. External pretrained model; not trained by GeoAlibi."
+      },
+      "metrics": {
+        "raw_rgb": {
+          "tp": 6475,
+          "fp": 546492,
+          "fn": 2470,
+          "tn": 493139,
+          "precision": 0.011709559521635106,
+          "recall": 0.7238680827277809,
+          "f1": 0.02304631330172696,
+          "iou": 0.01165748770787686
+        },
+        "proposals": {
+          "tp": 4270,
+          "fp": 620,
+          "fn": 4675,
+          "tn": 1039011,
+          "precision": 0.8732106339468303,
+          "recall": 0.4773616545556177,
+          "f1": 0.617275027105168,
+          "iou": 0.4464192368008364
+        },
+        "supported": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 8945,
+          "tn": 1039631,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "iou": 0.0
+        }
+      },
+      "verification_tradeoff": {
+        "pixels": 1048576,
+        "truth_change_pixels": 8945,
+        "proposal_pixels": 4890,
+        "supported_pixels": 0,
+        "proposal_true_positive_pixels": 4270,
+        "proposal_false_positive_pixels": 620,
+        "removed_true_positive_pixels": 4270,
+        "removed_false_positive_pixels": 620,
+        "added_true_positive_pixels": 0,
+        "added_false_positive_pixels": 0,
+        "retained_proposal_pixels": 0,
+        "proposal_retention_fraction": 0.0,
+        "removed_true_positive_fraction": 1.0,
+        "removed_false_positive_fraction": 1.0,
+        "net_recall_change": -0.4773616545556177,
+        "net_false_positive_reduction_pixels": 620,
+        "note": "Removed proposal pixels include review, nuisance rejection, small/omitted regions and filtering; they are not all abstentions. These are pixel transitions, not calibrated selective risk or physical area."
+      },
+      "all_candidates_abstained": true,
+      "inspected_regions": 5,
+      "omitted_regions": 0,
+      "hash": "36b8ee596f9fd4e49345fc3701b593a4b825346252aee3369958a15030102f7c",
+      "elapsed_ms": 2941,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 5
+      },
+      "alignment": {
+        "method": "phase correlation",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            1.2285735607147217
+          ],
+          [
+            0.0,
+            1.0,
+            1.4059231281280518
+          ]
+        ],
+        "matches": 23,
+        "inliers": 6,
+        "phase_response": 0.2101,
+        "selected_transform_matches": 6,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 0.9941,
+        "texture_variance": 3851.4
+      },
+      "candidate_pixels": 4890,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    },
+    {
+      "file": "test_113.png",
+      "source_hashes": {
+        "file": "test_113.png",
+        "A_sha256": "bdbad10a1e6b574852cf703edaa5a1aecbbe86e468c2731b652420714d66dd67",
+        "B_sha256": "89c85cb3b38dedc2573de5fc7a511be201365542b030dc3cbd7136466930e926",
+        "label_sha256": "d1236298fcaf5860b67560081335bc007b5c12aaa4d586584e43dd9a257fd608"
+      },
+      "engine": "counterfactual-0.4.1",
+      "model_provenance": {
+        "name": "Corley et al. LEVIR-CD U-Net / ResNet-50",
+        "revision": "52e7fdb42ddf4e89661c56ef8b8900528a20df0a",
+        "sha256": "fd113f39d69c45cddee18d780ac8392f3d96dfc097402cd6c2b77b69565629e9",
+        "weights_license": "CC-BY-4.0",
+        "authors": "Isaac Corley, Caleb Robinson, Anthony Ortiz (2024)",
+        "source": "https://huggingface.co/isaaccorley/a-change-detection-reality-check",
+        "preprocessing_source": "https://github.com/isaaccorley/a-change-detection-reality-check/blob/main/src/datasets/levircd.py",
+        "preprocessing": "RGB / 127.5 - 1; before RGB followed by after RGB; 256px tiles; class 1 argmax",
+        "note": "Model softmax scores are not calibrated confidence. External pretrained model; not trained by GeoAlibi."
+      },
+      "metrics": {
+        "raw_rgb": {
+          "tp": 36192,
+          "fp": 611458,
+          "fn": 19828,
+          "tn": 381098,
+          "precision": 0.055882035049795414,
+          "recall": 0.6460549803641557,
+          "f1": 0.10286640044338966,
+          "iou": 0.054222011811625254
+        },
+        "proposals": {
+          "tp": 37427,
+          "fp": 3398,
+          "fn": 18593,
+          "tn": 989158,
+          "precision": 0.9167666870789957,
+          "recall": 0.6681006783291682,
+          "f1": 0.7729258092828747,
+          "iou": 0.6298932983271063
+        },
+        "supported": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 56020,
+          "tn": 992556,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "iou": 0.0
+        }
+      },
+      "verification_tradeoff": {
+        "pixels": 1048576,
+        "truth_change_pixels": 56020,
+        "proposal_pixels": 40825,
+        "supported_pixels": 0,
+        "proposal_true_positive_pixels": 37427,
+        "proposal_false_positive_pixels": 3398,
+        "removed_true_positive_pixels": 37427,
+        "removed_false_positive_pixels": 3398,
+        "added_true_positive_pixels": 0,
+        "added_false_positive_pixels": 0,
+        "retained_proposal_pixels": 0,
+        "proposal_retention_fraction": 0.0,
+        "removed_true_positive_fraction": 1.0,
+        "removed_false_positive_fraction": 1.0,
+        "net_recall_change": -0.6681006783291682,
+        "net_false_positive_reduction_pixels": 3398,
+        "note": "Removed proposal pixels include review, nuisance rejection, small/omitted regions and filtering; they are not all abstentions. These are pixel transitions, not calibrated selective risk or physical area."
+      },
+      "all_candidates_abstained": true,
+      "inspected_regions": 24,
+      "omitted_regions": 7,
+      "hash": "ba805b20582bc3c16356f028c5098d48d6d989deca066003f41569304ab806fc",
+      "elapsed_ms": 3420,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 24
+      },
+      "alignment": {
+        "method": "phase correlation",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            1.7671723365783691
+          ],
+          [
+            0.0,
+            1.0,
+            1.164914846420288
+          ]
+        ],
+        "matches": 8,
+        "inliers": 2,
+        "phase_response": 0.2393,
+        "selected_transform_matches": 1,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 0.9932,
+        "texture_variance": 5411.91
+      },
+      "candidate_pixels": 40825,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "Showing the 24 largest of 31 candidates; smaller regions require separate investigation.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    },
+    {
+      "file": "test_13.png",
+      "source_hashes": {
+        "file": "test_13.png",
+        "A_sha256": "653c48cd7e075844c146fa6351f9818b7f50c3d8a06ce697c3f8215d06be3146",
+        "B_sha256": "de0571ee82579cf4217cbf3fa8c811941b2e10abc6ce735af50f8f36e65c957c",
+        "label_sha256": "5f20f850221f4acaf915ae40add444a1bf47a97c2a970e3d89d5d66286b6bf85"
+      },
+      "engine": "counterfactual-0.4.1",
+      "model_provenance": {
+        "name": "Corley et al. LEVIR-CD U-Net / ResNet-50",
+        "revision": "52e7fdb42ddf4e89661c56ef8b8900528a20df0a",
+        "sha256": "fd113f39d69c45cddee18d780ac8392f3d96dfc097402cd6c2b77b69565629e9",
+        "weights_license": "CC-BY-4.0",
+        "authors": "Isaac Corley, Caleb Robinson, Anthony Ortiz (2024)",
+        "source": "https://huggingface.co/isaaccorley/a-change-detection-reality-check",
+        "preprocessing_source": "https://github.com/isaaccorley/a-change-detection-reality-check/blob/main/src/datasets/levircd.py",
+        "preprocessing": "RGB / 127.5 - 1; before RGB followed by after RGB; 256px tiles; class 1 argmax",
+        "note": "Model softmax scores are not calibrated confidence. External pretrained model; not trained by GeoAlibi."
+      },
+      "metrics": {
+        "raw_rgb": {
+          "tp": 34906,
+          "fp": 472029,
+          "fn": 67852,
+          "tn": 473789,
+          "precision": 0.06885695404736307,
+          "recall": 0.3396913135716927,
+          "f1": 0.11450352882516283,
+          "iou": 0.060728582935939746
+        },
+        "proposals": {
+          "tp": 89914,
+          "fp": 11382,
+          "fn": 12844,
+          "tn": 934436,
+          "precision": 0.8876362344021481,
+          "recall": 0.8750072987018043,
+          "f1": 0.8812765248414636,
+          "iou": 0.7877518836516558
+        },
+        "supported": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 102758,
+          "tn": 945818,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "iou": 0.0
+        }
+      },
+      "verification_tradeoff": {
+        "pixels": 1048576,
+        "truth_change_pixels": 102758,
+        "proposal_pixels": 101296,
+        "supported_pixels": 0,
+        "proposal_true_positive_pixels": 89914,
+        "proposal_false_positive_pixels": 11382,
+        "removed_true_positive_pixels": 89914,
+        "removed_false_positive_pixels": 11382,
+        "added_true_positive_pixels": 0,
+        "added_false_positive_pixels": 0,
+        "retained_proposal_pixels": 0,
+        "proposal_retention_fraction": 0.0,
+        "removed_true_positive_fraction": 1.0,
+        "removed_false_positive_fraction": 1.0,
+        "net_recall_change": -0.8750072987018043,
+        "net_false_positive_reduction_pixels": 11382,
+        "note": "Removed proposal pixels include review, nuisance rejection, small/omitted regions and filtering; they are not all abstentions. These are pixel transitions, not calibrated selective risk or physical area."
+      },
+      "all_candidates_abstained": true,
+      "inspected_regions": 24,
+      "omitted_regions": 48,
+      "hash": "1fbb1a4504b02b2ef4c27994492d559a9f4490083f2fe24312fb437fc54fa85b",
+      "elapsed_ms": 3591,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 24
+      },
+      "alignment": {
+        "method": "phase correlation",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            -0.21872147917747498
+          ],
+          [
+            0.0,
+            1.0,
+            0.9559393525123596
+          ]
+        ],
+        "matches": 9,
+        "inliers": 4,
+        "phase_response": 0.1744,
+        "selected_transform_matches": 1,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 0.9971,
+        "texture_variance": 489.87
+      },
+      "candidate_pixels": 101296,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "Showing the 24 largest of 72 candidates; smaller regions require separate investigation.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    },
+    {
+      "file": "test_30.png",
+      "source_hashes": {
+        "file": "test_30.png",
+        "A_sha256": "3775e3e9e07313e92ae317448dd4a18348bd8fee4780bd1f4175369088ae7a59",
+        "B_sha256": "421a2820b70e1b0ddc39ac914c3b738b6530a6250a6f9fb5c7b3df2243853030",
+        "label_sha256": "69c4730cea7b4c0c9ad9ed25fb819387e6df974b730a3e640b67bccd134d4d8b"
+      },
+      "engine": "counterfactual-0.4.1",
+      "model_provenance": {
+        "name": "Corley et al. LEVIR-CD U-Net / ResNet-50",
+        "revision": "52e7fdb42ddf4e89661c56ef8b8900528a20df0a",
+        "sha256": "fd113f39d69c45cddee18d780ac8392f3d96dfc097402cd6c2b77b69565629e9",
+        "weights_license": "CC-BY-4.0",
+        "authors": "Isaac Corley, Caleb Robinson, Anthony Ortiz (2024)",
+        "source": "https://huggingface.co/isaaccorley/a-change-detection-reality-check",
+        "preprocessing_source": "https://github.com/isaaccorley/a-change-detection-reality-check/blob/main/src/datasets/levircd.py",
+        "preprocessing": "RGB / 127.5 - 1; before RGB followed by after RGB; 256px tiles; class 1 argmax",
+        "note": "Model softmax scores are not calibrated confidence. External pretrained model; not trained by GeoAlibi."
+      },
+      "metrics": {
+        "raw_rgb": {
+          "tp": 42766,
+          "fp": 735189,
+          "fn": 20422,
+          "tn": 250199,
+          "precision": 0.0549723313045099,
+          "recall": 0.676805722605558,
+          "f1": 0.1016854446865753,
+          "iou": 0.0535661723722001
+        },
+        "proposals": {
+          "tp": 54044,
+          "fp": 8594,
+          "fn": 9144,
+          "tn": 976794,
+          "precision": 0.8627989399406111,
+          "recall": 0.8552889789200481,
+          "f1": 0.8590275459761894,
+          "iou": 0.7528906968320749
+        },
+        "supported": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 63188,
+          "tn": 985388,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "iou": 0.0
+        }
+      },
+      "verification_tradeoff": {
+        "pixels": 1048576,
+        "truth_change_pixels": 63188,
+        "proposal_pixels": 62638,
+        "supported_pixels": 0,
+        "proposal_true_positive_pixels": 54044,
+        "proposal_false_positive_pixels": 8594,
+        "removed_true_positive_pixels": 54044,
+        "removed_false_positive_pixels": 8594,
+        "added_true_positive_pixels": 0,
+        "added_false_positive_pixels": 0,
+        "retained_proposal_pixels": 0,
+        "proposal_retention_fraction": 0.0,
+        "removed_true_positive_fraction": 1.0,
+        "removed_false_positive_fraction": 1.0,
+        "net_recall_change": -0.8552889789200481,
+        "net_false_positive_reduction_pixels": 8594,
+        "note": "Removed proposal pixels include review, nuisance rejection, small/omitted regions and filtering; they are not all abstentions. These are pixel transitions, not calibrated selective risk or physical area."
+      },
+      "all_candidates_abstained": true,
+      "inspected_regions": 24,
+      "omitted_regions": 31,
+      "hash": "8802bb6da2cea952073a0f8521c567667f438af3b087f3a862eab74aca43f7b7",
+      "elapsed_ms": 2849,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 24
+      },
+      "alignment": {
+        "method": "phase correlation",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            1.158334493637085
+          ],
+          [
+            0.0,
+            1.0,
+            1.1408116817474365
+          ]
+        ],
+        "matches": 6,
+        "inliers": 0,
+        "phase_response": 0.1379,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 0.9941,
+        "texture_variance": 7510.52
+      },
+      "candidate_pixels": 62638,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "Showing the 24 largest of 55 candidates; smaller regions require separate investigation.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    },
+    {
+      "file": "test_37.png",
+      "source_hashes": {
+        "file": "test_37.png",
+        "A_sha256": "e470eb9a87c9e6e59dfb2ea5bc50e9924d18f7970f1e6ca15e6bc604c8104fc5",
+        "B_sha256": "b08016d0e0041a82496c1f01a3c89218f02d7dafba3eff61d28086910ed34324",
+        "label_sha256": "168afe22d662d1bcb59b2b50625417fff226efa225053a0f81f2602e32cd426c"
+      },
+      "engine": "counterfactual-0.4.1",
+      "model_provenance": {
+        "name": "Corley et al. LEVIR-CD U-Net / ResNet-50",
+        "revision": "52e7fdb42ddf4e89661c56ef8b8900528a20df0a",
+        "sha256": "fd113f39d69c45cddee18d780ac8392f3d96dfc097402cd6c2b77b69565629e9",
+        "weights_license": "CC-BY-4.0",
+        "authors": "Isaac Corley, Caleb Robinson, Anthony Ortiz (2024)",
+        "source": "https://huggingface.co/isaaccorley/a-change-detection-reality-check",
+        "preprocessing_source": "https://github.com/isaaccorley/a-change-detection-reality-check/blob/main/src/datasets/levircd.py",
+        "preprocessing": "RGB / 127.5 - 1; before RGB followed by after RGB; 256px tiles; class 1 argmax",
+        "note": "Model softmax scores are not calibrated confidence. External pretrained model; not trained by GeoAlibi."
+      },
+      "metrics": {
+        "raw_rgb": {
+          "tp": 51209,
+          "fp": 389317,
+          "fn": 16877,
+          "tn": 591173,
+          "precision": 0.11624512514584837,
+          "recall": 0.7521223158946039,
+          "f1": 0.20136764370482804,
+          "iou": 0.11195597755152459
+        },
+        "proposals": {
+          "tp": 41819,
+          "fp": 28054,
+          "fn": 26267,
+          "tn": 952436,
+          "precision": 0.5985001359609577,
+          "recall": 0.6142085010134242,
+          "f1": 0.606252582288941,
+          "iou": 0.4349802371541502
+        },
+        "supported": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 68086,
+          "tn": 980490,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "iou": 0.0
+        }
+      },
+      "verification_tradeoff": {
+        "pixels": 1048576,
+        "truth_change_pixels": 68086,
+        "proposal_pixels": 69873,
+        "supported_pixels": 0,
+        "proposal_true_positive_pixels": 41819,
+        "proposal_false_positive_pixels": 28054,
+        "removed_true_positive_pixels": 41819,
+        "removed_false_positive_pixels": 28054,
+        "added_true_positive_pixels": 0,
+        "added_false_positive_pixels": 0,
+        "retained_proposal_pixels": 0,
+        "proposal_retention_fraction": 0.0,
+        "removed_true_positive_fraction": 1.0,
+        "removed_false_positive_fraction": 1.0,
+        "net_recall_change": -0.6142085010134242,
+        "net_false_positive_reduction_pixels": 28054,
+        "note": "Removed proposal pixels include review, nuisance rejection, small/omitted regions and filtering; they are not all abstentions. These are pixel transitions, not calibrated selective risk or physical area."
+      },
+      "all_candidates_abstained": true,
+      "inspected_regions": 24,
+      "omitted_regions": 43,
+      "hash": "9a9c621419f18dfd8a799345a90c02d371cd624df20020173fee2ebc1f23534b",
+      "elapsed_ms": 3332,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 24
+      },
+      "alignment": {
+        "method": "phase correlation",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            8.033478736877441
+          ],
+          [
+            0.0,
+            1.0,
+            0.29600048065185547
+          ]
+        ],
+        "matches": 13,
+        "inliers": 5,
+        "phase_response": 0.1503,
+        "selected_transform_matches": 1,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 0.9902,
+        "texture_variance": 1015.64
+      },
+      "candidate_pixels": 69873,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "Showing the 24 largest of 67 candidates; smaller regions require separate investigation.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    },
+    {
+      "file": "test_52.png",
+      "source_hashes": {
+        "file": "test_52.png",
+        "A_sha256": "3b48fc9322f966137bc23f5aef9290e8aa682f9c0eef0b0d22ea4765837ef6dc",
+        "B_sha256": "22103f04f4f45e290aedd59464d939b0072220e441919673c53184d1f0b99b65",
+        "label_sha256": "288d3e558c90426b35aa37183e440ca32caa6818bf09cd26eabc57169e5e828f"
+      },
+      "engine": "counterfactual-0.4.1",
+      "model_provenance": {
+        "name": "Corley et al. LEVIR-CD U-Net / ResNet-50",
+        "revision": "52e7fdb42ddf4e89661c56ef8b8900528a20df0a",
+        "sha256": "fd113f39d69c45cddee18d780ac8392f3d96dfc097402cd6c2b77b69565629e9",
+        "weights_license": "CC-BY-4.0",
+        "authors": "Isaac Corley, Caleb Robinson, Anthony Ortiz (2024)",
+        "source": "https://huggingface.co/isaaccorley/a-change-detection-reality-check",
+        "preprocessing_source": "https://github.com/isaaccorley/a-change-detection-reality-check/blob/main/src/datasets/levircd.py",
+        "preprocessing": "RGB / 127.5 - 1; before RGB followed by after RGB; 256px tiles; class 1 argmax",
+        "note": "Model softmax scores are not calibrated confidence. External pretrained model; not trained by GeoAlibi."
+      },
+      "metrics": {
+        "raw_rgb": {
+          "tp": 26874,
+          "fp": 550513,
+          "fn": 15339,
+          "tn": 455850,
+          "precision": 0.04654417227959757,
+          "recall": 0.6366285267571601,
+          "f1": 0.08674628792769529,
+          "iou": 0.045339667907262377
+        },
+        "proposals": {
+          "tp": 38286,
+          "fp": 1694,
+          "fn": 3927,
+          "tn": 1004669,
+          "precision": 0.9576288144072036,
+          "recall": 0.9069717859427191,
+          "f1": 0.9316121810859805,
+          "iou": 0.8719794110278544
+        },
+        "supported": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 42213,
+          "tn": 1006363,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "iou": 0.0
+        }
+      },
+      "verification_tradeoff": {
+        "pixels": 1048576,
+        "truth_change_pixels": 42213,
+        "proposal_pixels": 39980,
+        "supported_pixels": 0,
+        "proposal_true_positive_pixels": 38286,
+        "proposal_false_positive_pixels": 1694,
+        "removed_true_positive_pixels": 38286,
+        "removed_false_positive_pixels": 1694,
+        "added_true_positive_pixels": 0,
+        "added_false_positive_pixels": 0,
+        "retained_proposal_pixels": 0,
+        "proposal_retention_fraction": 0.0,
+        "removed_true_positive_fraction": 1.0,
+        "removed_false_positive_fraction": 1.0,
+        "net_recall_change": -0.9069717859427191,
+        "net_false_positive_reduction_pixels": 1694,
+        "note": "Removed proposal pixels include review, nuisance rejection, small/omitted regions and filtering; they are not all abstentions. These are pixel transitions, not calibrated selective risk or physical area."
+      },
+      "all_candidates_abstained": true,
+      "inspected_regions": 24,
+      "omitted_regions": 5,
+      "hash": "a8362eb51058e56ba8d0c6b5817e66f52aadcd81ee13e7d83dec373fbc0f1453",
+      "elapsed_ms": 3205,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 24
+      },
+      "alignment": {
+        "method": "identity",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "matches": 2,
+        "inliers": 0,
+        "phase_response": 0.1076,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 1.0,
+        "texture_variance": 960.68
+      },
+      "candidate_pixels": 39980,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "Showing the 24 largest of 29 candidates; smaller regions require separate investigation.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    },
+    {
+      "file": "test_88.png",
+      "source_hashes": {
+        "file": "test_88.png",
+        "A_sha256": "7abcd4f8d95b50f864465566392e541ca803bc72b1808252414cf62c229738c3",
+        "B_sha256": "c73885e7c71f6d8b3c28bd2c8372a4dbc48be9ec902d0205527df7a8e44e4e82",
+        "label_sha256": "19722c0cfd19ca3a59b9d79cb56f1a34d66454abf52c13cc2b9ad08d80e4a349"
+      },
+      "engine": "counterfactual-0.4.1",
+      "model_provenance": {
+        "name": "Corley et al. LEVIR-CD U-Net / ResNet-50",
+        "revision": "52e7fdb42ddf4e89661c56ef8b8900528a20df0a",
+        "sha256": "fd113f39d69c45cddee18d780ac8392f3d96dfc097402cd6c2b77b69565629e9",
+        "weights_license": "CC-BY-4.0",
+        "authors": "Isaac Corley, Caleb Robinson, Anthony Ortiz (2024)",
+        "source": "https://huggingface.co/isaaccorley/a-change-detection-reality-check",
+        "preprocessing_source": "https://github.com/isaaccorley/a-change-detection-reality-check/blob/main/src/datasets/levircd.py",
+        "preprocessing": "RGB / 127.5 - 1; before RGB followed by after RGB; 256px tiles; class 1 argmax",
+        "note": "Model softmax scores are not calibrated confidence. External pretrained model; not trained by GeoAlibi."
+      },
+      "metrics": {
+        "raw_rgb": {
+          "tp": 267,
+          "fp": 883997,
+          "fn": 306,
+          "tn": 164006,
+          "precision": 0.0003019460251689541,
+          "recall": 0.46596858638743455,
+          "f1": 0.0006035009837970157,
+          "iou": 0.000301841572741558
+        },
+        "proposals": {
+          "tp": 193,
+          "fp": 650,
+          "fn": 380,
+          "tn": 1047353,
+          "precision": 0.22894424673784106,
+          "recall": 0.3368237347294939,
+          "f1": 0.2725988700564972,
+          "iou": 0.15780866721177433
+        },
+        "supported": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 573,
+          "tn": 1048003,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "iou": 0.0
+        }
+      },
+      "verification_tradeoff": {
+        "pixels": 1048576,
+        "truth_change_pixels": 573,
+        "proposal_pixels": 843,
+        "supported_pixels": 0,
+        "proposal_true_positive_pixels": 193,
+        "proposal_false_positive_pixels": 650,
+        "removed_true_positive_pixels": 193,
+        "removed_false_positive_pixels": 650,
+        "added_true_positive_pixels": 0,
+        "added_false_positive_pixels": 0,
+        "retained_proposal_pixels": 0,
+        "proposal_retention_fraction": 0.0,
+        "removed_true_positive_fraction": 1.0,
+        "removed_false_positive_fraction": 1.0,
+        "net_recall_change": -0.3368237347294939,
+        "net_false_positive_reduction_pixels": 650,
+        "note": "Removed proposal pixels include review, nuisance rejection, small/omitted regions and filtering; they are not all abstentions. These are pixel transitions, not calibrated selective risk or physical area."
+      },
+      "all_candidates_abstained": true,
+      "inspected_regions": 2,
+      "omitted_regions": 0,
+      "hash": "bff90f22ba4f563e554d09a4657f87eaefac9f930d307a2bf9b79aa778d71270",
+      "elapsed_ms": 3233,
+      "counts": {
+        "supported": 0,
+        "artifact": 0,
+        "review": 2
+      },
+      "alignment": {
+        "method": "phase correlation",
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.6302351951599121
+          ],
+          [
+            0.0,
+            1.0,
+            -0.5372421741485596
+          ]
+        ],
+        "matches": 4,
+        "inliers": 0,
+        "phase_response": 0.1215,
+        "selected_transform_matches": 0,
+        "feature_support": false,
+        "phase_support": false,
+        "reliable": false,
+        "overlap": 0.9941,
+        "texture_variance": 1052.07
+      },
+      "candidate_pixels": 843,
+      "accepted_pixels": 0,
+      "warnings": [
+        "Low registration evidence: inspect alignment before interpreting change.",
+        "All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed."
+      ]
+    }
+  ],
+  "verification_tradeoff": {
+    "pixels": 8388608,
+    "truth_change_pixels": 359991,
+    "proposal_pixels": 332002,
+    "supported_pixels": 0,
+    "proposal_true_positive_pixels": 272155,
+    "proposal_false_positive_pixels": 59847,
+    "removed_true_positive_pixels": 272155,
+    "removed_false_positive_pixels": 59847,
+    "added_true_positive_pixels": 0,
+    "added_false_positive_pixels": 0,
+    "retained_proposal_pixels": 0,
+    "proposal_retention_fraction": 0.0,
+    "removed_true_positive_fraction": 1.0,
+    "removed_false_positive_fraction": 1.0,
+    "net_recall_change": -0.756005011236392,
+    "net_false_positive_reduction_pixels": 59847,
+    "note": "Removed proposal pixels include review, nuisance rejection, small/omitted regions and filtering; they are not all abstentions. These are pixel transitions, not calibrated selective risk or physical area."
+  },
+  "all_candidates_abstained_pairs": 8,
+  "note": "Pixel metrics in processed image coordinates, maximum side 1024. Rejected/abstained pixels count as negative. Precision/recall are null when their denominator is zero. No calibration or real-world deployment claim."
+}

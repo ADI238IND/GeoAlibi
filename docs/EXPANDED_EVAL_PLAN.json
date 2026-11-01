@@ -1,0 +1,20 @@
+{
+  "schema": "geoalibi-evaluation-plan-v1",
+  "created_date": "2026-10-31",
+  "purpose": "Prospective small test-subset evaluation, frozen before downloading selected imagery or examining labels/predictions; not a full benchmark or independent geospatial split.",
+  "archive_revision": "6a6bb0a5b389403d81c05e33bf08bc0b9e5f13a6",
+  "archive_url": "https://huggingface.co/datasets/satellite-image-deep-learning/LEVIR-CD/resolve/6a6bb0a5b389403d81c05e33bf08bc0b9e5f13a6/test.zip",
+  "excluded_parent_scenes": ["test_2.png", "test_7.png", "test_55.png", "test_77.png", "test_102.png", "test_121.png"],
+  "selection": "Enumerate matching A/B/label PNG parent filenames in pinned test archive, exclude every previously used parent scene, rank by sha256('geoalibi-eval-2026-10-31:' + filename), select first 8. Keep all 1024px images, no label-based selection or crop picking.",
+  "count": 8,
+  "rank_prefix": "geoalibi-eval-2026-10-31:",
+  "arms": ["baseline", "unet"],
+  "threshold": 0.12,
+  "min_area": 70,
+  "learned_registration": false,
+  "landmarks": false,
+  "paid_api_calls": false,
+  "tuning": "No threshold sweeps or adaptation to these results. Publish all selected scenes and failures.",
+  "metrics": "Full processed footprint precision, recall, F1, IoU and verification transitions for each arm. Rejected pixels count negative; empty precision is null.",
+  "terms": "LEVIR academic research only, no commercial use; underlying Google Earth terms apply. No imagery redistributed. Model weights CC-BY-4.0 with original attribution. Mirror membership does not establish geographic independence or audit the author's training split."
+}
