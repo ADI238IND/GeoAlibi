@@ -56,13 +56,19 @@ function renderAssessment(data){
   $('assessment-title').textContent=a?.title||'Inspection scope was not recorded';
   $('assessment-panel').dataset.state=a?.code||'legacy';
   $('assessment-detail').textContent=a?.detail||'This saved investigation has no current scope summary. Its original verdicts are preserved.';
+  $('inspect-omitted').hidden=!a?.omitted_regions||!data.assets.omitted_overlay;
+  for(const name of ['omitted_overlay','omitted_mask'])document.querySelector(`[data-view="${name}"]`).disabled=!data.assets[name];
   const c=a?.coverage;
   $('assessment-coverage').textContent=a?`${a.inspected_regions} / ${a.eligible_regions} eligible regions inspected · ${a.omitted_regions} omitted · ${a.supported_pixels.toLocaleString()} supported pixels`+(c?` · ${c.omitted_region_pixels.toLocaleString()} eligible-region pixels omitted`:' · detailed pixel coverage unavailable for this older run'):'';
   $('assessment-next').textContent=a?.next_step||'Review the recorded warnings and acquisition context.';
 }
 $('inspect-proposals').onclick=()=>setView('proposal_mask');
+$('inspect-omitted').onclick=()=>setView('omitted_overlay');
 function setView(name){
-  view=name; if(!report)return;
+  if(!report)return;
+  if(name!=='swipe'&&!report.assets[name])name='swipe';
+  view=name;
+  $('omission-note').hidden=!['omitted_overlay','omitted_mask'].includes(name);
   document.querySelectorAll('.tab').forEach(b=>{b.classList.toggle('active',b.dataset.view===name);b.setAttribute('aria-pressed',String(b.dataset.view===name));});
   const compare=name==='swipe';
   $('base-image').src=report.assets[compare?'before':name];$('base-image').alt=compare?'Before image':name+' image';
@@ -77,12 +83,13 @@ function renderRegions(){
     const top=element('div','region-top');top.append(element('span','region-id',region.id),element('span','verdict '+region.verdict,verdictNames[region.verdict]));
     const bottom=element('div','region-bottom');bottom.append(element('span','',region.pixels.toLocaleString()+' px'),element('span','',region.review.replaceAll('_',' ')));
     b.append(top,element('h3','',region.title),element('p','',region.contradictions[0]||region.support[0]||'Inspect the source pixels.'),bottom);
-    b.onclick=()=>{selected=region.id;renderRegions();renderDetail();drawRegion();};$('regions').append(b);
+    b.onclick=()=>{if(['omitted_overlay','omitted_mask'].includes(view))setView('overlay');selected=region.id;renderRegions();renderDetail();drawRegion();};$('regions').append(b);
   }
 }
 function drawRegion(){
   const c=$('region-canvas');if(!report)return;
   const bounds=$('viewer').getBoundingClientRect();const ratio=window.devicePixelRatio||1;c.width=Math.round(bounds.width*ratio);c.height=Math.round(bounds.height*ratio);
+  if(['omitted_overlay','omitted_mask'].includes(view))return;
   const ctx=c.getContext('2d');ctx.scale(ratio,ratio);const region=report.regions.find(r=>r.id===selected);if(!region)return;
   const scale=Math.min(bounds.width/report.width,bounds.height/report.height),ox=(bounds.width-report.width*scale)/2,oy=(bounds.height-report.height*scale)/2;
   const [x,y,w,h]=region.bbox;ctx.strokeStyle=region.verdict==='supported'?'#43e1a8':region.verdict==='review'?'#ffc15c':'#9ab8de';ctx.lineWidth=2;ctx.setLineDash([5,4]);ctx.strokeRect(ox+x*scale,oy+y*scale,w*scale,h*scale);

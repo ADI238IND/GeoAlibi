@@ -45,6 +45,7 @@ def assessment_markdown(report):
         lines.extend([f"Candidate pixels before morphology: {c['proposal_pixels']}; after morphology: {c['morphology_pixels']}.",
                       f"Eligible-region pixels: {c['eligible_region_pixels']}; inspected-region pixels: {c['inspected_region_pixels']}; omitted-region pixels: {c['omitted_region_pixels']}.",
                       f"Pixels in components below minimum area: {c['below_min_area_pixels']}.",
+                      'When included, images/omitted_mask.png locates only eligible regions omitted by the inspection cap; images/omitted_overlay.png marks them in purple. Small filtered components are excluded.',
                       'Morphology can add or remove pixels. Region footprint counts are not the supported mask, accuracy, confidence or physical area.', ''])
     else:
         lines.extend(['Detailed pixel coverage was not recorded for this older investigation and has not been reconstructed.', ''])

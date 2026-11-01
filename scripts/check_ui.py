@@ -169,6 +169,13 @@ def main():
                     assert scope_report['inspection']['omitted_regions'] == 57
                     assert page.locator('#assessment-panel').get_attribute('data-state') == 'partial_inspection'
                     assert '57 omitted' in page.locator('#assessment-coverage').inner_text()
+                    page.locator('#inspect-omitted').click()
+                    assert page.locator('[data-view="omitted_overlay"]').get_attribute('aria-pressed') == 'true'
+                    page.wait_for_function("() => {const img=document.querySelector('#base-image');return img.complete && img.naturalWidth>0;}")
+                    assert page.locator('#omission-note').is_visible()
+                    page.locator('[data-view="omitted_mask"]').click()
+                    page.wait_for_function("() => {const img=document.querySelector('#base-image');return img.complete && img.naturalWidth>0;}")
+                    assert '/omitted_mask.png' in page.locator('#base-image').get_attribute('src')
                     page.locator('#inspect-proposals').click()
                     assert page.locator('[data-view="proposal_mask"]').get_attribute('aria-pressed') == 'true'
                     with page.expect_download() as scope_packet:
@@ -177,6 +184,12 @@ def main():
                     import io,zipfile
                     with zipfile.ZipFile(io.BytesIO((out/'partial-inspection-packet.zip').read_bytes())) as packet:
                         assert 'omitted: 57' in packet.read('SUMMARY.md').decode()
+                        from geoalibi.vision import decode_image
+                        omission=decode_image(packet.read('images/omitted_mask.png'))
+                        assert int((omission[:,:,0]>0).sum()) == scope_report['inspection']['omitted_region_pixels']
+                        assert 'images/omitted_overlay.png' in packet.namelist()
+                    page.locator('#inspect-omitted').click()
+                    page.wait_for_function("() => {const img=document.querySelector('#base-image');return img.complete && img.naturalWidth>0;}")
                     page.screenshot(path=str(out/'inspection-scope-desktop.png'),full_page=True)
                     page.set_viewport_size({'width':390,'height':844})
                     page.screenshot(path=str(out/'inspection-scope-mobile.png'),full_page=True)
@@ -184,7 +197,7 @@ def main():
                     assert not errors, errors
                     browser.close()
                     (out / "ui-results.json").write_text(json.dumps({"status": "passed", "page_errors": errors,
-                        "checks": ["fixture investigation", "image assets", "review filtering", "saved reviewer decision", "image views", "swipe", "JSON download", "three nuisance scenarios", "file upload", "visual landmark matching/keyboard/undo/submit/stale reset", "history reload", "390px mobile overflow", "partial inspection counts and packet summary"]}, indent=2))
+                        "checks": ["fixture investigation", "image assets", "review filtering", "saved reviewer decision", "image views", "swipe", "JSON download", "three nuisance scenarios", "file upload", "visual landmark matching/keyboard/undo/submit/stale reset", "history reload", "390px mobile overflow", "partial inspection counts and packet summary", "spatial omission overlay/mask/packet agreement"]}, indent=2))
                     print("Browser checks passed: fixture, assets, filters, review, views, slider, download, nuisance scenarios, upload, history, mobile.")
             finally:
                 server.terminate()

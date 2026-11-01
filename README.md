@@ -24,7 +24,7 @@ A preregistered subset of eight new full LEVIR test scenes gives U-Net proposals
 
 Collect independent geometry evidence with the [offline blind landmark-review workflow](docs/BLIND_ALIGNMENT_REVIEW.md). It shows original pairs only, requires a separate reviewer and scores saved production transforms without refitting. Real reviewed annotations are still needed.
 
-Each investigation now shows its diagnostic state and inspection coverage, including eligible regions/pixels omitted by the 24-region cap. Evidence ZIPs include a readable `SUMMARY.md`; an empty supported mask is never presented as proof of no change. Historical runs retain unknown pixel coverage rather than inventing it.
+Each investigation now shows its diagnostic state and inspection coverage, including eligible regions/pixels omitted by the 24-region cap. The purple Uninspected view locates eligible regions omitted by the cap, with an exportable binary omission mask; small filtered components are excluded. Evidence ZIPs include these spatial assets and a readable `SUMMARY.md`; an empty supported mask is never presented as proof of no change. Historical runs retain unknown pixel coverage rather than inventing it.
 
 ## Start on Windows PowerShell
 

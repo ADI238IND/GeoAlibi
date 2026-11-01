@@ -295,7 +295,10 @@ def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=
     report['all_candidates_abstained'] = bool(regions) and counts['review'] == len(regions)
     if report['all_candidates_abstained']:
         report['warnings'].append('All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed.')
-    images = {"before": a, "after": b, "aligned": aligned, "normalized": normalized, "overlay": overlay,
+    omitted = np.isin(labels, selected[24:]) if len(selected) > 24 else np.zeros((h, w), dtype=bool)
+    omitted_overlay = aligned.copy()
+    omitted_overlay[omitted] = np.uint8(.45 * aligned[omitted] + .55 * np.array([171, 112, 242]))
+    images = {"omitted_mask": omitted.astype(np.uint8) * 255, "omitted_overlay": omitted_overlay, "before": a, "after": b, "aligned": aligned, "normalized": normalized, "overlay": overlay,
               "heatmap": heat, "raw_mask": raw_mask.astype(np.uint8) * 255, "proposal_mask": candidates.astype(np.uint8) * 255, "supported_mask": accepted}
     if model_scores is not None:
         from .pretrained import PROVENANCE, NAME
