@@ -4,16 +4,19 @@ from __future__ import annotations
 import base64
 import hashlib
 import io
+import json
 import time
 import warnings
 from dataclasses import dataclass
+from pathlib import Path
 
 import cv2
 import numpy as np
 from PIL import Image, ImageOps
 
-VERSION = "counterfactual-0.4.1"
+VERSION = "counterfactual-0.4.2"
 MAX_SIDE = 1024
+SOURCE_SHA256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
 
 
 def decode_image(data: bytes) -> np.ndarray:
@@ -146,10 +149,12 @@ class Analysis:
     images: dict[str, np.ndarray]
 
 
-def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=None, landmarks=None) -> Analysis:
+def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=None, landmarks=None, region_offset=0, expected_context=None) -> Analysis:
     started = time.perf_counter()
     if a.shape != b.shape:
         raise ValueError("Use images of the same dimensions and footprint. Automatic stretching is disabled.")
+    if type(region_offset) is not int or region_offset < 0:
+        raise ValueError('Region offset must be a nonnegative integer.')
     h, w = a.shape[:2]
     if landmarks is not None:
         from .landmarks import register
@@ -176,6 +181,21 @@ def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=
     clean = cv2.morphologyEx(clean, cv2.MORPH_CLOSE, np.ones((5, 5), np.uint8))
     count, labels, stats, _ = cv2.connectedComponentsWithStats(clean)
     selected = sorted([i for i in range(1, count) if stats[i, cv2.CC_STAT_AREA] >= min_area], key=lambda i: -stats[i, cv2.CC_STAT_AREA])
+    if region_offset and region_offset >= len(selected):
+        raise ValueError('Region offset exceeds the eligible candidate set.')
+    analysis_source_hash = SOURCE_SHA256
+    if hashlib.sha256(Path(__file__).read_bytes()).hexdigest() != analysis_source_hash:
+        raise ValueError('Analysis context changed: implementation changed on disk; restart before analysing.')
+    analysis_environment = {'numpy': np.__version__, 'opencv': cv2.__version__}
+    context = hashlib.sha256()
+    context.update(json.dumps({'engine': VERSION, 'shape': list(a.shape), 'threshold': threshold,
+                               'min_area': min_area, 'alignment': alignment, 'analysis_source_sha256': analysis_source_hash, 'environment': analysis_environment}, sort_keys=True, allow_nan=False).encode())
+    for pixels in (a, b, aligned, normalized, valid, candidates, clean):
+        context.update(np.ascontiguousarray(pixels).tobytes())
+    context_hash = context.hexdigest()
+    if expected_context is not None and expected_context != context_hash:
+        raise ValueError('Analysis context changed; continuation refused. Re-run the original pair instead.')
+    batch = selected[region_offset:region_offset + 24]
     edge_a = cv2.Canny(gray(a), 55, 135)
     edge_b = cv2.Canny(gray(normalized), 55, 135)
     near_a = cv2.dilate(edge_a, np.ones((3, 3), np.uint8)) > 0
@@ -186,7 +206,7 @@ def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=
         shifted = cv2.warpAffine(normalized, np.float32([[1, 0, tx], [0, 1, ty]]), (w, h), borderMode=cv2.BORDER_REFLECT)
         perturbations.append(difference(a, shifted) > threshold)
     regions, accepted = [], np.zeros((h, w), np.uint8)
-    for number, label in enumerate(selected[:24], 1):
+    for number, label in enumerate(batch, region_offset + 1):
         component = labels == label
         x, y, rw, rh, area = [int(v) for v in stats[label]]
         raw = float(np.mean(raw_d[component]))
@@ -255,7 +275,7 @@ def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=
     if not alignment["reliable"]:
         flags.append("Low registration evidence: inspect alignment before interpreting change.")
     if len(selected) > 24:
-        flags.append(f"Showing the 24 largest of {len(selected)} candidates; smaller regions require separate investigation.")
+        flags.append(f"Inspecting ranks {region_offset + 1}–{region_offset + len(batch)} of {len(selected)} eligible candidates. Verdicts cover this batch only.")
     if not regions:
         flags.append("No candidates above this threshold. This is not proof that the scene is unchanged.")
     blurred = cv2.Laplacian(gray(a), cv2.CV_32F).var() < 30 or cv2.Laplacian(gray(b), cv2.CV_32F).var() < 30
@@ -280,7 +300,16 @@ def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=
               "meta": {"status": "not_requested", "reason": "Local evidence only; no Meta API call was made."}, "sam": {"status": "not_requested"}}
     eligible_pixels = int(sum(stats[i, cv2.CC_STAT_AREA] for i in selected))
     inspected_pixels = int(sum(r['pixels'] for r in regions))
-    report['inspection'] = {'schema': 'geoalibi-inspection-v1',
+    report['analysis_environment'] = analysis_environment
+    report['analysis_source_sha256'] = analysis_source_hash
+    report['analysis_context_sha256'] = context_hash
+    report['inspection'] = {'offset': region_offset, 'batch_size': 24,
+                            'start_rank': region_offset + 1 if batch else None,
+                            'end_rank': region_offset + len(batch) if batch else None,
+                            'regions_before_batch': region_offset,
+                            'regions_after_batch': max(0, len(selected) - region_offset - len(batch)),
+                            'next_offset': region_offset + len(batch) if region_offset + len(batch) < len(selected) else None,
+                            'schema': 'geoalibi-inspection-v1',
                             'processed_pixels': h * w, 'valid_pixels': int(valid.sum()),
                             'proposal_pixels': int(candidates.sum()), 'morphology_pixels': int((clean > 0).sum()),
                             'eligible_regions': len(selected), 'inspected_regions': len(regions),
@@ -289,13 +318,13 @@ def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=
                             'omitted_region_pixels': eligible_pixels - inspected_pixels,
                             'below_min_area_pixels': int((clean > 0).sum()) - eligible_pixels,
                             'supported_pixels': report['supported_changed_pixels'],
-                            'scope': 'Connected-component footprints after morphology; not accuracy, confidence, physical area or abstention-only pixels.'}
+                            'scope': 'This batch only; other batches may have inspected some omitted regions. Connected-component footprints after morphology; not accuracy, confidence, physical area or abstention-only pixels.'}
     from .assessment import assess
     report['assessment'] = assess(report)
     report['all_candidates_abstained'] = bool(regions) and counts['review'] == len(regions)
     if report['all_candidates_abstained']:
         report['warnings'].append('All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed.')
-    omitted = np.isin(labels, selected[24:]) if len(selected) > 24 else np.zeros((h, w), dtype=bool)
+    omitted = np.isin(labels, selected[:region_offset] + selected[region_offset + 24:]) if len(selected) > len(batch) else np.zeros((h, w), dtype=bool)
     omitted_overlay = aligned.copy()
     omitted_overlay[omitted] = np.uint8(.45 * aligned[omitted] + .55 * np.array([171, 112, 242]))
     images = {"omitted_mask": omitted.astype(np.uint8) * 255, "omitted_overlay": omitted_overlay, "before": a, "after": b, "aligned": aligned, "normalized": normalized, "overlay": overlay,

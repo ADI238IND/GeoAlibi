@@ -190,6 +190,29 @@ def main():
                         assert 'images/omitted_overlay.png' in packet.namelist()
                     page.locator('#inspect-omitted').click()
                     page.wait_for_function("() => {const img=document.querySelector('#base-image');return img.complete && img.naturalWidth>0;}")
+                    parent_id=scope_report['id']
+                    with page.expect_response(f'**/api/runs/{parent_id}/continue') as continued:
+                        page.locator('#continue-inspection').click()
+                    child=continued.value.json()
+                    page.locator('#loading').wait_for(state='hidden')
+                    assert child['regions'][0]['id']=='R25' and child['regions'][-1]['id']=='R48'
+                    assert child['lineage']['source_run_id']==parent_id
+                    assert child['analysis_context_sha256']==scope_report['analysis_context_sha256']
+                    assert child['meta']['status']=='not_requested' and child['sam']['status']=='not_requested'
+                    assert 'Linked follow-up' in page.locator('#assessment-lineage').inner_text()
+                    assert 'Ranks 25–48' in page.locator('#assessment-next').inner_text()
+                    with page.expect_download() as child_packet:
+                        page.locator('#packet').click()
+                    child_packet.value.save_as(out/'continuation-packet.zip')
+                    with zipfile.ZipFile(io.BytesIO((out/'continuation-packet.zip').read_bytes())) as packet:
+                        summary=packet.read('SUMMARY.md').decode()
+                        assert parent_id in summary and 'not cumulative' in summary
+                    page.screenshot(path=str(out/'continuation-desktop.png'),full_page=True)
+                    page.locator('#open-original').click()
+                    page.wait_for_function("() => document.getElementById('assessment-next').textContent.startsWith('Ranks 1–24')")
+                    assert page.locator('#open-original').is_hidden()
+                    page.locator('#inspect-omitted').click()
+                    page.wait_for_function("() => {const img=document.querySelector('#base-image');return img.complete && img.naturalWidth>0;}")
                     page.screenshot(path=str(out/'inspection-scope-desktop.png'),full_page=True)
                     page.set_viewport_size({'width':390,'height':844})
                     page.screenshot(path=str(out/'inspection-scope-mobile.png'),full_page=True)
@@ -197,7 +220,7 @@ def main():
                     assert not errors, errors
                     browser.close()
                     (out / "ui-results.json").write_text(json.dumps({"status": "passed", "page_errors": errors,
-                        "checks": ["fixture investigation", "image assets", "review filtering", "saved reviewer decision", "image views", "swipe", "JSON download", "three nuisance scenarios", "file upload", "visual landmark matching/keyboard/undo/submit/stale reset", "history reload", "390px mobile overflow", "partial inspection counts and packet summary", "spatial omission overlay/mask/packet agreement"]}, indent=2))
+                        "checks": ["fixture investigation", "image assets", "review filtering", "saved reviewer decision", "image views", "swipe", "JSON download", "three nuisance scenarios", "file upload", "visual landmark matching/keyboard/undo/submit/stale reset", "history reload", "390px mobile overflow", "partial inspection counts and packet summary", "spatial omission overlay/mask/packet agreement", "linked continuation and original-run navigation"]}, indent=2))
                     print("Browser checks passed: fixture, assets, filters, review, views, slider, download, nuisance scenarios, upload, history, mobile.")
             finally:
                 server.terminate()

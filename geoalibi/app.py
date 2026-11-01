@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import hashlib
 import json
 import os
 import re
@@ -142,6 +143,51 @@ def add_evidence(run_id: str, region_id: str, body: EvidenceResponse):
     return get_run(run_id)
 
 
+def save_analysis(result, title, synthetic):
+    run_id = uuid.uuid4().hex
+    result.report.update({'id': run_id, 'synthetic': synthetic,
+                          'assets': {name: f'/api/runs/{run_id}/assets/{name}.png' for name in result.images}})
+    folder = store.root / run_id; folder.mkdir()
+    for name, image in result.images.items():
+        (folder / (name + '.png')).write_bytes(png(image))
+    store.save(run_id, title, result.report)
+    return get_run(run_id)
+
+
+@app.post('/api/runs/{run_id}/continue')
+async def continue_inspection(run_id: str):
+    async with lock:
+        parent = get_run(run_id)
+        context = parent.get('analysis_context_sha256')
+        offset = parent.get('inspection', {}).get('next_offset')
+        if not context:
+            raise HTTPException(409, 'This saved run has no frozen analysis context. Re-run the pair before continuing.')
+        if type(offset) is not int:
+            raise HTTPException(409, 'No further eligible candidates remain after this batch.')
+        try:
+            content = {name: (store.root / run_id / (name + '.png')).read_bytes()
+                       for name in ('before', 'after', 'proposal_mask')}
+            a, b = (decode_image(content[name]) for name in ('before', 'after'))
+            proposal = decode_image(content['proposal_mask'])[:, :, 0] > 0
+            landmarks = parent['alignment'].get('landmarks')
+            result = await asyncio.to_thread(investigate, a, b, threshold=parent['threshold'],
+                min_area=parent['min_area'], proposal=proposal, landmarks=landmarks,
+                region_offset=offset, expected_context=context)
+            result.report['detector'] = parent['detector']
+            if 'model_provenance' in parent:
+                result.report['model_provenance'] = parent['model_provenance']
+            result.report['lineage'] = {'source_run_id': run_id,
+                'root_run_id': parent.get('lineage', {}).get('root_run_id', run_id),
+                'analysis_context_sha256': context,
+                'source_asset_sha256': {key: hashlib.sha256(value).hexdigest() for key, value in content.items()},
+                'proposal_basis': 'Parent-saved proposal mask; no detector or paid provider rerun.',
+                'scope': 'Full-scene context matched exactly. Verdicts and masks cover this batch only; earlier reports are preserved.'}
+            title = parent['title'].split(' / batch ranks ')[0][:140] + f" / batch ranks {offset + 1}–{result.report['inspection']['end_rank']}"
+            return save_analysis(result, title, parent.get('synthetic', False))
+        except (ValueError, OSError) as exc:
+            raise HTTPException(422, str(exc)) from exc
+
+
 async def run(a, b, title, threshold, min_area, use_meta, use_sam, synthetic=False, detector="baseline", landmarks=None):
     async with lock:
         try:
@@ -153,14 +199,7 @@ async def run(a, b, title, threshold, min_area, use_meta, use_sam, synthetic=Fal
                     await meta.enrich(result, store, BUDGET, with_sam=use_sam)
                 except ValueError as exc:
                     result.report["meta"] = {"status": "blocked", "reason": str(exc)}
-            run_id = uuid.uuid4().hex
-            result.report.update({"id": run_id, "synthetic": synthetic, "assets": {name: f"/api/runs/{run_id}/assets/{name}.png" for name in result.images}})
-            folder = store.root / run_id
-            folder.mkdir()
-            for name, image in result.images.items():
-                (folder / (name + ".png")).write_bytes(png(image))
-            store.save(run_id, title, result.report)
-            return get_run(run_id)
+            return save_analysis(result, title, synthetic)
         except ValueError as exc:
             raise HTTPException(422, str(exc)) from exc
 

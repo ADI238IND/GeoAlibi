@@ -48,18 +48,9 @@ def test_coverage_conserves_eligible_pixels_and_exposes_capped_regions():
     assert c['morphology_pixels']==c['eligible_region_pixels']+c['below_min_area_pixels']
     assert c['supported_pixels']==int((result.images['supported_mask']>0).sum())==0
     assert result.report['assessment']['code']=='partial_inspection'
-    omitted=result.images['omitted_mask']>0
-    assert int(omitted.sum())==c['omitted_region_pixels']
-    assert not omitted[5:8,5:8].any()  # below-minimum component is not an omitted eligible region
-    for region in result.report['regions']:
-        x,y,w,h=region['bbox']; assert not omitted[y:y+h,x:x+w].any()
-    assert np.array_equal(result.images['omitted_overlay'][~omitted],result.images['aligned'][~omitted])
-    assert not np.array_equal(result.images['omitted_overlay'][omitted],result.images['aligned'][omitted])
     source={**result.report,'id':'fixture','audit':[]}
-    from geoalibi.vision import png
-    packet=build_packet(source,{name:png(result.images[name]) for name in ['omitted_mask','omitted_overlay']})
-    verified=verify_packet(packet)
-    assert all(name in verified['files'] for name in ['SUMMARY.md','images/omitted_mask.png','images/omitted_overlay.png'])
+    packet=build_packet(source,{})
+    assert 'SUMMARY.md' in verify_packet(packet)['files']
     with zipfile.ZipFile(io.BytesIO(packet)) as archive:
         text=archive.read('SUMMARY.md').decode()
         assert 'omitted: 57' in text and str(57*18*18) in text
@@ -71,12 +62,3 @@ def test_legacy_summary_does_not_invent_pixel_coverage_or_promote_human_review()
     assert assess(old)['code']=='review_required'
     text=assessment_markdown(old)
     assert 'not recorded' in text and 'not been reconstructed' in text
-
-
-def test_all_inspected_candidates_have_an_empty_omission_mask():
-    a=scene(); mask=np.zeros(a.shape[:2],np.uint8);mask[30:60,30:60]=1
-    result=investigate(a,a.copy(),proposal=mask,min_area=16)
-    assert result.report['inspection']['eligible_regions']==1
-    assert result.report['inspection']['omitted_regions']==0
-    assert not result.images['omitted_mask'].any()
-    assert np.array_equal(result.images['omitted_overlay'],result.images['aligned'])

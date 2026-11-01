@@ -29,7 +29,7 @@ async function history(){
   if(!runs.length)$('history').append(element('span','muted','No investigations yet.'));
   for(const run of runs){const b=element('button','',run.title);b.append(element('small','',new Date(run.created).toLocaleString()));b.onclick=async()=>{if(busy)return;try{render(await api('/api/runs/'+run.id));}catch(e){showError(e);}};$('history').append(b);}
 }
-function setBusy(value){busy=value;$('loading').hidden=!value;$('run').disabled=value;document.querySelector('#upload-form button').disabled=value;$('export').disabled=value||!report;$('packet').disabled=value||!report;}
+function setBusy(value){busy=value;$('continue-inspection').disabled=value;$('open-original').disabled=value;$('loading').hidden=!value;$('run').disabled=value;document.querySelector('#upload-form button').disabled=value;$('export').disabled=value||!report;$('packet').disabled=value||!report;}
 async function investigate(path, options){
   if(busy)return;setBusy(true);$('error').hidden=true;$('empty').hidden=true;
   try{render(await api(path,options));await history();await status();}
@@ -59,9 +59,15 @@ function renderAssessment(data){
   $('inspect-omitted').hidden=!a?.omitted_regions||!data.assets.omitted_overlay;
   for(const name of ['omitted_overlay','omitted_mask'])document.querySelector(`[data-view="${name}"]`).disabled=!data.assets[name];
   const c=a?.coverage;
-  $('assessment-coverage').textContent=a?`${a.inspected_regions} / ${a.eligible_regions} eligible regions inspected · ${a.omitted_regions} omitted · ${a.supported_pixels.toLocaleString()} supported pixels`+(c?` · ${c.omitted_region_pixels.toLocaleString()} eligible-region pixels omitted`:' · detailed pixel coverage unavailable for this older run'):'';
-  $('assessment-next').textContent=a?.next_step||'Review the recorded warnings and acquisition context.';
+  $('continue-inspection').hidden=!data.analysis_context_sha256||!Number.isInteger(c?.next_offset);
+  if(Number.isInteger(c?.next_offset))$('continue-inspection').textContent=`Inspect ranks ${c.next_offset+1}–${Math.min(c.next_offset+24,a.eligible_regions)}`;
+  $('open-original').hidden=!data.lineage?.root_run_id;
+  $('assessment-lineage').textContent=data.lineage?`Linked follow-up of ${data.lineage.source_run_id.slice(0,8)} · Saved proposals reused; no model or paid-provider rerun · This batch only`:(!data.analysis_context_sha256&&a?.omitted_regions?'Older result: the full analysis context was not recorded. Re-run the original pair before continuing.':'');
+  $('assessment-coverage').textContent=a?`${a.inspected_regions} / ${a.eligible_regions} eligible regions inspected · ${a.omitted_regions} omitted from this batch · ${a.supported_pixels.toLocaleString()} supported pixels`+(c?` · ${c.omitted_region_pixels.toLocaleString()} eligible-region pixels omitted`:' · detailed pixel coverage unavailable for this older run'):'';
+  $('assessment-next').textContent=(c?.start_rank?`Ranks ${c.start_rank}–${c.end_rank}; ${c.regions_before_batch} earlier ranks, ${c.regions_after_batch} remaining after this batch. `:'')+(a?.next_step||'Review the recorded warnings and acquisition context.');
 }
+$('continue-inspection').onclick=()=>{if(!busy&&report)investigate(`/api/runs/${report.id}/continue`,{method:'POST'});};
+$('open-original').onclick=()=>{if(!busy&&report?.lineage)investigate(`/api/runs/${report.lineage.root_run_id}`);};
 $('inspect-proposals').onclick=()=>setView('proposal_mask');
 $('inspect-omitted').onclick=()=>setView('omitted_overlay');
 function setView(name){
