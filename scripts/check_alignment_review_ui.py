@@ -32,11 +32,11 @@ def main():
             page.on('pageerror', lambda error: errors.append(str(error)))
             page.on('request', lambda request: network.append(request.url) if request.url.startswith(('https:', 'http:')) else None)
             page.goto((bundle / 'review.html').as_uri())
-            page.wait_for_function('loaded')
+            page.wait_for_function('() => loaded')
             page.locator('#annotator').fill('fixture-author')
             points = [(30, 30), (210, 30), (30, 210), (210, 210), (90, 90), (150, 150)]
             for i in range(2):
-                page.select_option('#scene', str(i)); page.wait_for_function('loaded')
+                page.select_option('#scene', str(i)); page.wait_for_function('() => loaded')
                 for x, y in points:
                     for side in ('after', 'before'):
                         canvas = page.locator('#' + side); box = canvas.bounding_box()
@@ -54,15 +54,15 @@ def main():
             wrong = dict(draft, dataset_manifest_sha256='0' * 64)
             wrong_path = root / 'wrong.json'; wrong_path.write_text(json.dumps(wrong))
             page.locator('#import').set_input_files(wrong_path)
-            page.wait_for_function("document.getElementById('status').textContent.startsWith('Import rejected:')")
+            page.wait_for_function("() => document.getElementById('status').textContent.startsWith('Import rejected:')")
             page.select_option('#mode', 'review')
             page.locator('#import').set_input_files(draft_path)
-            page.wait_for_function("document.getElementById('status').textContent.startsWith('Draft imported.')")
+            page.wait_for_function("() => document.getElementById('status').textContent.startsWith('Draft imported.')")
             page.locator('#reviewer').fill(' FIXTURE-AUTHOR '); page.locator('#attest').check()
             assert page.locator('#approve').is_disabled()
             page.locator('#reviewer').fill('fixture-reviewer'); page.locator('#attest').click(); page.locator('#attest').check()
             for i in range(2):
-                page.select_option('#scene', str(i)); page.wait_for_function('loaded')
+                page.select_option('#scene', str(i)); page.wait_for_function('() => loaded')
                 page.locator('#approve').check()
                 if i == 0: assert page.locator('#export').is_disabled()
             assert page.locator('#undo').is_disabled()
@@ -87,7 +87,7 @@ def main():
             page.screenshot(path=str(out / 'alignment-review-desktop.png'), full_page=True)
             page.set_viewport_size({'width': 390, 'height': 844})
             page.screenshot(path=str(out / 'alignment-review-mobile.png'), full_page=True)
-            assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+            assert page.evaluate('() => document.documentElement.scrollWidth <= innerWidth + 1')
             # Changing the reviewer invalidates all approvals.
             page.locator('#reviewer').fill('third-reviewer'); page.locator('#reviewer').blur()
             assert page.locator('#export').is_disabled()

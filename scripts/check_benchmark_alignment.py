@@ -15,6 +15,7 @@ if __name__ == '__main__':
     if args.output.exists():
         parser.error('Output exists; choose a new report path.')
     report = score_benchmark(args.benchmark, args.annotations, args.dataset, args.dataset_manifest)
+    serialized = json.dumps(report, indent=2, allow_nan=False) + '\n'
     with args.output.open('x') as stream:
-        stream.write(json.dumps(report, indent=2, allow_nan=False) + '\n')
+        stream.write(serialized)
     print(f"Scored {report['pair_count']} complete pairs; no refitting, model calls or production promotion.")

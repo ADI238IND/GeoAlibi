@@ -99,7 +99,7 @@ def test_invalid_review_is_rejected(tmp_path, change):
     with pytest.raises(ValueError): score_benchmark(benchmark, annotations, root, manifest)
 
 
-@pytest.mark.parametrize('change', ['hash', 'subset', 'source', 'unfrozen', 'matrix', 'decision'])
+@pytest.mark.parametrize('change', ['hash', 'subset', 'source', 'unfrozen', 'matrix', 'overflow', 'decision'])
 def test_invalid_benchmark_is_rejected(tmp_path, change):
     root, manifest, benchmark, annotations = review_fixture(tmp_path)
     b = json.loads(benchmark.read_text())
@@ -108,6 +108,7 @@ def test_invalid_benchmark_is_rejected(tmp_path, change):
     elif change == 'source': b['pair_results'][0]['source_hashes']['A_sha256'] = '0' * 64
     elif change == 'unfrozen': b['dataset_frozen'] = False
     elif change == 'matrix': b['pair_results'][0]['alignment']['matrix'][0][0] = float('nan')
+    elif change == 'overflow': b['pair_results'][0]['alignment']['matrix'][0][0] = 1e308
     elif change == 'decision': b['pair_results'][0]['alignment']['reliable'] = 'false'
     benchmark.write_text(json.dumps(b))
     with pytest.raises(ValueError): score_benchmark(benchmark, annotations, root, manifest)
@@ -123,7 +124,13 @@ def test_cli_refuses_overwrite_and_does_not_write_invalid_report(tmp_path):
     prior = output.read_bytes()
     assert subprocess.run(command, capture_output=True).returncode != 0
     assert output.read_bytes() == prior
-    output.unlink(); (root / 'A/pair0.png').write_bytes(b'changed')
+    output.unlink()
+    overflow = json.loads(benchmark.read_text())
+    overflow['pair_results'][0]['alignment']['matrix'][0][0] = 1e308
+    benchmark.write_text(json.dumps(overflow))
+    assert subprocess.run(command, capture_output=True).returncode != 0
+    assert not output.exists()
+    (root / 'A/pair0.png').write_bytes(b'changed')
     assert subprocess.run(command, capture_output=True).returncode != 0
     assert not output.exists()
 

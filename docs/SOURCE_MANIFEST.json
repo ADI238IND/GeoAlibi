@@ -4,7 +4,7 @@
   ".gitignore": "bd7695d69ebeafd64248ffe2599cb8d611d59c23a2d883a910f9f9d6516ddaa1",
   "README.md": "f3522a1e39f2a685ceda4650711fcd8af30aac5f9443d4066eea14772ee95cf9",
   "docs/ASSISTED_EVALUATION.md": "22d3ae4428c4b5220dc47f6e295ed1935cfd4abbb1ba70e4e20db013df1583ee",
-  "docs/BUILD_CHECKPOINT.md": "d380bfd9c0cf2b4841aad4e2eee79e3f4f5e7e49e6e724938abaab84ea3c5324",
+  "docs/BUILD_CHECKPOINT.md": "36417fe927c94f34273e0d8a65d3e0556661c0100d1eb4db061dd08d090a264a",
   "docs/CONTEXT_REGISTRATION.json": "96ae3a832f8396dc30c709f0d1471ee8d533f2b782554548382c84fd3d28b878",
   "docs/DEMO_RUNBOOK.md": "59a7f47a7b6017549c35489566c8b2dbc3c8ba0181a58ddb4d26e1ffd37daad9",
   "docs/INDEPENDENT_ALIGNMENT.md": "5f898ba45b67543f118180402914e3d766a5bca0fc44671aa95ced0a0d566073",
@@ -30,7 +30,7 @@
   "geoalibi/demo.py": "04b2d043619d74d80f75907c1289cb4d7acf4ee7649f2a4d67f5bb0844504402",
   "geoalibi/dossier.py": "38dd75a03503c43f61d71768d55ff3c689f6edf0e4f52e9d57ea57842c99bbbb",
   "geoalibi/evaluation.py": "6bc4e405602ce1e6cb1770857866a93e99f24a6c48c285e8fe5649591fae624a",
-  "geoalibi/independent_alignment.py": "3d8723a50d47148749bfd61e28b042b171f2a66dc20d887a2e8764bc66d48140",
+  "geoalibi/independent_alignment.py": "b364974101324d8429660b33b446f6a2b7e91cc7f915cc862d86e5a8b9d0927b",
   "geoalibi/landmarks.py": "b25e0f4f31b48a0bbbe9d250e111b18d135b13d1b46ed035f2b09ecd5a37462a",
   "geoalibi/matcher_audit.py": "b63a6f6ecc1e1976513414a4bbbcc922e5730181bc7be32710730f51c548c74e",
   "geoalibi/meta.py": "a8abf823e415fade1dd920db1d638a1d1bcccd34267130df8ab003de15b94ccd",
@@ -93,7 +93,7 @@
   "geoalibi/alignment_review.py": "cb48673839d6d57ee286b38e5ba9a2a79b2f72fa536749108b778ceb23d766b4",
   "geoalibi/static/alignment-review.html": "ec5d43508c7cb3ebbea365d95463a494ce8286add0d61bf0756ec6c1e6364f4f",
   "scripts/build_alignment_review.py": "8b0bb271781b9da5b7c40cca811eca64809c0c14dabbf3bc10304a3b1e176ef5",
-  "scripts/check_benchmark_alignment.py": "c65bed383154a21a79af20750a25b6a810ead6d79cf950972044f4ceab8b7fde",
-  "scripts/check_alignment_review_ui.py": "df6d7782a6f68de472addd1471045d4be711c6015779d6787bb11978583bd0d3",
-  "tests/test_alignment_review.py": "07b10cfe4293a36ee34c6059641e5e226d615ebc812ad886e9ff0692a7e9403e"
+  "scripts/check_benchmark_alignment.py": "3d77dc9f501ef38710722c5085e367ab000aa6c9234953fa6cfbc46beeec64b2",
+  "scripts/check_alignment_review_ui.py": "f846b4a657948012d1a77c85b48a489ac0709a9826562836eaaa1bcd66b78b2c",
+  "tests/test_alignment_review.py": "447e6415a3d91d7bed89d63b4e302d77aa10bb5a9efbfb960c21000f1ecdb869"
 }
