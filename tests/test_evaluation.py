@@ -51,6 +51,8 @@ def test_paired_evaluation_cli_and_wrong_image_rejection(tmp_path):
     assert result.returncode == 0, result.stderr
     report = json.loads(output.read_text())
     assert report['pairs'] == 1 and len(report['assisted']['pair_results']) == 1
+    assert report['assisted']['pair_results'][0]['inspection']['schema'] == 'geoalibi-inspection-v1'
+    assert report['pair_results'][0]['assessment']['schema'] == 'geoalibi-assessment-v1'
     assert report['assisted']['metrics']['supported']['fp'] == 0
     assert report['assisted']['metrics']['supported']['precision'] is None
     assert report['assisted']['pair_results'][0]['alignment']['held_out_points'] == 2

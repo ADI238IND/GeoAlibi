@@ -32,6 +32,9 @@ def evidence_requests(checks, alignment):
 def build_packet(report, assets):
     """Checksums detect modified contents; they are not a signature or authenticity proof."""
     files = {"report.json": json.dumps(report, sort_keys=True, indent=2, allow_nan=False).encode()}
+    if all(key in report for key in ('regions', 'candidate_count', 'supported_changed_pixels', 'alignment', 'counts')):
+        from .assessment import assessment_markdown
+        files['SUMMARY.md'] = assessment_markdown(report).encode()
     files.update({"images/"+name+".png": data for name,data in assets.items()})
     manifest = {"format": "geoalibi-evidence-1", "hash_algorithm": "sha256", "run_id": report['id'],
                 "warning": "Unsigned content-integrity manifest. Not proof of acquisition provenance, correctness, or real-world change.",

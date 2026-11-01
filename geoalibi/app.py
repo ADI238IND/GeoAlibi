@@ -77,7 +77,8 @@ def get_run(run_id):
     report = store.get(run_id)
     if report is None:
         raise HTTPException(404, "Investigation not found")
-    return report
+    from .assessment import assess
+    return {**report, 'assessment': assess(report)}
 
 
 @app.get("/api/runs/{run_id}")

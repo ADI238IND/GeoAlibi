@@ -278,6 +278,20 @@ def investigate(a, b, *, threshold=.12, min_area=70, proposal=None, detector_fn=
                               "No causal disaster/damage conclusion can be drawn from these checks alone.", "Global normalization does not resolve local shadows, clouds, parallax, or seasonal changes reliably.",
                               "Two images alone cannot prove that a candidate is a real-world change."],
               "meta": {"status": "not_requested", "reason": "Local evidence only; no Meta API call was made."}, "sam": {"status": "not_requested"}}
+    eligible_pixels = int(sum(stats[i, cv2.CC_STAT_AREA] for i in selected))
+    inspected_pixels = int(sum(r['pixels'] for r in regions))
+    report['inspection'] = {'schema': 'geoalibi-inspection-v1',
+                            'processed_pixels': h * w, 'valid_pixels': int(valid.sum()),
+                            'proposal_pixels': int(candidates.sum()), 'morphology_pixels': int((clean > 0).sum()),
+                            'eligible_regions': len(selected), 'inspected_regions': len(regions),
+                            'omitted_regions': len(selected) - len(regions),
+                            'eligible_region_pixels': eligible_pixels, 'inspected_region_pixels': inspected_pixels,
+                            'omitted_region_pixels': eligible_pixels - inspected_pixels,
+                            'below_min_area_pixels': int((clean > 0).sum()) - eligible_pixels,
+                            'supported_pixels': report['supported_changed_pixels'],
+                            'scope': 'Connected-component footprints after morphology; not accuracy, confidence, physical area or abstention-only pixels.'}
+    from .assessment import assess
+    report['assessment'] = assess(report)
     report['all_candidates_abstained'] = bool(regions) and counts['review'] == len(regions)
     if report['all_candidates_abstained']:
         report['warnings'].append('All inspected candidates require human review. Use the proposal view; no automated supported-change mask is claimed.')

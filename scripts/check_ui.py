@@ -10,7 +10,7 @@ from pathlib import Path
 import httpx
 from playwright.sync_api import sync_playwright
 
-from geoalibi.demo import pair
+from geoalibi.demo import pair, scene
 from geoalibi.vision import png
 
 
@@ -47,6 +47,9 @@ def main():
                     page.locator("#results").wait_for(state="visible")
                     assert page.locator("#count-supported").inner_text() == "2"
                     assert page.locator("#count-review").inner_text() == "4"
+                    assert page.locator("#assessment-panel").get_attribute("data-state") == "review_required"
+                    page.locator("#inspect-proposals").click()
+                    assert page.locator('[data-view="proposal_mask"]').get_attribute("aria-pressed") == "true"
                     assert page.locator("#base-image").evaluate("img => img.complete && img.naturalWidth > 0")
                     page.locator('[data-filter="review"]').click()
                     assert page.locator("#regions .region").count() == 4
@@ -78,6 +81,7 @@ def main():
                     packet_info.value.save_as(out / "evidence-packet.zip")
                     from geoalibi.dossier import verify_packet
                     assert verify_packet((out / "evidence-packet.zip").read_bytes())["files"]["report.json"]
+                    assert verify_packet((out / "evidence-packet.zip").read_bytes())["files"]["SUMMARY.md"]
                     page.screenshot(path=str(out / "desktop.png"), full_page=True)
                     for case in ["shift", "light", "unchanged"]:
                         page.locator(f'[data-case="{case}"]').click()
@@ -148,10 +152,39 @@ def main():
                     page.set_viewport_size({"width": 390, "height": 844})
                     page.screenshot(path=str(out / "mobile.png"), full_page=True)
                     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), "Mobile horizontal overflow"
+                    page.set_viewport_size({"width": 1500, "height": 1000})
+                    page.goto("http://127.0.0.1:8089")
+                    scope_a=scene(); scope_b=scope_a.copy()
+                    for y in range(20,620,70):
+                        for x in range(20,620,70):scope_b[y:y+18,x:x+18]=[240,30,40]
+                    scope_before,scope_after=Path(tmp)/'scope-before.png',Path(tmp)/'scope-after.png'
+                    scope_before.write_bytes(png(scope_a));scope_after.write_bytes(png(scope_b))
+                    page.locator('#toggle-upload').click()
+                    page.locator('#before').set_input_files(scope_before)
+                    page.locator('#after').set_input_files(scope_after)
+                    with page.expect_response('**/api/analyze') as scoped:
+                        page.get_by_role('button',name='Investigate uploaded pair').click()
+                    scope_report=scoped.value.json()
+                    page.locator('#loading').wait_for(state='hidden')
+                    assert scope_report['inspection']['omitted_regions'] == 57
+                    assert page.locator('#assessment-panel').get_attribute('data-state') == 'partial_inspection'
+                    assert '57 omitted' in page.locator('#assessment-coverage').inner_text()
+                    page.locator('#inspect-proposals').click()
+                    assert page.locator('[data-view="proposal_mask"]').get_attribute('aria-pressed') == 'true'
+                    with page.expect_download() as scope_packet:
+                        page.locator('#packet').click()
+                    scope_packet.value.save_as(out/'partial-inspection-packet.zip')
+                    import io,zipfile
+                    with zipfile.ZipFile(io.BytesIO((out/'partial-inspection-packet.zip').read_bytes())) as packet:
+                        assert 'omitted: 57' in packet.read('SUMMARY.md').decode()
+                    page.screenshot(path=str(out/'inspection-scope-desktop.png'),full_page=True)
+                    page.set_viewport_size({'width':390,'height':844})
+                    page.screenshot(path=str(out/'inspection-scope-mobile.png'),full_page=True)
+                    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
                     assert not errors, errors
                     browser.close()
                     (out / "ui-results.json").write_text(json.dumps({"status": "passed", "page_errors": errors,
-                        "checks": ["fixture investigation", "image assets", "review filtering", "saved reviewer decision", "image views", "swipe", "JSON download", "three nuisance scenarios", "file upload", "visual landmark matching/keyboard/undo/submit/stale reset", "history reload", "390px mobile overflow"]}, indent=2))
+                        "checks": ["fixture investigation", "image assets", "review filtering", "saved reviewer decision", "image views", "swipe", "JSON download", "three nuisance scenarios", "file upload", "visual landmark matching/keyboard/undo/submit/stale reset", "history reload", "390px mobile overflow", "partial inspection counts and packet summary"]}, indent=2))
                     print("Browser checks passed: fixture, assets, filters, review, views, slider, download, nuisance scenarios, upload, history, mobile.")
             finally:
                 server.terminate()

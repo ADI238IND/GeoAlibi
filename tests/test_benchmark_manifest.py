@@ -55,6 +55,8 @@ def test_cli_frozen_evaluation_and_changed_label_failure(tmp_path):
     assert result.returncode == 0, result.stderr
     report = json.loads(output.read_text())
     assert report['dataset_frozen'] is True and report['pairs'] == 2
+    assert report['pair_results'][0]['inspection']['schema'] == 'geoalibi-inspection-v1'
+    assert report['pair_results'][0]['assessment']['code'] in ('alignment_unresolved', 'no_candidates')
     assert report['pair_results'][0]['source_hashes']['label_sha256']
     assert report['verification_tradeoff']['pixels'] == 2 * 64 * 64
     assert report['verification_tradeoff']['net_recall_change'] is None

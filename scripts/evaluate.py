@@ -71,7 +71,7 @@ def main():
         transitions = transition_counts(result.images['proposal_mask'] > 0, result.images['supported_mask'] > 0, label)
         for key, value in transitions.items():
             transition_totals[key] = transition_totals.get(key, 0) + value
-        pairs.append({"file": path.name, "source_hashes": bound[path.name], "engine": result.report["engine"], "model_provenance": result.report.get("model_provenance"), "metrics": per_pair, "verification_tradeoff": summarize_transitions(transitions), "all_candidates_abstained": result.report["all_candidates_abstained"], "inspected_regions": len(result.report["regions"]), "omitted_regions": result.report["candidate_count"] - len(result.report["regions"]), "hash": result.report["input_hash"], "elapsed_ms": result.report["elapsed_ms"], "counts": result.report["counts"],
+        pairs.append({"inspection": result.report["inspection"], "assessment": result.report["assessment"], "file": path.name, "source_hashes": bound[path.name], "engine": result.report["engine"], "model_provenance": result.report.get("model_provenance"), "metrics": per_pair, "verification_tradeoff": summarize_transitions(transitions), "all_candidates_abstained": result.report["all_candidates_abstained"], "inspected_regions": len(result.report["regions"]), "omitted_regions": result.report["candidate_count"] - len(result.report["regions"]), "hash": result.report["input_hash"], "elapsed_ms": result.report["elapsed_ms"], "counts": result.report["counts"],
                       "alignment": result.report["alignment"], "candidate_pixels": int((result.images['proposal_mask']>0).sum()),
                       "accepted_pixels": int((result.images['supported_mask']>0).sum()), "warnings": result.report['warnings']})
         if landmarks is not None:
@@ -86,7 +86,7 @@ def main():
             transitions = transition_counts(assisted.images['proposal_mask'] > 0, assisted.images['supported_mask'] > 0, label)
             for key, value in transitions.items():
                 assisted_transition_totals[key] = assisted_transition_totals.get(key, 0) + value
-            assisted_pairs.append({"file": path.name, "metrics": per_pair, "verification_tradeoff": summarize_transitions(transitions), "all_candidates_abstained": assisted.report["all_candidates_abstained"], "alignment": assisted.report["alignment"],
+            assisted_pairs.append({"inspection": assisted.report["inspection"], "assessment": assisted.report["assessment"], "file": path.name, "metrics": per_pair, "verification_tradeoff": summarize_transitions(transitions), "all_candidates_abstained": assisted.report["all_candidates_abstained"], "alignment": assisted.report["alignment"],
                                    "counts": assisted.report["counts"], "elapsed_ms": assisted.report["elapsed_ms"]})
         print(f"Evaluated {path.name}", flush=True)
     output = {"dataset": str(args.dataset), "dataset_manifest_sha256": dataset_hash, "dataset_frozen": dataset_hash is not None, "environment": {"python": platform.python_version(), "numpy": np.__version__, "opencv": cv2.__version__}, "pairs": len(pairs), "subset_limit": args.limit, "threshold": args.threshold, "min_area": args.min_area, "detector": args.detector,

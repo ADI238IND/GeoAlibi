@@ -44,12 +44,23 @@ function render(data){
   $('run-title').textContent=data.title;$('fixture-badge').hidden=!data.synthetic;
   $('elapsed').textContent=`${(data.elapsed_ms/1000).toFixed(2)}s · ${data.detector}`;
   $('dimensions').textContent=`${data.width} × ${data.height} px`;
+  renderAssessment(data);
   $('alignment-label').textContent=`${data.alignment.method} · ${(data.alignment.overlap*100).toFixed(1)}% overlap`;
   $('warnings').replaceChildren(...data.warnings.map(w=>element('p','',w)));
   $('compare-image').src=data.assets.aligned;
   setView(view);renderRegions();renderDetail();renderModel();$('export').disabled=false;$('packet').disabled=false;
   document.querySelectorAll('.filter').forEach(b=>b.classList.toggle('active',b.dataset.filter===filter));
 }
+function renderAssessment(data){
+  const a=data.assessment;
+  $('assessment-title').textContent=a?.title||'Inspection scope was not recorded';
+  $('assessment-panel').dataset.state=a?.code||'legacy';
+  $('assessment-detail').textContent=a?.detail||'This saved investigation has no current scope summary. Its original verdicts are preserved.';
+  const c=a?.coverage;
+  $('assessment-coverage').textContent=a?`${a.inspected_regions} / ${a.eligible_regions} eligible regions inspected · ${a.omitted_regions} omitted · ${a.supported_pixels.toLocaleString()} supported pixels`+(c?` · ${c.omitted_region_pixels.toLocaleString()} eligible-region pixels omitted`:' · detailed pixel coverage unavailable for this older run'):'';
+  $('assessment-next').textContent=a?.next_step||'Review the recorded warnings and acquisition context.';
+}
+$('inspect-proposals').onclick=()=>setView('proposal_mask');
 function setView(name){
   view=name; if(!report)return;
   document.querySelectorAll('.tab').forEach(b=>{b.classList.toggle('active',b.dataset.view===name);b.setAttribute('aria-pressed',String(b.dataset.view===name));});
