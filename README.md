@@ -26,6 +26,8 @@ Collect independent geometry evidence with the [offline blind landmark-review wo
 
 Each investigation now shows its diagnostic state and inspection coverage, including eligible regions/pixels omitted by the 24-region cap. The purple Outside batch view locates eligible regions omitted by the cap, with an exportable binary omission mask; small filtered components are excluded. Evidence ZIPs include these spatial assets and a readable `SUMMARY.md`; an empty supported mask is never presented as proof of no change. Use **Inspect ranks …** to create the next linked 24-region investigation in the same full-scene context. Original reports stay intact; continuation reuses the saved proposal mask and makes no detector or paid-provider call. Results, supported masks and omission maps describe each batch separately. A changed analysis context is rejected; older runs without a context must be rerun first. Historical runs retain unknown pixel coverage rather than inventing it.
 
+Validate downloaded original/continuation packets with the [offline inspection-chain checker](docs/INSPECTION_CHAIN.md). It rejects broken lineage and duplicate coverage, checks spatial masks, and separates eligible-candidate completeness from real-world change verification.
+
 ## Start on Windows PowerShell
 
 Install Python 3.10 or newer. Extract this project, open its folder in PowerShell, then:

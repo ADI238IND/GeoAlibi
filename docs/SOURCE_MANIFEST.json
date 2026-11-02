@@ -1,10 +1,10 @@
 {
   ".env.example": "0140bea5acd41f1c27fc8f1001925af238a8ec04800d5594968fe98ec18ef435",
-  ".github/workflows/tests.yml": "0f3fec98df32da577526e43389bbe3be9b426d729d795b31b0e1ee7071311939",
+  ".github/workflows/tests.yml": "2534a0107f8bc2dd152afcf25f72e17a301c1bcb613ff10a8654493d0949e996",
   ".gitignore": "bd7695d69ebeafd64248ffe2599cb8d611d59c23a2d883a910f9f9d6516ddaa1",
-  "README.md": "cc5e92e2788769b309e394f7ae1ec62b7d782eacf8ca5a06ef615e46d44731fc",
+  "README.md": "31ed4ad2780dd8a1e0707db2feac0a979ee0dde879f5eceadb7f4de2c7aee44d",
   "docs/ASSISTED_EVALUATION.md": "22d3ae4428c4b5220dc47f6e295ed1935cfd4abbb1ba70e4e20db013df1583ee",
-  "docs/BUILD_CHECKPOINT.md": "f6284f0b1e3534b2d18823b71c487c674bd1f7af50c0eb5d20250c2e9f2151d4",
+  "docs/BUILD_CHECKPOINT.md": "7891edabea91319856a86d84c5eb01b5867f7374826d5d16523dee7ccf2d1b83",
   "docs/CONTEXT_REGISTRATION.json": "96ae3a832f8396dc30c709f0d1471ee8d533f2b782554548382c84fd3d28b878",
   "docs/DEMO_RUNBOOK.md": "655622324ef0d4b83c5ba134e12f56e51dc10e9046c2d71fefbf7a49c2ea92c4",
   "docs/INDEPENDENT_ALIGNMENT.md": "5f898ba45b67543f118180402914e3d766a5bca0fc44671aa95ced0a0d566073",
@@ -46,7 +46,7 @@
   "scripts/audit_registration.py": "8d22a3354c1245a45ef596ae6f7459a0f3d7ddc9f00938c3c0d66f7e5475e9bf",
   "scripts/build_demo_bundle.py": "7e07fcdbd14cbee355e580f83145f7aca47e393ea201edef386976a8964c6800",
   "scripts/check_independent_alignment.py": "b40b05aa2f0a5e546acbc2ea4c086fe11c7e009e529b2ccbc9d61085956e4412",
-  "scripts/check_ui.py": "6b97677afae3c0968565d5f098996a46b79c04cce11238dff4b46b2435310262",
+  "scripts/check_ui.py": "de2e08e60f4becefb7c513f22a7d57ee8e22fd4c2b604ba92b5028a9a3786cf4",
   "scripts/compare_matchers.py": "5b950670618e541ae3e517c89943a68fdb1273810f1c53bd5ad3ffadac37681a",
   "scripts/context_registration.py": "7cee487dc22bae53af0116b50c7870a22bf2891842cbacfce80e14edddc24619",
   "scripts/download_detector.py": "12f19b59bfe59307b45679edeaf06b456c6a89df6b1b18577b97c1df98066dfd",
@@ -100,5 +100,9 @@
   "tests/test_release_evidence.py": "61600970b3c21ff48132e4076be82ac0b93068881c0b732bcbd2d56409f197f3",
   "geoalibi/assessment.py": "bca199f0ac87e02a03f05c3f92bab82ac1f27a05b07049501d5e32b166c03019",
   "tests/test_assessment.py": "8666f8dd08a1276a200cb4e0d0aefe50fc8fc36f2895da33a03def438a9105ff",
-  "tests/test_continuation.py": "71adb24789eabc7ee7295f9622f6d8e6da2173666c0d032df0a2d81c0d6c3afa"
+  "tests/test_continuation.py": "71adb24789eabc7ee7295f9622f6d8e6da2173666c0d032df0a2d81c0d6c3afa",
+  "geoalibi/inspection_chain.py": "a2cf10c16130fcb85955158aec02920829b9b548246cb7b85db9fc63d3435715",
+  "scripts/verify_inspection_chain.py": "6cb18d7f991415088d54041b4516687278957ba483f8d30b66a2dd9e66a6cc17",
+  "tests/test_inspection_chain.py": "b7e9ac12e612ee245c5af1ee5e923f93218b0155addebb34cc8057183e440c93",
+  "docs/INSPECTION_CHAIN.md": "5f6f44298b3f98689c92483a47ec0d19b4b0494a615def9bbf6f5eb3a45e0a1e"
 }
