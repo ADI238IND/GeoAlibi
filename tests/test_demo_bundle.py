@@ -27,6 +27,11 @@ def test_rehearsal_is_labelled_verified_and_does_not_copy_private_files(tmp_path
     assert real['arms']['unet']['metrics']['supported']['precision'] is None
     assert '78.66%' in (out / 'README.md').read_text()
     assert '91.44%' not in (out / 'README.md').read_text()
+    player=(out/'index.html').read_text()
+    assert '78.66%' in player and 'undefined' in player and 'accepted zero pixels' in player
+    assert '<!--SCENARIOS-->' not in player and 'Every image in this gallery is generated' in player
+    assert (out/'RECORDING_SCRIPT.md').is_file()
+    assert 'Supported recall was 0.00%' in (out/'RECORDING_SCRIPT.md').read_text()
     assert not any(p.suffix in ('.ckpt', '.env') for p in out.iterdir())
     manifest = json.loads((out / 'manifest.json').read_text())
     assert set(p.name for p in out.iterdir()) == set(manifest['files']) | {'manifest.json'}
