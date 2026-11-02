@@ -14,6 +14,8 @@ Generate a credential-free offline rehearsal with four clearly labelled procedur
 python scripts/build_demo_bundle.py --output dist/offline-demo
 ```
 
+Open `dist/offline-demo/index.html` locally for the interactive scenario player. `RECORDING_SCRIPT.md` provides a three-minute rehearsal draft with measured results and explicit evidence limits; confirm the organizer’s requirements before the final recording.
+
 The bundle also includes a separate summary of the saved eight-scene results and source reports, checked for complete frozen coverage, consistent counts and explicit missed changes. It runs no new model inference.
 
 Use a new output directory for each run. CI builds this bundle and retains it with desktop/mobile screenshots as a downloadable workflow artifact for seven days. This is a local demo deliverable, not a hosted deployment or competition submission.

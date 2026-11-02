@@ -12,6 +12,7 @@ from geoalibi.demo import CASES, pair
 from geoalibi.dossier import build_packet, verify_packet
 from geoalibi.vision import investigate, png
 from geoalibi.release_evidence import FILES, saved_evidence
+from geoalibi.demo_player import render_player, recording_script
 
 
 def build_bundle(output, root=None):
@@ -69,6 +70,7 @@ def build_bundle(output, root=None):
         lines = ['# GeoAlibi offline rehearsal', '',
                  '**All images below are procedural illustrations, not satellite benchmark evidence.**', '',
                  'No credentials, API calls, model downloads or live ledger access are used.',
+                 'Open index.html locally for the interactive gallery; RECORDING_SCRIPT.md provides a three-minute rehearsal draft. Confirm actual organizer requirements before recording/submitting.',
                  'Open each PNG locally. Each ZIP contains a report, source/derived images and an unsigned checksum manifest.',
                  'Verify a ZIP with `python scripts/verify_packet.py PATH_TO_ZIP` from the source repository.', '',
                  '## Evidence limits', '',
@@ -85,6 +87,8 @@ def build_bundle(output, root=None):
                           f'![Procedural before image]({case}-before.png)',
                           f'![Procedural candidate overlay]({case}-overlay.png)', '', f'[Evidence packet]({case}.zip)', ''])
         (stage / 'README.md').write_text('\n'.join(lines) + '\n')
+        (stage / 'index.html').write_text(render_player(results, evidence, summary['source_manifest_sha256']))
+        (stage / 'RECORDING_SCRIPT.md').write_text(recording_script(evidence))
         manifest = {'schema': 'geoalibi-demo-bundle-v1',
                     'warning': 'Unsigned checksums establish content consistency only, not authenticity or accuracy.',
                     'files': {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(stage.iterdir())}}

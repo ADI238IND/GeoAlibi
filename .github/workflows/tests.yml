@@ -16,6 +16,7 @@ jobs:
       - run: python scripts/check_ui.py
       - run: python scripts/check_alignment_review_ui.py
       - run: python scripts/build_demo_bundle.py --output dist/offline-demo
+      - run: python scripts/check_demo_player.py dist/offline-demo
       - uses: actions/upload-artifact@v4
         with:
           name: geoalibi-rehearsal-${{ github.sha }}
@@ -24,6 +25,7 @@ jobs:
             test-results/*.png
             test-results/ui-results.json
             test-results/alignment-review-ui.json
+            test-results/offline-player-ui.json
             test-results/inspection-chain.json
             test-results/inspection-chain-README.md
             test-results/partial-inspection-packet.zip
