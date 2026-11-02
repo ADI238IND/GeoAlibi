@@ -24,5 +24,9 @@ jobs:
             test-results/*.png
             test-results/ui-results.json
             test-results/alignment-review-ui.json
+            test-results/inspection-chain.json
+            test-results/inspection-chain-README.md
+            test-results/partial-inspection-packet.zip
+            test-results/continuation-packet.zip
           if-no-files-found: error
           retention-days: 7
