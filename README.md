@@ -16,6 +16,14 @@ python scripts/build_demo_bundle.py --output dist/offline-demo
 
 Open `dist/offline-demo/index.html` locally for the interactive scenario player. `RECORDING_SCRIPT.md` provides a three-minute rehearsal draft with measured results and explicit evidence limits; confirm the organizer’s requirements before the final recording.
 
+Before opening or recording a downloaded bundle, use the matching source checkout to check its files, packets, gallery and saved research arithmetic:
+
+```bash
+python scripts/verify_demo_bundle.py dist/offline-demo
+```
+
+The verifier is read-only and makes no model/API calls. Optional `--expected-source-sha256 SHA256` checks a source-manifest hash obtained independently from the matching checkout or CI. Without an external pin, the unsigned manifests establish internal consistency only. Use the verifier from the bundle's source version: it also compares the page and recording guide with that version's checked templates. It does not establish authenticity, execution history or satellite accuracy. See [bundle verification](docs/DEMO_BUNDLE_VERIFICATION.md).
+
 The bundle also includes a separate summary of the saved eight-scene results and source reports, checked for complete frozen coverage, consistent counts and explicit missed changes. It runs no new model inference.
 
 Use a new output directory for each run. CI builds this bundle and retains it with desktop/mobile screenshots as a downloadable workflow artifact for seven days. This is a local demo deliverable, not a hosted deployment or competition submission.

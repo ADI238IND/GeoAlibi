@@ -73,6 +73,8 @@ def build_bundle(output, root=None):
                  'Open index.html locally for the interactive gallery; RECORDING_SCRIPT.md provides a three-minute rehearsal draft. Confirm actual organizer requirements before recording/submitting.',
                  'Open each PNG locally. Each ZIP contains a report, source/derived images and an unsigned checksum manifest.',
                  'Verify a ZIP with `python scripts/verify_packet.py PATH_TO_ZIP` from the source repository.', '',
+                 'Before recording, use the matching source checkout: `python scripts/verify_demo_bundle.py PATH_TO_THIS_DIRECTORY`.',
+                 'Optionally supply `--expected-source-sha256 SHA256` obtained independently from the matching checkout/CI. Unsigned checksums do not authenticate a bundle.', '',
                  '## Evidence limits', '',
                  f"Saved eight-scene diagnostic: U-Net proposal F1 {100*evidence['arms']['unet']['metrics']['proposals']['f1']:.2f}%; RGB proposal F1 {100*evidence['arms']['baseline']['metrics']['proposals']['f1']:.2f}%.",
                  f"U-Net supported recall {100*evidence['arms']['unet']['metrics']['supported']['recall']:.2f}%; supported precision is undefined when no pixels are accepted. Registration flagged reliable in {evidence['arms']['unet']['registration_flagged_reliable_pairs']}/{evidence['pair_count']} scenes.",

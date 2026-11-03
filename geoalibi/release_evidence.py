@@ -39,6 +39,11 @@ def checked_metrics(saved):
 
 def saved_evidence(root):
     raw = {key: (Path(root) / path).read_bytes() for key, path in FILES.items()}
+    return evidence_from_bytes(raw)
+
+
+def evidence_from_bytes(raw):
+    """Validate saved reports supplied by a bundle without writing temporary source files."""
     documents = {key: json.loads(data) for key, data in raw.items()}
     hashes = {key: hashlib.sha256(data).hexdigest() for key, data in raw.items()}
     inputs = documents['inputs']
