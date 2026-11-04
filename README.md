@@ -4,6 +4,10 @@
 
 Built for Aditya Singhal's Meta Global AI Developer Hackathon idea, Indie Dev Track. This is a working local research prototype. Live Muse Spark interpretation and SAM response decoding have been exercised; real satellite accuracy and deployment readiness remain to be established. It is not a completed hackathon submission.
 
+## License
+
+Original GeoAlibi code is available under the [MIT License](LICENSE). Model weights, datasets, imagery, services and dependencies retain their own terms; see [third-party notices](THIRD_PARTY_NOTICES.md).
+
 ## Integrated release — 1 November
 
 The main-targeted [release PR #20](https://github.com/ADI238IND/GeoAlibi/pull/20) brings together the classical/larger-context experiments, replayable learned-match audit, corrected SAM geometry, frozen eight-scene evaluation, blind independent-review workflow and current offline deliverables. Research matchers remain separate from production registration. See [release status](docs/RELEASE_STATUS.md) for established evidence and remaining blockers.

@@ -262,3 +262,12 @@ The bundle verifier now checks nested packet manifest bytes for duplicate keys/n
 Fresh GitHub metadata reports visibility private and default branch main. Public repository access is required by the participant submission form; this remains a real submission blocker. Latest validated follow-ups remain stacked drafts, not merged main. No repository visibility change, main merge, public deployment or competition submission was performed. Video handoff exists separately in the conversation, but no YouTube URL or submission receipt is established by this run.
 
 No secure MODEL_API_KEY or local environment file is available. Existing real ledger/billing access remains unestablished; historical $0.54 reservation is unreconciled. New observed provider calls/spend $0, new reservations $0. No credential retrieval from chat, ledger reset or infrastructure purchase. Independent human alignment review and corrected real-satellite Meta validation remain outstanding; observed proposal F1 78.66% versus 8.08%, supported recall zero/precision undefined remain unchanged. Tests use isolated temporary state. Validation results belong in the follow-up PR; require full fresh CI before acceptance.
+
+
+## 4 November final main handoff and project license
+
+At the user's explicit finalization request, main was advanced without force from c6be37f to the tested descendant 710bf15, preserving all contributor commits. All 114 source blobs matched GitHub, 220 local tests passed again, fresh procedural demo/packet verification and saved LoFTR replay passed. Main workflow 41862267636 subsequently completed successfully.
+
+Added the standard MIT license for original project code/documentation and explicit third-party exclusions/attributions. Imagery, datasets, optional weights, services and dependency licenses are preserved. No original satellite imagery or model weights are added. These documentation changes do not change runtime behavior, measured results or provider validation.
+
+GitHub still reports the repository private. Available GitHub operations do not include changing repository visibility. No YouTube upload connector was found, and the browser connection continues to lack originating context. The narrated video remains a separate conversation deliverable; no public video URL or submission receipt is established. No submission, public deployment or infrastructure purchase. New observed API spend/calls/reservations $0; historical $0.54 remains unreconciled. Secure credential/billing/ledger access and independent alignment review remain outstanding.
