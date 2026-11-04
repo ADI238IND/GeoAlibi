@@ -2,7 +2,13 @@
 
 **A change needs an alibi.** An evidence-first workstation for investigating whether an apparent satellite-image change survives alternative explanations.
 
-Built for Aditya Singhal's Meta Global AI Developer Hackathon idea, Indie Dev Track. This is a working local research prototype. Live Muse Spark interpretation and SAM response decoding have been exercised; real satellite accuracy and deployment readiness remain to be established. It is not a completed hackathon submission.
+Built for Aditya Singhal's Meta Global AI Developer Hackathon idea, Indie Dev Track. This is a working local research prototype. Live Muse Spark interpretation and SAM response decoding have been exercised; real satellite accuracy and deployment readiness remain to be established. GeoAlibi was submitted to the Meta Global AI Developer Hackathon on 4 November 2026. The submitted video is an offline visual walkthrough, not a live application recording or live Meta inference.
+
+## Start reviewing here
+
+- [Three-minute submitted walkthrough](https://youtu.be/mj2dss_nWP0) — procedural images, offline presentation, separately reported satellite results.
+- [Judge quickstart](docs/JUDGE_QUICKSTART.md) — run the actual application, inspect outcomes and verify exported evidence.
+- [Frozen real-data results](docs/EXPANDED_EVALUATION.md) — proposal F1 78.66%; supported recall zero; precision undefined.
 
 ## License
 
@@ -195,3 +201,4 @@ The SAM adapter now respects the official parser's half-open bounds, avoiding an
 For new real-data evaluation, [freeze the exact input split](docs/FROZEN_BENCHMARK.md) before inspecting results. The evaluator can verify original A/B/label bytes against that manifest and discloses whether a run used frozen inputs.
 
 Benchmark output now reports [verification benefit and missed-change cost](docs/VERIFICATION_TRADEOFF.md) together, including per-pair metrics and separate automatic/assisted pixel transitions. Both the historical seven-pair RGB rerun and the latest eight-scene experiment produced zero supported pixels; removing false alarms also removed every correctly proposed change pixel.
+
