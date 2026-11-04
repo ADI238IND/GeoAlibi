@@ -2,6 +2,7 @@
 import hashlib
 import io
 import json
+import math
 import re
 import stat
 import zipfile
@@ -21,6 +22,12 @@ def digest(data):
 
 
 def read_json(data):
+    def finite_float(value):
+        result = float(value)
+        if not math.isfinite(result):
+            raise ValueError('Nonfinite JSON number')
+        return result
+
     def unique(pairs):
         result = {}
         for key, value in pairs:
@@ -28,7 +35,7 @@ def read_json(data):
                 raise ValueError('Duplicate JSON key: ' + key)
             result[key] = value
         return result
-    return json.loads(data, object_pairs_hook=unique,
+    return json.loads(data, object_pairs_hook=unique, parse_float=finite_float,
                       parse_constant=lambda value: (_ for _ in ()).throw(ValueError('Nonfinite JSON number')))
 
 
@@ -91,6 +98,9 @@ def verify_bundle(directory, expected_source_sha256=None):
         packet = content[case + '.zip']
         checked = verify_packet(packet)
         with zipfile.ZipFile(io.BytesIO(packet)) as archive:
+            # The packet checksum helper uses the standard JSON parser. Apply the
+            # bundle's ambiguity/finite-number policy to the nested manifest too.
+            read_json(archive.read('manifest.json'))
             report = read_json(archive.read('report.json'))
             if (report.get('id') != 'procedural-' + case or checked['run_id'] != report['id']
                     or report.get('synthetic') is not True or item['title'] != CASES[case]

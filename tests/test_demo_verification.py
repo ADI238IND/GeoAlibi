@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 
 from geoalibi.demo_verification import verify_bundle
+from geoalibi.demo_verification import read_json
 from scripts.build_demo_bundle import build_bundle
 
 
@@ -133,3 +134,37 @@ def test_cli_failure_is_nonzero_and_does_not_modify_bundle(bundle):
     result = subprocess.run([sys.executable, 'scripts/verify_demo_bundle.py', str(bundle)], capture_output=True, text=True)
     assert result.returncode == 1 and 'verification failed' in result.stderr
     assert before == {p.name: p.read_bytes() for p in bundle.iterdir()}
+
+
+@pytest.mark.parametrize('value', ['1e999', '-1e999', 'NaN', 'Infinity', '-Infinity'])
+def test_nonfinite_json_is_rejected_even_inside_unused_metadata(value):
+    with pytest.raises(ValueError, match='Nonfinite'):
+        read_json('{"metadata": {"value": ' + value + '}}')
+
+
+@pytest.mark.parametrize('mode', ['duplicate_key', 'overflow'])
+def test_nested_packet_manifest_rejects_ambiguous_metadata(bundle, mode):
+    import io
+    import zipfile
+    from geoalibi.dossier import verify_packet
+    case = json.loads((bundle / 'summary.json').read_text())['scenarios'][0]['case']
+    name = case + '.zip'
+    with zipfile.ZipFile(bundle / name) as original_zip:
+        entries = {entry: original_zip.read(entry) for entry in original_zip.namelist()}
+    text = entries['manifest.json'].decode()
+    if mode == 'duplicate_key':
+        text = text.replace('"format":', '"format": "ambiguous", "format":', 1)
+    else:
+        text = text.replace('{', '{"unused_metadata": 1e999,', 1)
+    entries['manifest.json'] = text.encode()
+    data = io.BytesIO()
+    with zipfile.ZipFile(data, 'w', zipfile.ZIP_DEFLATED) as archive:
+        for entry, content in entries.items():
+            archive.writestr(entry, content)
+    # Outer and inner checksums alone accept this ambiguity; strict bundle
+    # validation must reject it even after the outer manifest is refreshed.
+    verify_packet(data.getvalue())
+    (bundle / name).write_bytes(data.getvalue())
+    rehash(bundle, name)
+    with pytest.raises(ValueError, match='Duplicate|Nonfinite'):
+        verify_bundle(bundle)
