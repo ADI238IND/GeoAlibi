@@ -1,5 +1,7 @@
 # Verify the offline rehearsal before recording
 
+Strict JSON validation includes nested evidence-packet manifests: duplicate keys, explicit nonfinite constants and overflowed numbers such as `1e999` are rejected, even in unused metadata. Refreshing the outer checksum manifest does not bypass these checks.
+
 Use the source checkout associated with the downloaded CI artifact, install the normal project dependencies, and locate the extracted `dist/offline-demo` directory. Do not execute untrusted HTML to verify it.
 
 ```bash
